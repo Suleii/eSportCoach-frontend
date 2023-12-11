@@ -48,7 +48,7 @@ function Login() {
                             </Modal>
                         </div>}
                         <p className={styles.textBottom}>You are coach?</p>
-                        <button className={styles.signInButton} onClick={showSignInModal}>Sign in</button>
+                        <input type="checkbox" className={styles.signInButton} onClick={showSignInModal}/>
                         {isSignInModalVisible && <div id="react-signInModals">
                             <Modal getContainer="#react-signInModals" className={styles.modal} visible={isSignInModalVisible} closable={false} footer={null}>
                                 <SignIn />

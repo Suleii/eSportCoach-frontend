@@ -4,8 +4,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../reducers/user';
 import styles from '../styles/SignUp.module.css';
-//import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-//import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'antd';
 import Link from 'next/link';
 
@@ -43,7 +43,7 @@ function SignUp() {
 	return (
         <div className={styles.body}>	
 			<div className={styles.container}>
-				{/* <FontAwesomeIcon className={styles.XmarkSignUp} icon={faXmark} data-dismiss="modal" /> */}
+				<FontAwesomeIcon className={styles.XmarkSignUp} icon={faXmark} data-dismiss="modal" />
 				<img className={styles.logo} src="logoTwitter.png" alt="logo Twitter" />
 				<h2 className={styles.textSingUp}>Create your account</h2>
 					<input className={styles.input}
