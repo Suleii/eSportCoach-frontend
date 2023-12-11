@@ -1,7 +1,7 @@
-import Login from "@/components/Login";
+import Home from "@/components/Home";
 
 function app() {
-    return <Login />;
+    return <Home />;
   }
   
   export default app;
