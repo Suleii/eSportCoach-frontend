@@ -36,24 +36,18 @@ function Login() {
                         <h3 className={styles.textTop2}>Join the coaching platform.</h3>
                         <button className={styles.signUpButton} onClick={showSignUpModal}>Sign up</button>
                         {isSignUpModalVisible && <div id="react-signUpModals">
-                            <Modal getContainer="#react-signUpModals" className={styles.modal} visible={isSignUpModalVisible} closable={false} footer={null}>
+                            <Modal getContainer="#react-signUpModals" className={styles.modal} visible={isSignUpModalVisible} closable={true} footer={null} onCancel={()=> setIsSignUpModalVisible(false)}>
                                 <SignUp />
                             </Modal>
                         </div>}
                         <p className={styles.textBottom}>Already have an account?</p>
                         <button className={styles.signInButton} onClick={showSignInModal}>Sign in</button>
                         {isSignInModalVisible && <div id="react-signInModals">
-                            <Modal getContainer="#react-signInModals" className={styles.modal} visible={isSignInModalVisible} closable={false} footer={null}>
+                            <Modal getContainer="#react-signInModals" className={styles.modal} visible={isSignInModalVisible} closable={true} footer={null} onCancel={()=> setIsSignInModalVisible(false)} >
                                 <SignIn />
                             </Modal>
                         </div>}
-                        <p className={styles.textBottom}>You are coach?</p>
-                        <input type="checkbox" className={styles.signInButton} onClick={showSignInModal}/>
-                        {isSignInModalVisible && <div id="react-signInModals">
-                            <Modal getContainer="#react-signInModals" className={styles.modal} visible={isSignInModalVisible} closable={false} footer={null}>
-                                <SignIn />
-                            </Modal>
-                        </div>}
+                        
                     </div> 
                 </div>
             
