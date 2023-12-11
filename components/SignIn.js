@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../reducers/user';
 import styles from '../styles/SignIn.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { faTwitch } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'antd';
 import Link from 'next/link';
 
@@ -40,7 +40,7 @@ function SignIn() {
 
 	return (
         <div className={styles.body}>
-           <FontAwesomeIcon className={styles.XmarkSignIn} icon={faXmark} data-dismiss="modal" />
+           {/* <FontAwesomeIcon className={styles.XmarkSignIn} icon={faXmark} data-dismiss="modal"  /> */}
             <img className={styles.logo} src="logoTwitter.png" alt="logo Twitter" />
             <h2 className={styles.textSingIn}>Create your account</h2>
             <input className={styles.input}
@@ -57,7 +57,18 @@ function SignIn() {
                 onChange={(e) => setSignInPassword(e.target.value)} 
                 value={signInPassword} 
             />
+            <input type="checkbox" id="exampleUniq"/>
+            <label for="exampleUniq">Remember me</label>
+            <p>Forgot password?</p>
             <button className={styles.signIn} id="signInButton" onClick={() => handleSignIn()}>Sign in</button>
+            <a href='/SignUp'>
+                <p>Don't have an account? Please sign up.</p>
+            </a>
+            <p>or</p>
+            <button >
+            <img src='https://www.vectorlogo.zone/logos/twitch/twitch-icon.svg'></img>
+                Log in with Twitch
+            </button>
         </div>
 	);
 }

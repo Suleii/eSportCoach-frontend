@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../reducers/user';
 import styles from '../styles/SignUp.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import { Modal } from 'antd';
 import Link from 'next/link';
 
@@ -43,15 +42,28 @@ function SignUp() {
 	return (
         <div className={styles.body}>	
 			<div className={styles.container}>
-				<FontAwesomeIcon className={styles.XmarkSignUp} icon={faXmark} data-dismiss="modal" />
 				<img className={styles.logo} src="logoTwitter.png" alt="logo Twitter" />
 				<h2 className={styles.textSingUp}>Create your account</h2>
 					<input className={styles.input}
 						type="text" 
-						placeholder="Firstname" 
+						placeholder="Last name" 
 						id="signUpFirstname" 
 						onChange={(e) => setSignUpFirstname(e.target.value)} 
 						value={signUpFirstname} 
+					/>
+					<input className={styles.input}
+						type="text" 
+						placeholder="First name" 
+						id="signUpUsername" 
+						onChange={(e) => setSignUpUsername(e.target.value)} 
+						value={signUpUsername} 
+					/>
+					<input className={styles.input}
+						type="email" 
+						placeholder="E-mail" 
+						id="signUpUsername" 
+						onChange={(e) => setSignUpUsername(e.target.value)} 
+						value={signUpUsername} // modifier le value
 					/>
 					<input className={styles.input}
 						type="text" 
@@ -67,7 +79,13 @@ function SignUp() {
 						onChange={(e) => setSignUpPassword(e.target.value)} 
 						value={signUpPassword} 
 					/>
-				<button className={styles.signUp} id="signUpButton" onClick={() => handleSignUp()}>Sign up</button>
+					<label for="dog-names">I want to sign up as:</label>
+						<select name="dog-names" id="dog-names"> 
+							
+							<option value="Gamer" selected>Gamer</option> 
+							<option value="Coach">Coach</option> 	
+						</select>
+				<button className={styles.signUp} id="signUpButton" onClick={() => handleSignUp()}>Sign Up and take the quiz</button>
 			</div>
         </div>
 	);
