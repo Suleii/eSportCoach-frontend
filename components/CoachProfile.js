@@ -79,13 +79,27 @@ const ExperienceList = experience.map((item)=>
                  //socials   
                 </div>
                 <h3>Prices</h3>
-                <div className="dropdown">
-                    <div tabIndex={0} role="button" className="btn m-1">Solo Sessions</div>
-                    <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                        <li><a>1 session: {price.oneSession}</a></li>
-                        <li><a>10 sessions: {price.TenSession}</a></li>
-                    </ul>
+                <div className="collapse collapse-arrow bg-secondary">
+                    <input type="checkbox" /> 
+                    <div className="collapse-title text-sm font-medium text-white">
+                        Solo Sessions
+                    </div>
+                    <div className="collapse-content text-white"> 
+                        <p>1 session: €{price.oneSession}</p>
+                        <p>10 sessions: €{price.TenSession}</p>
+                    </div>
                 </div>
+                <div className="collapse collapse-arrow bg-secondary">
+                    <input type="checkbox" /> 
+                    <div className="collapse-title text-sm font-medium text-white">
+                        Group Sessions
+                    </div>
+                    <div className="collapse-content text-white"> 
+                        <p>1 session: €{price.oneGroupSession}</p>
+                        <p>10 sessions: €{price.tenGroupSessions}</p>
+                    </div>
+                </div>
+                
                 <h3>Experience/Achievements</h3>
                 <ul>{ExperienceList}</ul> 
                 <h3>Reviews</h3>
