@@ -90,7 +90,7 @@ const ExperienceList = experience.map((item)=>
                         <p>10 sessions: €{price.TenSession}</p>
                     </div>
                 </div>
-                <div className="collapse collapse-arrow bg-secondary mt-6 ">
+                <div className="collapse collapse-arrow bg-secondary mt-6">
                     <input type="checkbox" /> 
                     <div className="collapse-title text-sm font-medium text-white p-6">
                         Group Sessions

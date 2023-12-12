@@ -24,33 +24,24 @@ function Login() {
 	};
 
 	return (
-        <div className={styles.body}>
-                <div className={styles.leftContainer}>
-                    <img className={styles.logoLeftContainer} href="./home" src="logoTwitter2.png" alt="logo Twitter" />
-                </div>
-
-                <div className={styles.rightContainer}>
-                    <div className={styles.rightInContainer}>
-                        <img className={styles.logoRightContainer} href="./home" src="logoTwitter.png" alt="logo Twitter" />
-                        <h1 className={styles.textTop}>eSport Coach</h1>
-                        <h3 className={styles.textTop2}>Join the coaching platform.</h3>
-                        <button className={styles.signUpButton} onClick={showSignUpModal}>Sign up</button>
-                        {isSignUpModalVisible && <div id="react-signUpModals">
-                            <Modal getContainer="#react-signUpModals" className={styles.modal} visible={isSignUpModalVisible} closable={true} footer={null} onCancel={()=> setIsSignUpModalVisible(false)}>
-                                <SignUp />
-                            </Modal>
-                        </div>}
-                        <p className={styles.textBottom}>Already have an account?</p>
-                        <button className={styles.signInButton} onClick={showSignInModal}>Sign in</button>
-                        {isSignInModalVisible && <div id="react-signInModals">
-                            <Modal getContainer="#react-signInModals" className={styles.modal} visible={isSignInModalVisible} closable={true} footer={null} onCancel={()=> setIsSignInModalVisible(false)} >
-                                <SignIn />
-                            </Modal>
-                        </div>}
-                        
-                    </div> 
-                </div>
-            
+        <div className="flex flex-col grid justify-items-center text-white ">
+                <div className="space-y-4 ">
+                    <h1 className={styles.textTop}>eSport Coach</h1>
+                    <h3 className={styles.textTop2}>Join the coaching platform.</h3>
+                    <button className="bg-secondary" onClick={showSignUpModal}>Sign up</button>
+                    {isSignUpModalVisible && <div id="react-signUpModals">
+                         <Modal getContainer="#react-signUpModals" className={styles.modal} visible={isSignUpModalVisible} closable={true} footer={null} onCancel={()=> setIsSignUpModalVisible(false)}>
+                            <SignUp />
+                        </Modal>
+                    </div>}
+                    <p className="{styles.textBottom}">Already have an account?</p>
+                    <button className="bg-secondary" onClick={showSignInModal}>Sign in</button>
+                    {isSignInModalVisible && <div id="react-signInModals">
+                        <Modal getContainer="#react-signInModals" className={styles.modal} visible={isSignInModalVisible} closable={true} footer={null} onCancel={()=> setIsSignInModalVisible(false)} >
+                            <SignIn />
+                        </Modal>
+                    </div>}   
+                </div> 
         </div>
 	);
 }

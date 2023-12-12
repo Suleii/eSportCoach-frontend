@@ -44,39 +44,39 @@ function SignUp() {
 
 
 	return (
-        <div className={styles.body}>	
-			<div className={styles.container}>
+        <div className="text-black bg-primary">	
+			<div className="flex flex-col grid justify-items-center h-96">
 				<img className={styles.logo} src="logoTwitter.png" alt="logo Twitter" />
 				<h2 className={styles.textSingUp}>Create your account</h2>
-					<input className={styles.input}
+					<input className="bg-secondary w-64 "
 						type="text" 
 						placeholder="Last name" 
 						id="signUpLastname" 
 						onChange={(e) => setSignUpLastname(e.target.value)} 
 						value={signUpLastname} 
 					/>
-					<input className={styles.input}
+					<input className="bg-secondary w-64"
 						type="text" 
 						placeholder="First name" 
 						id="signUpFirstname" 
 						onChange={(e) => setSignUpFirstname(e.target.value)} 
 						value={signUpFirstname} 
 					/>
-					<input className={styles.input}
+					<input className="bg-secondary w-64"
 						type="email" 
 						placeholder="E-mail" 
 						id="signUpMail" 
 						onChange={(e) => setSignUpMail(e.target.value)} 
 						value={signUpMail}
 					/>
-					<input className={styles.input}
+					<input className="bg-secondary w-64"
 						type="text" 
 						placeholder="Username" 
 						id="signUpUsername" 
 						onChange={(e) => setSignUpUsername(e.target.value)} 
 						value={signUpUsername} 
 					/>
-					<input className={styles.input}
+					<input className="bg-secondary w-64"
 						type="password" 
 						placeholder="Password" 
 						id="signUpPassword" 
@@ -91,7 +91,7 @@ function SignUp() {
 						</ul>
 					</div>
 					
-				<button className={styles.signUp} id="signUpButton" onClick={() => handleSignUp()}>Sign up and take the quiz</button>
+				<button className="text-white" onClick={() => handleSignUp()}>Sign up and take the quiz</button>
 			</div>
         </div>
 	);
