@@ -89,7 +89,7 @@ function SignUp() {
 							</Dropdown.Toggle>
 
 							<Dropdown.Menu>
-								<Dropdown.Item onClick={(e)=>setSignUpCoach(false)}>Gamer  </Dropdown.Item>
+								<Dropdown.Item onClick={(e)=>setSignUpCoach(false)}>Gamer </Dropdown.Item>
 								<Dropdown.Item onClick={(e)=>setSignUpCoach(true)}>Coach</Dropdown.Item>
 							</Dropdown.Menu>
 					</Dropdown>
