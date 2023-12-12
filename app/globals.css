@@ -8,6 +8,8 @@ margin:0;
 background-image: url('../public/Bgrd.png');
 background-size: cover;
 background-position: center;
+background-attachment:fixed;
+background-repeat: repeat;
 background-repeat: no-repeat;
 color: #fff
 }

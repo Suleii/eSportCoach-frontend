@@ -6,7 +6,6 @@ import { login, logout } from '../reducers/user';
 import styles from '../styles/SignUp.module.css';
 
 
-
 function SignUp() {
 
 	const router = useRouter()
