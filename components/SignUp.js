@@ -82,8 +82,8 @@ function SignUp() {
 					/>
 					<label for="dog-names">I want to sign up as:</label>
 						<select name="dog-names" id="dog-names"> 
-							
-							<option onClick={(e)=>setSignUpCoach(false)} value="Gamer" selected>Gamer</option> 
+							<option onClick={(e)=>setSignUpCoach(false)} disabled="disabled" value="Not Selectable">Choose</option> 
+							<option onClick={(e)=>setSignUpCoach(false)} value="Gamer">Gamer</option> 
 							<option onClick={(e)=>setSignUpCoach(true)} value="Coach">Coach</option> 	
 						</select>
 				<button className={styles.signUp} id="signUpButton" onClick={() => handleSignUp()}>Sign up and take the quiz</button>
