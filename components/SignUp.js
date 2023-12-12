@@ -83,16 +83,13 @@ function SignUp() {
 						onChange={(e) => setSignUpPassword(e.target.value)} 
 						value={signUpPassword} 
 					/>
-					<Dropdown>
-							<Dropdown.Toggle variant="success" id="dropdown-basic">
-								I want to sign up as
-							</Dropdown.Toggle>
-
-							<Dropdown.Menu>
-								<Dropdown.Item onClick={(e)=>setSignUpCoach(false)}>Gamer </Dropdown.Item>
-								<Dropdown.Item onClick={(e)=>setSignUpCoach(true)}>Coach</Dropdown.Item>
-							</Dropdown.Menu>
-					</Dropdown>
+					<div className="dropdown dropdown-bottom">
+						<div tabIndex={0} role="button" className="btn m-1">Pick</div>
+						<ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-primary rounded-box w-52">
+							<li className="bg-blue-500 select:focus" onClick={(e) => setSignUpCoach(false)} ><a >Gamer</a></li>
+							<li className="btn btn-outline text-white active:[white]" onClick={(e) => setSignUpCoach(true)}><a >Coach</a></li>
+						</ul>
+					</div>
 					<br></br>
 				<button className={styles.signUp} id="signUpButton" onClick={() => handleSignUp()}>Sign up and take the quiz</button>
 			</div>
