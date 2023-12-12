@@ -1,12 +1,10 @@
 "use client";
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../reducers/user';
 import styles from '../styles/SignUp.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Modal } from 'antd';
-import Link from 'next/link';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 
 function SignUp() {
@@ -26,15 +24,16 @@ function SignUp() {
 		fetch('http://localhost:3000/users/signup', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ firstname: signUpFirstname, username: signUpUsername, password: signUpPassword }),
+			body: JSON.stringify({ firstname: signUpFirstname, username: signUpUsername, password: signUpPassword, isCoach: signUpCoach}),
 		}).then(response => response.json())
 			.then(data => {
 				if (data.result) {
-					dispatch(login({ firstname: signUpFirstname, username: signUpUsername, token: data.token, isCoach: signUpCoach }));
+					dispatch(login({ firstname: data.firstname, username: data.username, token: data.token, isCoach: data.isCoach }));
                     setSignUpFirstname('');
 					setSignUpUsername('');
 					setSignUpPassword('');
-                    router.push('/home');
+					setSignUpCoach(false);
+                    router.push('/');
 				}
 			});
 	};
@@ -80,12 +79,17 @@ function SignUp() {
 						onChange={(e) => setSignUpPassword(e.target.value)} 
 						value={signUpPassword} 
 					/>
-					<label for="dog-names">I want to sign up as:</label>
-						<select name="dog-names" id="dog-names"> 
-							<option onClick={(e)=>setSignUpCoach(false)} disabled="disabled" value="Not Selectable">Choose</option> 
-							<option onClick={(e)=>setSignUpCoach(false)} value="Gamer">Gamer</option> 
-							<option onClick={(e)=>setSignUpCoach(true)} value="Coach">Coach</option> 	
-						</select>
+					<Dropdown>
+							<Dropdown.Toggle variant="success" id="dropdown-basic">
+								I want to sign up as
+							</Dropdown.Toggle>
+
+							<Dropdown.Menu>
+								<Dropdown.Item onClick={(e)=>setSignUpCoach(false)}>Gamer </Dropdown.Item>
+								<Dropdown.Item onClick={(e)=>setSignUpCoach(true)}>Coach</Dropdown.Item>
+							</Dropdown.Menu>
+					</Dropdown>
+					<br></br>
 				<button className={styles.signUp} id="signUpButton" onClick={() => handleSignUp()}>Sign up and take the quiz</button>
 			</div>
         </div>
