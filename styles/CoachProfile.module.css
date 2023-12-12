@@ -4,3 +4,10 @@
     align-items: center;
     width: 100vw;
 }
+
+.dropdownButton{
+    background-color: #323153;
+    color: #fff;
+    height : 30px;
+    border: none;
+}

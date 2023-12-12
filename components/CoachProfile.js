@@ -11,12 +11,17 @@ config.autoAddCss = false;
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
+import Dropdown from 'react-bootstrap/Dropdown';
+
+
 
 function CoachProfile (props) {
 const [reviewCount, setReviewCount] = useState(0);
 const [profile, setProfile] = useState([]);
 const [reviews, setReviews] = useState([]);
 const [experience, setExperience] = useState([]);
+const [price, setPrice] = useState([]);
+
 const user = useSelector((state) => state.user.value); 
 
 
@@ -31,6 +36,8 @@ useEffect(() => {
     setReviews(reviewsdata);
     let experiencedata = data.profile.experience;
     setExperience(experiencedata);
+    let prices = data.profile.price
+    setPrice(prices)
     });
   }, [])
 
@@ -72,6 +79,18 @@ const ExperienceList = experience.map((item)=>
                  //socials   
                 </div>
                 <h3>Prices</h3>
+                    <Dropdown className={styles.dropdownPrice}>
+							<Dropdown.Toggle className={styles.dropdownButton}>
+								Solo Coaching
+							</Dropdown.Toggle>
+
+							<Dropdown.Menu>
+								<Dropdown.Item onClick={(e)=>setSignUpCoach(false)}>1 session: {price.oneSession}</Dropdown.Item>
+                                <Dropdown.Divider />
+								<Dropdown.Item onClick={(e)=>setSignUpCoach(true)}>10 sessions: {price.TenSession} </Dropdown.Item>
+							</Dropdown.Menu>
+					</Dropdown>
+
                 <h3>Experience/Achievements</h3>
                 <ul>{ExperienceList}</ul> 
                 <h3>Reviews</h3>
