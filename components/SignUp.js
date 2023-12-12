@@ -55,22 +55,14 @@ function SignUp() {
 						onChange={(e) => setSignUpLastname(e.target.value)} 
 						value={signUpLastname} 
 					/>
-<<<<<<< HEAD
-					<input className={styles.input}
-=======
 					<input className="bg-secondary w-64"
->>>>>>> olivier
 						type="text" 
 						placeholder="First name" 
 						id="signUpFirstname" 
 						onChange={(e) => setSignUpFirstname(e.target.value)} 
 						value={signUpFirstname} 
 					/>
-<<<<<<< HEAD
-					<input className={styles.input}
-=======
 					<input className="bg-secondary w-64"
->>>>>>> olivier
 						type="email" 
 						placeholder="E-mail" 
 						id="signUpMail" 
