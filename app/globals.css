@@ -8,12 +8,9 @@ margin:0;
 background-image: url('../public/Bgrd.png');
 background-size: cover;
 background-position: center;
-<<<<<<< HEAD
 background-attachment:fixed;
 background-repeat: repeat;
-=======
 background-repeat: no-repeat;
 color: #fff
->>>>>>> c03367c48c93648f1568aa1e8030b5971816d76f
 }
 

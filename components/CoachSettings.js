@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation'
 
 function CoachSettings(props) {
     const [isEditing, setIsEditing] = useState(false);
@@ -15,11 +17,14 @@ function CoachSettings(props) {
     const [discord, setDiscord] = useState()
     const [price, setPrice] = useState()
     
+    const router = useRouter()
+    const user = useSelector((state) => state.user.value);
       
-    // if dans le useeffect qui dit que si il est connecté il cherche les infos else il renvoi a la page login
+   
     
 // Fetch coach information when the component mounts
     useEffect(() => {
+        if (user.token) {
       fetch(`http://localhost:3000/coaches/profile/${props.username}`)
         .then((response) => response.json())
         .then((data) => {
@@ -46,7 +51,11 @@ function CoachSettings(props) {
               const price = data.profile.price;
               setPrice(price);
                 });
-            }, []);
+            } else {
+                // Redirect to login page if not logged in
+                router.push('/Login');
+              }
+            }, [user.token, user.username]);
  
  // Handle input changes and update the corresponding state variable
     const handleInputChange = (e) => {
