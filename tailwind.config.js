@@ -7,44 +7,28 @@ daisyui: {
   themes: [
     {
       'mytheme': {
-        'primary': '#05042f',
-        'primary-focus': '#4506cb',
-        'primary-content': '#ffffff',
-        'secondary': '#323153',
-        'secondary-focus': '#bd0091',
-        'secondary-content': '#ffffff',
-        'accent': '#C0C0CB',
-        'accent-focus': '#2aa79b',
-        'accent-content': '#ffffff',
-        'neutral': '#3d4451',
+        'primary': '#05042f', //PRIMARY BLUE
+        // 'primary-focus': '#767680', 
+        // 'primary-content': '#C0C0CB', 
+        'secondary': '#599c5f', // PRIMARY GREEN
+        'secondary-focus': '#accdaf', // LIGHT GREEN
+        'secondary-content': '#EEF5EF', //LIGHT GREEN 2
+        'accent': '#fc8366', // ORANGE
+        'accent-focus': '#fff3f0', // LIGHT ORANGE
+        'accent-content': '#ffffff', // WHITE
+        'neutral': '#C0C0CB',// SECONDARY BLUE 2
         'neutral-focus': '#2a2e37',
         'neutral-content': '#ffffff',
-        'base-100': '#ffffff',
-        'base-200': '#f9fafb',
+        'base-100': '#323153', //SECONDARY BLUE
+        'base-200': '#C0C0CB', // SECONDARY BLUE 2
         'base-300': '#d1d5db',
         'base-content': '#1f2937',
-        'info': '#2094f3',
-        'success': '#009485',
+        'info': '#accdaf', // LIGHT GREEN
+        'success': '#599c5f', //GREEN
         'warning': '#ff9900',
         'error': '#ff5724',
       },
 
-
-    // mytheme: {
-
-
-
-
-    // 'transparent': 'transparent',
-    // 'white': '#ffffff',
-    // 'green': '#599c5f',
-    // 'light-green': '#accdaf',
-    // 'primary': '#05042f',
-    // 'secondary': '#323153',
-    // 'orange': '#fc8366',
-    // 'light-orange': '#fff3f0',
-    
-    //   },
     },
   ],
 },
