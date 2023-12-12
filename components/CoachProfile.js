@@ -60,42 +60,46 @@ const ExperienceList = experience.map((item)=>
 
     return(
         <div className={styles.main}>
-            <div>
-            <div><img className={styles.image} src={profile.photo} alt="Profile pic" /></div>
-
-                <div>    
-                <span>@{props.username}</span>
-                <div><span>{stars}</span><span>{reviewCount}</span></div>
-                { user.isCoach 
-                    ? <Link href="/">Edit Profile <span><FontAwesomeIcon icon={faPencil} style={{'color':"black"}}/></span> </Link>
-                    : <Link href="/">Book Me <span><FontAwesomeIcon icon={faArrowRightLong} style={{'color':"black"}}/></span> </Link>
-                }
+            <div className="flex flex-row ">
+                <div><img className="p-5" src={profile.photo} alt="Profile pic" /></div>
+                <div className="p-5">
+                    <span className="text-white mb-1">@{props.username}</span>
+                    <div className="text-xs mb-6"><span>{stars}</span><span className="text-white"> ({reviewCount})</span></div>
+                    { user.isCoach 
+                        ? <Link href="/" type="button" className="btn btn-success text-white">Edit Profile <span className="text-white"><FontAwesomeIcon icon={faPencil} /></span> </Link>
+                        : <Link href="/" type="button" className="btn btn-success text-white">Book Me <span className="text-white"><FontAwesomeIcon icon={faArrowRightLong} /></span> </Link>
+                    }
                 </div>
-                <div><span><FontAwesomeIcon icon={faEllipsisVertical} style={{'color':"#ffffff"}} /></span></div>
-
-                <h3> About me</h3>
-                <p>{profile.about}</p>
-                <div>
+                <div className="p-5"><span><FontAwesomeIcon icon={faEllipsisVertical} style={{'color':"#ffffff"}} /></span></div>
+            </div>
+            <div className=" text-white mx-20 ">
+                <h3 className="text-base mb-1 "> About me</h3>
+                <p className="text-sm ">{profile.about}Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in</p>
+                <div className="text-sm ">
                  //socials   
-                </div>
-                <h3>Prices</h3>
-                <div className="collapse collapse-arrow bg-secondary">
+                </div >
+                <h3 className="text-sm ">Prices</h3>
+                <div className="collapse collapse-arrow bg-base-100 mt-6 w-52">
                     <input type="checkbox" /> 
-                    <div className="collapse-title text-sm font-medium text-white">
+                    <div className="collapse-title text-sm font-medium text-white p-6 ">
                         Solo Sessions
                     </div>
                     <div className="collapse-content text-white"> 
                         <p>1 session: €{price.oneSession}</p>
+                        <div className="divider divider-neutral"></div> 
                         <p>10 sessions: €{price.TenSession}</p>
                     </div>
                 </div>
-                <div className="collapse collapse-arrow bg-secondary">
+                <div className="collapse collapse-arrow bg-base-100 mt-6 w-52">
                     <input type="checkbox" /> 
-                    <div className="collapse-title text-sm font-medium text-white">
+                    <div className="collapse-title text-sm font-medium text-white p-6">
                         Group Sessions
                     </div>
-                    <div className="collapse-content text-white"> 
+                    <div className="collapse-content text-white "> 
                         <p>1 session: €{price.oneGroupSession}</p>
+                        <div className="divider divider-neutral"></div> 
                         <p>10 sessions: €{price.tenGroupSessions}</p>
                     </div>
                 </div>
@@ -106,8 +110,8 @@ const ExperienceList = experience.map((item)=>
                 {reviews.map((review)=>{
                     return <p>{review.content}</p>
                 })}
-            </div>
             
+            </div>
         </div>
     )
 }
