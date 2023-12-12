@@ -26,21 +26,15 @@ const initialState = {
     isEditing: false,
   }};
 
-export const userSlice = createSlice({
+export const coachSlice = createSlice({
   name: 'coach',
   initialState,
   reducers: {
     displayProfile: (state, action) => {
       state.value.username = action.payload.username;
     },
-    updateProfile: (state, action) => {
-      state.profile = action.payload;
-    },
-    toggleEdit: (state) => {
-      state.isEditing = !state.isEditing;
-    },
   },
 });
 
-export const { displayProfile, updateProfile, toggleEdit } = userSlice.actions;
-export default userSlice.reducer;
+export const { displayProfile,} = coachSlice.actions;
+export default coachSlice.reducer;
