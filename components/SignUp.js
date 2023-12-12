@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../reducers/user';
 import styles from '../styles/SignUp.module.css';
-
+import Dropdown from 'react-bootstrap/Dropdown';
 
 
 function SignUp() {
@@ -83,7 +83,6 @@ function SignUp() {
 						onChange={(e) => setSignUpPassword(e.target.value)} 
 						value={signUpPassword} 
 					/>
-<<<<<<< HEAD
 					<Dropdown>
 							<Dropdown.Toggle variant="success" id="dropdown-basic">
 								I want to sign up as
@@ -95,10 +94,6 @@ function SignUp() {
 							</Dropdown.Menu>
 					</Dropdown>
 					<br></br>
-=======
-					
-					
->>>>>>> db4528a68eed2ec1c117ab3f5ebf3f3e428d8251
 				<button className={styles.signUp} id="signUpButton" onClick={() => handleSignUp()}>Sign up and take the quiz</button>
 			</div>
         </div>
