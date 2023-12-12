@@ -5,8 +5,9 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 /* ---------------------------------------------------------------- */
 
 import user from "./user";
+import coach from "./coach";
 
-const reducers = combineReducers({ user });
+const reducers = combineReducers({ user, coach });
 
 /* ---------------------------------------------------------------- */
 /*                        Store configuration                       */
