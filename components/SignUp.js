@@ -16,6 +16,7 @@ function SignUp() {
     const [signUpFirstname, setSignUpFirstname] = useState('');
     const [signUpUsername, setSignUpUsername] = useState('');
 	const [signUpPassword, setSignUpPassword] = useState('');
+	const [signUpCoach, setSignUpCoach] = useState(false);
 
     const dispatch = useDispatch();
 	const user = useSelector((state) => state.user.value);
@@ -29,7 +30,7 @@ function SignUp() {
 		}).then(response => response.json())
 			.then(data => {
 				if (data.result) {
-					dispatch(login({ firstname: signUpFirstname, username: signUpUsername, token: data.token, isCoach: data.isCoach }));
+					dispatch(login({ firstname: signUpFirstname, username: signUpUsername, token: data.token, isCoach: signUpCoach }));
                     setSignUpFirstname('');
 					setSignUpUsername('');
 					setSignUpPassword('');
@@ -82,10 +83,10 @@ function SignUp() {
 					<label for="dog-names">I want to sign up as:</label>
 						<select name="dog-names" id="dog-names"> 
 							
-							<option value="Gamer" selected>Gamer</option> 
-							<option value="Coach">Coach</option> 	
+							<option onClick={(e)=>setSignUpCoach(false)} value="Gamer" selected>Gamer</option> 
+							<option onClick={(e)=>setSignUpCoach(true)} value="Coach">Coach</option> 	
 						</select>
-				<button className={styles.signUp} id="signUpButton" onClick={() => handleSignUp()}>Sign Up and take the quiz</button>
+				<button className={styles.signUp} id="signUpButton" onClick={() => handleSignUp()}>Sign up and take the quiz</button>
 			</div>
         </div>
 	);
