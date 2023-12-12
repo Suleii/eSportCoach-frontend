@@ -53,7 +53,7 @@ function CoachSettings(props) {
                 });
             } else {
                 // Redirect to login page if not logged in
-                router.push('/Login');
+                router.push('/login');
               }
             }, [user.token, user.username]);
  
