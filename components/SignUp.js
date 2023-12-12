@@ -13,7 +13,8 @@ function SignUp() {
 
 	const router = useRouter()
 
-    const [signUpFirstname, setSignUpFirstname] = useState('');
+    const [signUpLastname, setSignUpLastname] = useState('');
+	const [signUpFirstname, setSignUpFirstname] = useState('');
     const [signUpUsername, setSignUpUsername] = useState('');
 	const [signUpPassword, setSignUpPassword] = useState('');
 
@@ -30,7 +31,8 @@ function SignUp() {
 			.then(data => {
 				if (data.result) {
 					dispatch(login({ firstname: signUpFirstname, username: signUpUsername, token: data.token, isCoach: data.isCoach }));
-                    setSignUpFirstname('');
+                    setSignUpLastname('');
+					setSignUpFirstname('');
 					setSignUpUsername('');
 					setSignUpPassword('');
                     router.push('/home');
@@ -47,9 +49,9 @@ function SignUp() {
 					<input className={styles.input}
 						type="text" 
 						placeholder="Last name" 
-						id="signUpFirstname" 
-						onChange={(e) => setSignUpFirstname(e.target.value)} 
-						value={signUpFirstname} 
+						id="signUpLastname" 
+						onChange={(e) => setSignUpLastname(e.target.value)} 
+						value={signUpLastname} 
 					/>
 					<input className={styles.input}
 						type="text" 
@@ -81,7 +83,6 @@ function SignUp() {
 					/>
 					<label for="dog-names">I want to sign up as:</label>
 						<select name="dog-names" id="dog-names"> 
-							
 							<option value="Gamer" selected>Gamer</option> 
 							<option value="Coach">Coach</option> 	
 						</select>
