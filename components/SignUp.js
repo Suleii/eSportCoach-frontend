@@ -79,7 +79,13 @@ function SignUp() {
 						onChange={(e) => setSignUpPassword(e.target.value)} 
 						value={signUpPassword} 
 					/>
-					
+					<div className="dropdown dropdown-bottom">
+						<div tabIndex={0} role="button" className="btn m-1">Pick</div>
+						<ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-primary rounded-box w-52">
+							<li onClick={(e) => setSignUpCoach(false)} ><a class="hover:bg-base-100 focus:bg-base-100">Gamer</a></li>
+							<li onClick={(e) => setSignUpCoach(true)}><a class="hover:bg-base-100 focus:bg-base-100" >Coach</a></li>
+						</ul>
+					</div>
 					
 				<button className={styles.signUp} id="signUpButton" onClick={() => handleSignUp()}>Sign up and take the quiz</button>
 			</div>
