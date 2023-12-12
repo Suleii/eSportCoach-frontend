@@ -12,11 +12,16 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 
+
+
+
 function CoachProfile (props) {
 const [reviewCount, setReviewCount] = useState(0);
 const [profile, setProfile] = useState([]);
 const [reviews, setReviews] = useState([]);
 const [experience, setExperience] = useState([]);
+const [price, setPrice] = useState([]);
+
 const user = useSelector((state) => state.user.value); 
 
 
@@ -31,6 +36,8 @@ useEffect(() => {
     setReviews(reviewsdata);
     let experiencedata = data.profile.experience;
     setExperience(experiencedata);
+    let prices = data.profile.price
+    setPrice(prices)
     });
   }, [])
 
@@ -72,6 +79,27 @@ const ExperienceList = experience.map((item)=>
                  //socials   
                 </div>
                 <h3>Prices</h3>
+                <div className="collapse collapse-arrow bg-secondary">
+                    <input type="checkbox" /> 
+                    <div className="collapse-title text-sm font-medium text-white">
+                        Solo Sessions
+                    </div>
+                    <div className="collapse-content text-white"> 
+                        <p>1 session: €{price.oneSession}</p>
+                        <p>10 sessions: €{price.TenSession}</p>
+                    </div>
+                </div>
+                <div className="collapse collapse-arrow bg-secondary">
+                    <input type="checkbox" /> 
+                    <div className="collapse-title text-sm font-medium text-white">
+                        Group Sessions
+                    </div>
+                    <div className="collapse-content text-white"> 
+                        <p>1 session: €{price.oneGroupSession}</p>
+                        <p>10 sessions: €{price.tenGroupSessions}</p>
+                    </div>
+                </div>
+                
                 <h3>Experience/Achievements</h3>
                 <ul>{ExperienceList}</ul> 
                 <h3>Reviews</h3>
