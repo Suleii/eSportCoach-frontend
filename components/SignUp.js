@@ -4,14 +4,16 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../reducers/user';
 import styles from '../styles/SignUp.module.css';
-
+import Dropdown from 'react-bootstrap/Dropdown';
 
 
 function SignUp() {
 
 	const router = useRouter()
 
-    const [signUpFirstname, setSignUpFirstname] = useState('');
+    const [signUpLastname, setSignUpLastname] = useState('');
+	const [signUpFirstname, setSignUpFirstname] = useState('');
+	const [signUpMail, setSignUpMail] = useState('');
     const [signUpUsername, setSignUpUsername] = useState('');
 	const [signUpPassword, setSignUpPassword] = useState('');
 	const [signUpCoach, setSignUpCoach] = useState(false);
@@ -24,16 +26,18 @@ function SignUp() {
 		fetch('http://localhost:3000/users/signup', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ firstname: signUpFirstname, username: signUpUsername, password: signUpPassword, isCoach: signUpCoach}),
+			body: JSON.stringify({ lastname: signUpLastname, firstname: signUpFirstname, username: signUpUsername, mail: signUpMail, password: signUpPassword, isCoach: signUpCoach}),
 		}).then(response => response.json())
 			.then(data => {
 				if (data.result) {
-					dispatch(login({ firstname: data.firstname, username: data.username, token: data.token, isCoach: data.isCoach }));
-                    setSignUpFirstname('');
+					dispatch(login({ lastname: data.lastname, firstname: data.firstname, username: data.username, mail: data.mail, token: data.token, isCoach: data.isCoach }));
+                    setSignUpLastname('');
+					setSignUpFirstname('');
 					setSignUpUsername('');
+					setSignUpMail('');
 					setSignUpPassword('');
 					setSignUpCoach(false);
-                    router.push('/');
+                    router.push('/home');
 				}
 			});
 	};
@@ -47,23 +51,23 @@ function SignUp() {
 					<input className={styles.input}
 						type="text" 
 						placeholder="Last name" 
+						id="signUpLastname" 
+						onChange={(e) => setSignUpLastname(e.target.value)} 
+						value={signUpLastname} 
+					/>
+					<input className={styles.input}
+						type="text" 
+						placeholder="First name" 
 						id="signUpFirstname" 
 						onChange={(e) => setSignUpFirstname(e.target.value)} 
 						value={signUpFirstname} 
 					/>
 					<input className={styles.input}
-						type="text" 
-						placeholder="First name" 
-						id="signUpUsername" 
-						onChange={(e) => setSignUpUsername(e.target.value)} 
-						value={signUpUsername} 
-					/>
-					<input className={styles.input}
 						type="email" 
 						placeholder="E-mail" 
-						id="signUpUsername" 
-						onChange={(e) => setSignUpUsername(e.target.value)} 
-						value={signUpUsername} // modifier le value
+						id="signUpMail" 
+						onChange={(e) => setSignUpMail(e.target.value)} 
+						value={signUpMail}
 					/>
 					<input className={styles.input}
 						type="text" 
