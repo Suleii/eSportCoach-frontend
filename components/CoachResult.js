@@ -21,7 +21,7 @@ function CoachResult(props) {
     return (
         <div>
             <h3>@{props.username}</h3>
-            <div>{props.photo}</div>
+            <img src= {props.photo} alt="profile picture" width="150" heigth="150"></img>
             <div>{stars}</div>
             <div>({props.reviewsNumber})</div>
             <div>{props.gameTag}</div>

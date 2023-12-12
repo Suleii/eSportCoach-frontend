@@ -34,15 +34,22 @@ function SearchBar() {
     };
 
     return (
-        <div>
-            <input
-                type="text"
-                placeholder="Search by coach name or by game"
-                value={searchInput}
-                onChange={(e) => setSearchInput(e.target.value)}
-                onKeyDown={handleKeyDown}
-            />
-            <FontAwesomeIcon icon={faMagnifyingGlass} onClick={handleSearch} />
+        <div className="flex justify-center mt-5">
+            <div className="relative w-full max-w-xs"> 
+                <FontAwesomeIcon 
+                    icon={faMagnifyingGlass} 
+                    onClick={handleSearch}
+                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
+                />
+                <input
+                    type="text"
+                    placeholder="Find a coach by name or game"
+                    className="input input-bordered w-full pl-10 rounded-xl" 
+                    value={searchInput}
+                    onChange={(e) => setSearchInput(e.target.value)}
+                    onKeyDown={handleKeyDown}
+                />
+            </div>
         </div>
     );
 }

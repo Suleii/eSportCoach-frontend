@@ -2,7 +2,7 @@
 import styles from '../styles/Home.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
-import SearchBar from './SearchBar';
+import SearchBar from './Searchbar';
 import SearchPage from './SearchPage';
 import { useState } from 'react';
 

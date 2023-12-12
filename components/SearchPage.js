@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Modal } from 'antd';
 import CoachResult from './CoachResult';
-import SearchBar from "./SearchBar";
+import SearchBar from "./Searchbar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faFilterCircleDollar} from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/fontawesome-svg-core/styles.css';
@@ -98,7 +98,7 @@ function SearchPage({ searchQuery }) {
         >
             {[1, 2, 3, 4, 5].map(rating => (
                 <div key={rating} onClick={() => handleMinRatingSelection(rating)}>
-                    {Array.from({ length: rating }, (_, i) => (
+                    {Array.from({ length: rating }, (_, i) => ( // Create a temporary array where length = rating 
                         <FontAwesomeIcon key={i} icon={faStar} style={{ color: '599c5f' }} />
                     ))}
                 </div>
