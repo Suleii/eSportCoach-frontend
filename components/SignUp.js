@@ -82,7 +82,7 @@ function SignUp() {
 						value={signUpPassword} 
 					/>
 					<label for="dog-names">I want to sign up as:</label>
-						<select name="dog-names" id="dog-names"> 
+						<select required> 
 							<option value="Gamer" selected>Gamer</option> 
 							<option value="Coach">Coach</option> 	
 						</select>
