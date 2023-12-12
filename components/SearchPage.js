@@ -10,6 +10,7 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false;
 
 
+
 function SearchPage({ searchQuery }) {
     const [results, setResults] = useState([]);
     const [minRating, setMinRating] = useState(0);
@@ -91,11 +92,24 @@ function SearchPage({ searchQuery }) {
     // Rating modal componant
     const RatingModal = () => (
         <Modal
-            title="Select Minimum Rating"
-            open={isModalVisible}
-            onCancel={() => setIsModalVisible(false)}
-            footer={null}
-        >
+        title="Select Minimum Rating"
+        open={isModalVisible}
+        onCancel={() => {
+          setIsModalVisible(false);
+          setMinRating(0); // Reset filter on click on cancel button
+        }}
+        footer={[
+          <button key="cancel" onClick={() => {
+            setIsModalVisible(false);
+            setMinRating(0); // Reset filter on click on cancel button
+          }}>
+            Cancel filter
+          </button>,
+          <button key="submit"  onClick={handleMinRatingSelection}>
+            Filter
+          </button>,
+        ]}
+      >
             {[1, 2, 3, 4, 5].map(rating => (
                 <div key={rating} onClick={() => handleMinRatingSelection(rating)}>
                     {Array.from({ length: rating }, (_, i) => ( // Create a temporary array where length = rating 
@@ -126,11 +140,17 @@ function SearchPage({ searchQuery }) {
     
         return (
             <Modal
-                title="Select Price Range"
-                open={isPriceModalVisible}
-                onCancel={() => setIsPriceModalVisible(false)}
-                onOk={handleOk}
-            >
+            title="Select Price Range"
+            open={isPriceModalVisible}
+            onCancel={() => {
+              setIsPriceModalVisible(false);
+              setMinPrice(null);
+              setMaxPrice(null); // Reset filter after click on Cancel button
+            }}
+            onOk={handleOk}
+            okText="Filter"
+            okButtonProps={{ style: { backgroundColor: '#4B71A0' } }}
+          >
                 <div>
                     <input type="number" placeholder="Min Price" value={localMinPrice || ''} onChange={e => setLocalMinPrice(parseInt(e.target.value, 10) || null)} /> 
                     <input type="number" placeholder="Max Price" value={localMaxPrice || ''} onChange={e => setLocalMaxPrice(parseInt(e.target.value, 10) || null)} />

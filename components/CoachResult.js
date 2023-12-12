@@ -21,7 +21,14 @@ function CoachResult(props) {
     return (
         <div>
             <h3>@{props.username}</h3>
-            <img src= {props.photo} alt="profile picture" width="150" heigth="150"></img>
+            <div className="flex flex-row justify-between w-5/6">
+                <div className="avatar">
+                    <div className="w-24 h-24 rounded-full">
+                    <img src= {props.photo} alt="profile picture" />
+                    </div>
+                </div>
+            
+            </div>
             <div>{stars}</div>
             <div>({props.reviewsNumber})</div>
             <div>{props.gameTag}</div>

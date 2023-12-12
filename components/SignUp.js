@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../reducers/user';
 import styles from '../styles/SignUp.module.css';
-import Dropdown from 'react-bootstrap/Dropdown';
 
 
 function SignUp() {

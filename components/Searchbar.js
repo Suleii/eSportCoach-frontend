@@ -34,7 +34,7 @@ function SearchBar() {
     };
 
     return (
-        <div className="flex justify-center mt-5">
+        <div className="flex flex-row justify-center mt-5">
             <div className="relative w-full max-w-xs"> 
                 <FontAwesomeIcon 
                     icon={faMagnifyingGlass} 
