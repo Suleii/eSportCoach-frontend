@@ -29,7 +29,7 @@ function SignIn() {
 		}).then(response => response.json())
 			.then(data => {
 				if (data.result) {
-					dispatch(login({ firstname: data.firstname, username: signInUsername, token: data.token }));
+					dispatch(login({ firstname: data.firstname, username: signInUsername, token: data.token , isCoach: data.isCoach}));
 					setSignInUsername('');
 					setSignInPassword('');
                     router.push('/home');

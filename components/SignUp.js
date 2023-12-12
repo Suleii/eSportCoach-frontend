@@ -1,12 +1,10 @@
 "use client";
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../reducers/user';
 import styles from '../styles/SignUp.module.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { Modal } from 'antd';
-import Link from 'next/link';
+
 
 
 function SignUp() {
@@ -16,6 +14,7 @@ function SignUp() {
     const [signUpFirstname, setSignUpFirstname] = useState('');
     const [signUpUsername, setSignUpUsername] = useState('');
 	const [signUpPassword, setSignUpPassword] = useState('');
+	const [signUpCoach, setSignUpCoach] = useState(false);
 
     const dispatch = useDispatch();
 	const user = useSelector((state) => state.user.value);
@@ -25,15 +24,16 @@ function SignUp() {
 		fetch('http://localhost:3000/users/signup', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ firstname: signUpFirstname, username: signUpUsername, password: signUpPassword }),
+			body: JSON.stringify({ firstname: signUpFirstname, username: signUpUsername, password: signUpPassword, isCoach: signUpCoach}),
 		}).then(response => response.json())
 			.then(data => {
 				if (data.result) {
-					dispatch(login({ firstname: signUpFirstname, username: signUpUsername, token: data.token }));
+					dispatch(login({ firstname: data.firstname, username: data.username, token: data.token, isCoach: data.isCoach }));
                     setSignUpFirstname('');
 					setSignUpUsername('');
 					setSignUpPassword('');
-                    router.push('/home');
+					setSignUpCoach(false);
+                    router.push('/');
 				}
 			});
 	};
@@ -79,13 +79,15 @@ function SignUp() {
 						onChange={(e) => setSignUpPassword(e.target.value)} 
 						value={signUpPassword} 
 					/>
-					<label for="dog-names">I want to sign up as:</label>
-						<select name="dog-names" id="dog-names"> 
-							
-							<option value="Gamer" selected>Gamer</option> 
-							<option value="Coach">Coach</option> 	
-						</select>
-				<button className={styles.signUp} id="signUpButton" onClick={() => handleSignUp()}>Sign Up and take the quiz</button>
+					<div className="dropdown dropdown-bottom">
+						<div tabIndex={0} role="button" className="btn m-1">Pick</div>
+						<ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-primary rounded-box w-52">
+							<li onClick={(e) => setSignUpCoach(false)} ><a class="hover:bg-base-100 focus:bg-base-100">Gamer</a></li>
+							<li onClick={(e) => setSignUpCoach(true)}><a class="hover:bg-base-100 focus:bg-base-100" >Coach</a></li>
+						</ul>
+					</div>
+					
+				<button className={styles.signUp} id="signUpButton" onClick={() => handleSignUp()}>Sign up and take the quiz</button>
 			</div>
         </div>
 	);
