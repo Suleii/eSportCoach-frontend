@@ -1,8 +1,30 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  value: { username: null },
-};
+  value: { username: null,
+    profile: {
+      lastname: '',
+      firstname: '',
+      email: '',
+      photo: '',
+      games: [],
+      price: {
+        oneSession: 0,
+        tenSessions: 0,
+        oneGroupSession: 0,
+        tenGroupSessions: 0,
+      },
+      socials: {
+        twitch: '',
+        instagram: '',
+        youtube: '',
+        discord: '',
+      },
+      about: '',
+      bookings: [],
+    },
+    isEditing: false,
+  }};
 
 export const coachSlice = createSlice({
   name: 'coach',
@@ -14,5 +36,5 @@ export const coachSlice = createSlice({
   },
 });
 
-export const { displayProfile } = coachSlice.actions;
+export const { displayProfile,} = coachSlice.actions;
 export default coachSlice.reducer;
