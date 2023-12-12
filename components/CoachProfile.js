@@ -60,7 +60,7 @@ const ExperienceList = experience.map((item)=>
 
     return(
         <div className={styles.main}>
-            <div className="flex flex-row">
+            <div className="flex flex-row ">
                 <div><img className="p-5" src={profile.photo} alt="Profile pic" /></div>
                 <div className="p-5">
                     <span className="text-white mb-1">@{props.username}</span>
@@ -72,13 +72,15 @@ const ExperienceList = experience.map((item)=>
                 </div>
                 <div className="p-5"><span><FontAwesomeIcon icon={faEllipsisVertical} style={{'color':"#ffffff"}} /></span></div>
             </div>
-            <div className="text-white">
-                <h3 className="text-base mb-1"> About me</h3>
-                <p className="text-sm">{profile.about}</p>
-                <div>
+            <div className=" text-white mx-20 ">
+                <h3 className="text-base mb-1 "> About me</h3>
+                <p className="text-sm ">{profile.about}Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+                    sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in</p>
+                <div className="text-sm ">
                  //socials   
-                </div>
-                <h3>Prices</h3>
+                </div >
+                <h3 className="text-sm ">Prices</h3>
                 <div className="collapse collapse-arrow bg-base-100 mt-6 w-52">
                     <input type="checkbox" /> 
                     <div className="collapse-title text-sm font-medium text-white p-6 ">
@@ -90,11 +92,7 @@ const ExperienceList = experience.map((item)=>
                         <p>10 sessions: €{price.TenSession}</p>
                     </div>
                 </div>
-<<<<<<< HEAD
-                <div className="collapse collapse-arrow bg-secondary mt-6">
-=======
                 <div className="collapse collapse-arrow bg-base-100 mt-6 w-52">
->>>>>>> 9d1a3aa8ff941fa13562a42f1e32bba09c44e8c3
                     <input type="checkbox" /> 
                     <div className="collapse-title text-sm font-medium text-white p-6">
                         Group Sessions

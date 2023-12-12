@@ -3,28 +3,6 @@
 @tailwind utilities;
 
 body{
-<<<<<<< HEAD
-    width: 100vw;
-    height: 100vh;
-    margin:0;
-    background-image: url('../public/Bgrd.png');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-
-/* @media screen and (min-width: 200px) and (max-width: 1380px){
-    body{
-        background-image: url('../public/Bgrd.png');
-        height: 100vh;
-        background-size: auto;
-        background-position: center;
-        background-repeat: no-repeat;
-        width: 100vw;
-    }
-} */
-=======
 height: 100vh;
 margin:0;
 background-image: url('../public/Bgrd.png');
@@ -33,4 +11,3 @@ background-position: center;
 background-repeat: no-repeat;
 }
 
->>>>>>> 9d1a3aa8ff941fa13562a42f1e32bba09c44e8c3

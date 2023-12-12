@@ -44,7 +44,7 @@ function SignUp() {
 
 
 	return (
-        <div className="text-black bg-primary">	
+        <div className="text-black bg-primary m-0">	
 			<div className="flex flex-col grid justify-items-center h-96">
 				<img className={styles.logo} src="logoTwitter.png" alt="logo Twitter" />
 				<h2 className={styles.textSingUp}>Create your account</h2>

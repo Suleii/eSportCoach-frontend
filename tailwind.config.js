@@ -33,7 +33,12 @@ daisyui: {
   ],
 },
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        'bck-img': "url('../public/Bgrd.png')",
+        
+      }
+    },
   },
   plugins: [require("daisyui")],
 }
