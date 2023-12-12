@@ -98,7 +98,7 @@ function SearchPage({ searchQuery }) {
         >
             {[1, 2, 3, 4, 5].map(rating => (
                 <div key={rating} onClick={() => handleMinRatingSelection(rating)}>
-                    {Array.from({ length: rating }, (_, i) => (
+                    {Array.from({ length: rating }, (_, i) => ( // Create a temporary array where length = rating 
                         <FontAwesomeIcon key={i} icon={faStar} style={{ color: '599c5f' }} />
                     ))}
                 </div>
