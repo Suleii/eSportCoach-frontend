@@ -13,6 +13,7 @@ function SignUp() {
 
     const [signUpLastname, setSignUpLastname] = useState('');
 	const [signUpFirstname, setSignUpFirstname] = useState('');
+	const [signUpMail, setSignUpMail] = useState('');
     const [signUpUsername, setSignUpUsername] = useState('');
 	const [signUpPassword, setSignUpPassword] = useState('');
 	const [signUpCoach, setSignUpCoach] = useState(false);
@@ -25,22 +26,18 @@ function SignUp() {
 		fetch('http://localhost:3000/users/signup', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ firstname: signUpFirstname, username: signUpUsername, password: signUpPassword, isCoach: signUpCoach}),
+			body: JSON.stringify({ lastname: signUpLastname, firstname: signUpFirstname, username: signUpUsername, mail: signUpMail, password: signUpPassword, isCoach: signUpCoach}),
 		}).then(response => response.json())
 			.then(data => {
 				if (data.result) {
-<<<<<<< HEAD
-					dispatch(login({ firstname: signUpFirstname, username: signUpUsername, token: data.token, isCoach: data.isCoach }));
+					dispatch(login({ lastname: data.lastname, firstname: data.firstname, username: data.username, mail: data.mail, token: data.token, isCoach: data.isCoach }));
                     setSignUpLastname('');
 					setSignUpFirstname('');
-=======
-					dispatch(login({ firstname: data.firstname, username: data.username, token: data.token, isCoach: data.isCoach }));
-                    setSignUpFirstname('');
->>>>>>> 8d9a7dc802dc9b77b4994aabb1b903b5c0698909
 					setSignUpUsername('');
+					setSignUpMail('');
 					setSignUpPassword('');
 					setSignUpCoach(false);
-                    router.push('/');
+                    router.push('/home');
 				}
 			});
 	};
@@ -61,16 +58,16 @@ function SignUp() {
 					<input className={styles.input}
 						type="text" 
 						placeholder="First name" 
-						id="signUpUsername" 
-						onChange={(e) => setSignUpUsername(e.target.value)} 
-						value={signUpUsername} 
+						id="signUpFirstname" 
+						onChange={(e) => setSignUpFirstname(e.target.value)} 
+						value={signUpFirstname} 
 					/>
 					<input className={styles.input}
 						type="email" 
 						placeholder="E-mail" 
-						id="signUpUsername" 
-						onChange={(e) => setSignUpUsername(e.target.value)} 
-						value={signUpUsername} // modifier le value
+						id="signUpMail" 
+						onChange={(e) => setSignUpMail(e.target.value)} 
+						value={signUpMail}
 					/>
 					<input className={styles.input}
 						type="text" 
@@ -86,27 +83,18 @@ function SignUp() {
 						onChange={(e) => setSignUpPassword(e.target.value)} 
 						value={signUpPassword} 
 					/>
-<<<<<<< HEAD
-					<label for="dog-names">I want to sign up as:</label>
-						<select required> 
-							<option value="Gamer" selected>Gamer</option> 
-							<option value="Coach">Coach</option> 	
-						</select>
-				<button className={styles.signUp} id="signUpButton" onClick={() => handleSignUp()}>Sign Up and take the quiz</button>
-=======
 					<Dropdown>
 							<Dropdown.Toggle variant="success" id="dropdown-basic">
 								I want to sign up as
 							</Dropdown.Toggle>
 
 							<Dropdown.Menu>
-								<Dropdown.Item onClick={(e)=>setSignUpCoach(false)}>Gamer</Dropdown.Item>
+								<Dropdown.Item onClick={(e)=>setSignUpCoach(false)}>Gamer  </Dropdown.Item>
 								<Dropdown.Item onClick={(e)=>setSignUpCoach(true)}>Coach</Dropdown.Item>
 							</Dropdown.Menu>
 					</Dropdown>
-					
+					<br></br>
 				<button className={styles.signUp} id="signUpButton" onClick={() => handleSignUp()}>Sign up and take the quiz</button>
->>>>>>> 8d9a7dc802dc9b77b4994aabb1b903b5c0698909
 			</div>
         </div>
 	);
