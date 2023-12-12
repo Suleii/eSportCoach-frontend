@@ -34,15 +34,20 @@ function SearchBar() {
     };
 
     return (
-        <div>
+        <div className="flex items-center border-2 border-gray-300 bg-white h-10 rounded-full">
             <input
                 type="text"
                 placeholder="Search by coach name or by game"
+                className="flex-grow pl-5 bg-transparent outline-none text-sm text-gray-700"
                 value={searchInput}
                 onChange={(e) => setSearchInput(e.target.value)}
                 onKeyDown={handleKeyDown}
             />
-            <FontAwesomeIcon icon={faMagnifyingGlass} onClick={handleSearch} />
+            <FontAwesomeIcon 
+                icon={faMagnifyingGlass} 
+                onClick={handleSearch}
+                className="pr-4 text-gray-500 cursor-pointer"
+            />
         </div>
     );
 }

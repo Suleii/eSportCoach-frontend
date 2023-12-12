@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { Modal } from 'antd';
 import CoachResult from './CoachResult';
-import SearchBar from "./SearchBar";
+import SearchBar from "./Searchbar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faFilterCircleDollar} from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/fontawesome-svg-core/styles.css';
