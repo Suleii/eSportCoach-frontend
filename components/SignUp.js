@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../reducers/user';
 import styles from '../styles/SignUp.module.css';
-import Dropdown from 'react-bootstrap/Dropdown';
+
 
 
 function SignUp() {
@@ -79,16 +79,7 @@ function SignUp() {
 						onChange={(e) => setSignUpPassword(e.target.value)} 
 						value={signUpPassword} 
 					/>
-					<Dropdown>
-							<Dropdown.Toggle variant="success" id="dropdown-basic">
-								I want to sign up as
-							</Dropdown.Toggle>
-
-							<Dropdown.Menu>
-								<Dropdown.Item onClick={(e)=>setSignUpCoach(false)}>Gamer</Dropdown.Item>
-								<Dropdown.Item onClick={(e)=>setSignUpCoach(true)}>Coach</Dropdown.Item>
-							</Dropdown.Menu>
-					</Dropdown>
+					
 					
 				<button className={styles.signUp} id="signUpButton" onClick={() => handleSignUp()}>Sign up and take the quiz</button>
 			</div>
