@@ -11,6 +11,7 @@ function CoachSettings(props) {
     const [photo, setPhoto] = useState();
     const [about, setAbout] = useState();
     const [experience, setExperience] = useState([])
+    const [games, setGames] = useState([])
     const [twitch, setTwitch] = useState();
     const [instagram, setInstagram] = useState()
     const [youtube, setYoutube] = useState()
@@ -40,6 +41,8 @@ function CoachSettings(props) {
               setAbout(about);
               const experience = data.profile.experience;
               setExperience(experience);
+              const games = data.profile.games;
+              setGames(games);
               const twitch = data.profile.social.twitch;
               setTwitch(twitch);
               const instagram = data.profile.social.instagram;
@@ -69,6 +72,7 @@ function CoachSettings(props) {
             photo: setPhoto,
             about: setAbout,
             experience: setExperience,
+            games,
             twitch: setTwitch,
             instagram: setInstagram,
             youtube: setYoutube,
@@ -92,6 +96,7 @@ function CoachSettings(props) {
             photo,
             about,
             experience,
+            games,
             social: {
                 twitch,
                 instagram,
@@ -146,6 +151,7 @@ function CoachSettings(props) {
                 setPhoto(data.profile.photo);
                 setAbout(data.profile.about);
                 setExperience(data.profile.experience);
+                setGames(data.profile.games);
                 setTwitch(data.profile.social.twitch);
                 setInstagram(data.profile.social.instagram);
                 setYoutube(data.profile.social.youtube);
@@ -221,6 +227,17 @@ function CoachSettings(props) {
               type="text"
               name="experience"
               value={experience}
+              onChange={handleInputChange}
+              disabled={!isEditing}
+            />
+          </label>
+
+          <label>
+           Games:
+            <input
+              type="text"
+              name="games"
+              value={games}
               onChange={handleInputChange}
               disabled={!isEditing}
             />
