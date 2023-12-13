@@ -2,13 +2,12 @@
 import { useState, useEffect } from 'react';
 import { Modal } from 'antd';
 import CoachResult from './CoachResult';
-import SearchBar from "./Searchbar";
+import SearchBar from "./SearchBar";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar, faFilterCircleDollar} from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false;
-
 
 
 function SearchPage({ searchQuery }) {
@@ -84,35 +83,22 @@ function SearchPage({ searchQuery }) {
         setIsModalVisible(false);
     };
     
-    // Open review modal
-    const showReviewsModal = () => {
+    // Open modal
+    const showModal = () => {
         setIsModalVisible(true);
     };
 
     // Rating modal componant
     const RatingModal = () => (
         <Modal
-        title="Select Minimum Rating"
-        open={isModalVisible}
-        onCancel={() => {
-          setIsModalVisible(false);
-          setMinRating(0); // Reset filter on click on cancel button
-        }}
-        footer={[
-          <button key="cancel" onClick={() => {
-            setIsModalVisible(false);
-            setMinRating(0); // Reset filter on click on cancel button
-          }}>
-            Cancel filter
-          </button>,
-          <button key="submit"  onClick={handleMinRatingSelection}>
-            Filter
-          </button>,
-        ]}
-      >
+            title="Select Minimum Rating"
+            open={isModalVisible}
+            onCancel={() => setIsModalVisible(false)}
+            footer={null}
+        >
             {[1, 2, 3, 4, 5].map(rating => (
                 <div key={rating} onClick={() => handleMinRatingSelection(rating)}>
-                    {Array.from({ length: rating }, (_, i) => ( // Create a temporary array where length = rating 
+                    {Array.from({ length: rating }, (_, i) => (
                         <FontAwesomeIcon key={i} icon={faStar} style={{ color: '599c5f' }} />
                     ))}
                 </div>
@@ -140,17 +126,11 @@ function SearchPage({ searchQuery }) {
     
         return (
             <Modal
-            title="Select Price Range"
-            open={isPriceModalVisible}
-            onCancel={() => {
-              setIsPriceModalVisible(false);
-              setMinPrice(null);
-              setMaxPrice(null); // Reset filter after click on Cancel button
-            }}
-            onOk={handleOk}
-            okText="Filter"
-            okButtonProps={{ style: { backgroundColor: '#4B71A0' } }}
-          >
+                title="Select Price Range"
+                open={isPriceModalVisible}
+                onCancel={() => setIsPriceModalVisible(false)}
+                onOk={handleOk}
+            >
                 <div>
                     <input type="number" placeholder="Min Price" value={localMinPrice || ''} onChange={e => setLocalMinPrice(parseInt(e.target.value, 10) || null)} /> 
                     <input type="number" placeholder="Max Price" value={localMaxPrice || ''} onChange={e => setLocalMaxPrice(parseInt(e.target.value, 10) || null)} />
@@ -162,30 +142,16 @@ function SearchPage({ searchQuery }) {
     
 
     return (
-        <div className="flex flex-col items-center justify-center text-white">
-        <div className="text-center text-2xl mb-10">Find the best coach for you...</div>
-        <SearchBar />
-        <div className="flex flex-col items-center justify-center text-xl my-4 p-3">
-          Filters
-        </div>
-        <div className="flex flex-row items-center">
-        <div className="flex flex-col items-center space-y-2 mb-4 mr-10">
-          <div className={`rounded-2xl w-12 h-12 flex justify-center items-center  ${minRating !== 0 ? 'bg-orange-500' : 'bg-zinc-400'}`}>
-            <FontAwesomeIcon icon={faStar} onClick={showReviewsModal} className="text-white" />
+        <div>
+            <div>Find the best coach for you...</div>
+            <SearchBar />
+            <div>Filters</div>
+            <FontAwesomeIcon icon={faStar} onClick={showModal} />
             <RatingModal />
-          </div>
-          <div className="text-sm">Reviews</div>
-        </div>
-        <div className="flex flex-col items-center justify-around space-y-2 mb-4">
-          <div className={`rounded-2xl w-12 h-12 flex justify-center items-center p-3 ${minPrice || maxPrice !== null ? 'bg-orange-500' : 'bg-zinc-400'}`}>
-            <FontAwesomeIcon icon={faFilterCircleDollar} onClick={showPriceModal} className="text-white" />
+            <FontAwesomeIcon icon={faFilterCircleDollar} onClick={showPriceModal} />
             <PriceModal />
-          </div>
-          <div className="text-sm">Price</div>
+            {resultData}
         </div>
-        </div>
-        {resultData}
-      </div>
     );
 }
 

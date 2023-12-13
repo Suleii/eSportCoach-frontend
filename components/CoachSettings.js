@@ -1,5 +1,7 @@
 "use client";
 import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation'
 
 function CoachSettings(props) {
     const [isEditing, setIsEditing] = useState(false);
@@ -7,16 +9,22 @@ function CoachSettings(props) {
     const [firstname, setFirstname] = useState();
     const [email, setEmail] = useState();
     const [photo, setPhoto] = useState();
-    const [games, setGames] = useState();
+    const [about, setAbout] = useState();
+    const [experience, setExperience] = useState([])
     const [twitch, setTwitch] = useState();
     const [instagram, setInstagram] = useState()
     const [youtube, setYoutube] = useState()
     const [discord, setDiscord] = useState()
-    const [about, setAbout] = useState()
+    const [price, setPrice] = useState()
+    
+    const router = useRouter()
+    const user = useSelector((state) => state.user.value);
       
+   
     
 // Fetch coach information when the component mounts
     useEffect(() => {
+        if (user.token) {
       fetch(`http://localhost:3000/coaches/profile/${props.username}`)
         .then((response) => response.json())
         .then((data) => {
@@ -28,8 +36,10 @@ function CoachSettings(props) {
               setEmail(email);
               const photo = data.profile.photo;
               setPhoto(photo);
-              const games = data.profile.games;
-              setGames(games);
+              const about = data.profile.about;
+              setAbout(about);
+              const experience = data.profile.experience;
+              setExperience(experience);
               const twitch = data.profile.social.twitch;
               setTwitch(twitch);
               const instagram = data.profile.social.instagram;
@@ -38,10 +48,14 @@ function CoachSettings(props) {
               setYoutube(youtube);
               const discord = data.profile.social.discord;
               setDiscord(discord);
-              const about = data.profile.about;
-              setAbout(about);
+              const price = data.profile.price;
+              setPrice(price);
                 });
-            }, []);
+            } else {
+                // Redirect to login page if not logged in
+                router.push('/login');
+              }
+            }, [user.token, user.username]);
  
  // Handle input changes and update the corresponding state variable
     const handleInputChange = (e) => {
@@ -53,12 +67,13 @@ function CoachSettings(props) {
             firstname: setFirstname,
             email: setEmail,
             photo: setPhoto,
-            games: setGames,
+            about: setAbout,
+            experience: setExperience,
             twitch: setTwitch,
             instagram: setInstagram,
             youtube: setYoutube,
             discord: setDiscord,
-            about: setAbout,
+            price: setPrice,
         };
               
         // Use the mapping to update the state based on the input name
@@ -75,14 +90,15 @@ function CoachSettings(props) {
             firstname,
             email,
             photo,
-            games,
+            about,
+            experience,
             social: {
                 twitch,
                 instagram,
                 youtube,
                 discord,
               },
-            about,
+            price,
         };
           
             fetch(`http://192.168.1.65:3000/coaches/profile/${props.username}`, {
@@ -128,12 +144,13 @@ function CoachSettings(props) {
                 setFirstname(data.profile.firstname);
                 setEmail(data.profile.email);
                 setPhoto(data.profile.photo);
-                setGames(data.profile.games);
+                setAbout(data.profile.about);
+                setExperience(data.profile.experience);
                 setTwitch(data.profile.social.twitch);
                 setInstagram(data.profile.social.instagram);
                 setYoutube(data.profile.social.youtube);
                 setDiscord(data.profile.social.discord);
-                setAbout(data.profile.about);
+                setPrice(data.profile.price);
             });
         };
   
@@ -188,11 +205,22 @@ function CoachSettings(props) {
           </label>
   
           <label>
-            Games:
+           About:
             <input
               type="text"
-              name="games"
-              value={games}
+              name="about"
+              value={about}
+              onChange={handleInputChange}
+              disabled={!isEditing}
+            />
+          </label>
+
+          <label>
+           Experiences:
+            <input
+              type="text"
+              name="experience"
+              value={experience}
               onChange={handleInputChange}
               disabled={!isEditing}
             />
@@ -243,10 +271,10 @@ function CoachSettings(props) {
           </label>
   
           <label>
-            About:
+            Price:
             <textarea
-              name="about"
-              value={about}
+              name="price"
+              value={price}
               onChange={handleInputChange}
               disabled={!isEditing}
             />

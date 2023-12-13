@@ -1,6 +1,6 @@
-/* @tailwind base;
+@tailwind base;
 @tailwind components;
-@tailwind utilities; */
+@tailwind utilities;
 
 body{
 height: 100vh;
@@ -9,6 +9,7 @@ background-image: url('../public/Bgrd.png');
 background-size: cover;
 background-position: center;
 background-attachment:fixed;
+background-repeat: repeat;
 background-repeat: no-repeat;
 color: #fff
 }

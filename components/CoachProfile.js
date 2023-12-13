@@ -11,7 +11,7 @@ config.autoAddCss = false;
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
-
+import Review from './Reviews';
 
 
 
@@ -22,6 +22,9 @@ const [reviews, setReviews] = useState([]);
 const [experience, setExperience] = useState([]);
 const [price, setPrice] = useState([]);
 const [socials, setSocials] = useState({});
+const [games, setGames] = useState([]);
+
+const [reviewsdata, setReviewsData] = useState([]);
 
 const user = useSelector((state) => state.user.value); 
 
@@ -41,9 +44,25 @@ useEffect(() => {
     setPrice(prices);
     let socialslinks = data.profile.social;
     setSocials(socialslinks);
+    let gamesData=data.profile.games;
+    setGames(gamesData);
     });
   }, [])
 
+  //get all reviews
+  useEffect(() => {
+    fetch(`http://localhost:3000/reviews/${props.username}`)
+    .then(response => response.json())
+    .then(data => {
+        let allreviews=data.reviews;
+        setReviewsData(allreviews);
+    });
+  }, [])
+
+  const reviewcards = reviewsdata.map((data, i) => {
+    console.log(data)
+    return <Review key={i} rating={data.rating} username={data.username.username} photo={data.photo} game={data.game} content={data.content}/>;
+  });
 
 const stars = [];
   for (let i = 0; i < 5; i++) {
@@ -56,9 +75,12 @@ const stars = [];
 
 
 
-const ExperienceList = experience.map((item)=>
-<li className="mb-4">{item}</li>);
+const ExperienceList = experience.map((item, i)=>
+<li key={i} className="mb-4">{item}</li>);
 
+const gamesTags = games.map((item, i)=>
+<div className="badge badge-accent text-xs mr-2">{item}</div>
+);
 
 
     return(
@@ -69,19 +91,23 @@ const ExperienceList = experience.map((item)=>
                         <img src={profile.photo} alt="Profile pic" />
                     </div>
                 </div>
-                <div className="p-5">
+                <div>
+                    <div>
                     <span className="text-white mb-1">@{props.username}</span>
+                    <span className="ml-5"><FontAwesomeIcon icon={faEllipsisVertical} style={{'color':"#ffffff"}} /></span></div>
                     <div className="text-xs mb-6"><span>{stars}</span><span className="text-white"> ({reviewCount})</span></div>
                     { user.isCoach 
                         ? <Link href="/" type="button" className="btn btn-success text-white">Edit Profile <span className="text-white"><FontAwesomeIcon icon={faPencil} /></span> </Link>
                         : <Link href="/" type="button" className="btn btn-success text-white">Book Me <span className="text-white"><FontAwesomeIcon icon={faArrowRightLong} /></span> </Link>
                     }
+                    
                 </div>
-                <div className="p-5"><span><FontAwesomeIcon icon={faEllipsisVertical} style={{'color':"#ffffff"}} /></span></div>
+                
             </div>
             <div className="text-white  w-5/6">
                 <h3 className="text-lg mb-1"> About me</h3>
                 <p className="text-sm mb-2">{profile.about}</p>
+                {gamesTags}
                 <div>
                 <h3 className="text-lg mt-6">Experience/Achievements</h3>
                 <div className="text-base mx-10 mt-4">
@@ -169,35 +195,33 @@ const ExperienceList = experience.map((item)=>
                  
                 </div>
                 <h3 className="text-lg">Prices</h3>
-                <div className="collapse collapse-arrow bg-base-100 mt-6 w-52">
+                <div className="collapse collapse-arrow bg-base-100 mt-6 w-full">
                     <input type="checkbox" /> 
                     <div className="collapse-title text-sm font-medium text-white p-6 ">
                         Solo Sessions
                     </div>
                     <div className="collapse-content text-white"> 
                         <p>1 session: €{price.oneSession}</p>
-                        <div className="divider divider-neutral"></div> 
+                        <div className="divider divider-neutral h-0.5"></div> 
                         <p>10 sessions: €{price.TenSession}</p>
                     </div>
                 </div>
-                <div className="collapse collapse-arrow bg-base-100 mt-6 w-52">
+                <div className="collapse collapse-arrow bg-base-100 mt-6 w-full">
                     <input type="checkbox" /> 
                     <div className="collapse-title text-sm font-medium text-white p-6">
                         Group Sessions
                     </div>
                     <div className="collapse-content text-white "> 
                         <p>1 session: €{price.oneGroupSession}</p>
-                        <div className="divider divider-neutral"></div> 
+                        <div className="divider divider-neutral h-0.5"></div> 
                         <p>10 sessions: €{price.tenGroupSessions}</p>
                     </div>
                 </div>
                 
                 
 
-               <h3 className="text-lg mt-6">Reviews</h3>
-                {reviews.map((review)=>{
-                    return <p>{review.content}</p>
-                })}
+               <h3 className="text-lg mt-6 mb-6">Reviews</h3>
+                {reviewcards}
             
             </div>
         </div>
