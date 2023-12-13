@@ -52,13 +52,13 @@ function Login() {
 					setSignUpMail('');
 					setSignUpPassword('');
 					setSignUpCoach(false);
-                    router.push('/home');
+                    router.push('/');
 				}
 			});
         }
 
         const [signInUsername, setSignInUsername] = useState('');
-	const [signInPassword, setSignInPassword] = useState('');
+	    const [signInPassword, setSignInPassword] = useState('');
 
     
 
@@ -74,7 +74,7 @@ function Login() {
 					dispatch(login({ firstname: data.firstname, username: signInUsername, token: data.token , isCoach: data.isCoach}));
 					setSignInUsername('');
 					setSignInPassword('');
-                    router.push('/home');
+                    router.push('/');
 				}
 			});
 	};
@@ -93,55 +93,55 @@ function Login() {
                         <div className="flex flex-col space-y-4 grid justify-items-center h-96 ">
                             <img className={styles.logo} src="logoTwitter.png" alt="logo Twitter" />
                             <h2 className={styles.textSingUp}>Create your account</h2>
-                            <input className="bg-base-100 w-64 h-8 rounded-md p-2"
+                            <input className="bg-base-100 w-64 h-10 rounded-md p-2"
                                 type="text" 
                                 placeholder="Last name" 
                                 id="signUpLastname" 
                                 onChange={(e) => setSignUpLastname(e.target.value)} 
                                 value={signUpLastname} 
                             />
-                            <input className="bg-base-100 w-64 h-8 rounded-md p-2"
+                            <input className="bg-base-100 w-64 h-10 rounded-md p-2"
                                 type="text" 
                                 placeholder="First name" 
                                 id="signUpFirstname" 
                                 onChange={(e) => setSignUpFirstname(e.target.value)} 
                                 value={signUpFirstname} 
                             />
-                            <input className="bg-base-100 w-64 h-8 rounded-md p-2"
+                            <input className="bg-base-100 w-64 h-10 rounded-md p-2"
                                 type="email" 
                                 placeholder="E-mail" 
                                 id="signUpMail" 
                                 onChange={(e) => setSignUpMail(e.target.value)} 
                                 value={signUpMail}
                             />
-                            <input className="bg-base-100 w-64 h-8 rounded-md p-2"
+                            <input className="bg-base-100 w-64 h-10 rounded-md p-2"
                                 type="text" 
                                 placeholder="Username" 
                                 id="signUpUsername" 
                                 onChange={(e) => setSignUpUsername(e.target.value)} 
                                 value={signUpUsername} 
                             />
-                            <input className="bg-base-100 w-64 h-8 rounded-md p-2"
+                            <input className="bg-base-100 w-64 h-10 rounded-md p-2"
                                 type="password" 
                                 placeholder="Password" 
                                 id="signUpPassword" 
                                 onChange={(e) => setSignUpPassword(e.target.value)} 
                                 value={signUpPassword} 
                             />
-                            <div className="dropdown dropdown-bottom">
-                                <div tabIndex={0} role="button" className="btn m-1 bg-success">Choose :</div>
-                                <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-primary rounded-box w-52">
-                                    <li onClick={(e) => setSignUpCoach(false)} ><a class="hover:bg-base-100 focus:bg-base-100">Gamer</a></li>
-                                    <li onClick={(e) => setSignUpCoach(true)}><a class="hover:bg-base-100 focus:bg-base-100" >Coach</a></li>
-                                </ul>
-                            </div>
-                                
-                            <button className="text-white" onClick={() => handleSignUp()}>Sign up and take the quiz</button>
+                            <select
+                                className="select select-bordered w-64 h-10 rounded-md "
+                                onChange={(e) => setSignUpCoach(e.target.value === 'Coach')}
+                                >
+                                <option disabled selected>Choose :</option>
+                                <option value="Gamer">Gamer</option>
+                                <option value="Coach">Coach</option>
+                             </select>
+                            <button className="text-white bg-success w-64 h-10 rounded-md" onClick={() => handleSignUp()}>Sign up and take the quiz</button>
                         </div>
                         <div className="modal-action">
                             <form method="dialog">
                                 {/* if there is a button in form, it will close the modal */}
-                                <button className="bg-success h-10 w-10 rounded-full">X</button>
+                                <button className="bg-success h-10 w-10 rounded-full mt-20">X</button>
                             </form>
                         </div>
                     </div>
@@ -151,37 +151,45 @@ function Login() {
 
                 {/* BOUTON SIGN IN */}
                 <button className="bg-success h-10 w-24 rounded-lg" onClick={()=>document.getElementById('my_modal_2').showModal()}>Sign In</button>
-                <dialog id="my_modal_2" className="modal">
+                <dialog id="my_modal_2" className='modal'>
                     <div className="modal-box bg-bck-img ">
-                        <div className="flex flex-col grid justify-items-center h-96 ">
+                        <div className="flex flex-col grid justify-items-center h-full ">
                             <img className={styles.logo} src="logoTwitter.png" alt="logo Twitter" />
-                            <h2 className={styles.textSingIn}>Create your account</h2>
-                            <input className='bg-base-100 w-64 h-8 rounded-md p-2'
+                            <h2 className='mb-8'>Sign In</h2>
+                            <p className='mb-2'>Email</p>
+                            <input className='bg-base-100 w-80 h-10 rounded-md p-2 mb-6'
                                 type="text" 
-                                placeholder="Username" 
+                                placeholder="example@gmail.com" 
                                 id="signInUsername" 
                                 onChange={(e) => setSignInUsername(e.target.value)} 
                                 value={signInUsername} 
                             />
-                            <input className='bg-base-100 w-64 h-8 rounded-md p-2'
+                            <p className='mb-2 ' >Password</p>
+                            <input className='bg-base-100 w-80 h-10 rounded-md p-2 mb-4'
                                 type="password" 
-                                placeholder="Password" 
+                                placeholder="Enter Your Password" 
                                 id="signInPassword" 
                                 onChange={(e) => setSignInPassword(e.target.value)} 
                                 value={signInPassword} 
                             />
-                            <input type="checkbox" id="exampleUniq"/>
-                            <label for="exampleUniq">Remember me</label>
-                            <p>Forgot password?</p>
-                            <button className={styles.signIn} id="signInButton" onClick={() => handleSignIn()}>Sign in</button>
-                            <a href='/SignUp'>
-                                <p>Don't have an account? Please sign up.</p>
-                            </a>
-                            <p>or</p>
-                            <button >
-                            <img src='https://www.vectorlogo.zone/logos/twitch/twitch-icon.svg'></img>
-                                Log in with Twitch
-                            </button>
+                            <div className='flex flex-row space-x-10 mb-10'>
+                                <div>
+                                    <input type="checkbox" id="exampleUniq" className='bg-success'/>
+                                    <label for="exampleUniq">Remember me</label>
+                                </div>
+                                <p>Forgot password?</p>
+                            </div>
+                                <button className='bg-success w-80 h-10 rounded-md p-2 mb-6' id="signInButton" onClick={() => handleSignIn()}>Sign in</button>
+                                
+                                    <p onClick={()=>document.getElementById('my_modal_1').showModal()} className='mb-4'>Don't have an account? Please sign up.</p>
+                                
+                                <p className='mb-4'>or</p>
+                                <div className='flex flex-row '>
+                                    <button className='bg-accent w-80 h-10 rounded-md p-2 mb-6'>
+                                    <img className='h-6 float-left' src='https://www.vectorlogo.zone/logos/twitch/twitch-icon.svg'></img>
+                                        <p>Log in with Twitch</p>
+                                    </button>
+                                </div>
                         </div>
                         <div className="modal-action">
                             <form method="dialog">
