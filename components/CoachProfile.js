@@ -18,13 +18,13 @@ import Review from './Reviews';
 function CoachProfile (props) {
 const [reviewCount, setReviewCount] = useState(0);
 const [profile, setProfile] = useState([]);
-const [reviews, setReviews] = useState([]);
+const [reviewsdata, setReviewsData] = useState([]);
 const [experience, setExperience] = useState([]);
 const [price, setPrice] = useState([]);
 const [socials, setSocials] = useState({});
 const [games, setGames] = useState([]);
 
-const [reviewsdata, setReviewsData] = useState([]);
+
 
 const user = useSelector((state) => state.user.value); 
 
@@ -49,7 +49,8 @@ useEffect(() => {
     });
   }, [])
 
-  const reviewcards = reviewsdata.map((data, i) => {
+
+  const reviews = reviewsdata.map((data, i) => {
     console.log(data)
     return <Review key={i} rating={data.rating} username={data.username.username} photo={data.photo} game={data.game} content={data.content}/>;
   });
@@ -211,7 +212,7 @@ const gamesTags = games.map((item, i)=>
                 
 
                <h3 className="text-lg mt-6 mb-6">Reviews</h3>
-                {reviewcards}
+                {reviews}
             
             </div>
         </div>
