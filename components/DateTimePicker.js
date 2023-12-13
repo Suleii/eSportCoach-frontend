@@ -1,6 +1,6 @@
 "use client"
 import Calendar from 'react-calendar';
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import 'react-calendar/dist/Calendar.css';
 import styles from '../styles/DateTimepicker.module.css';
 import {add, format} from 'date-fns'
@@ -15,7 +15,9 @@ function DateTimePicker() {
 
     const getTimes = () => {
        
-        if (!date.selectedDate) return
+        if (!date.selectedDate) {
+            console.log(`return`)
+            return}
         const {selectedDate} = date
         const beginning = add(selectedDate, {hours: 1})
         const end = add(selectedDate, { hours :24})
@@ -29,10 +31,17 @@ function DateTimePicker() {
         setTimes(times)
     }
    
-    const handleDayClick=(date) => {
-        getTimes()
-        setDate((prev) => ({...prev, selectedDate: date}))
-    }
+    const handleDayClick = (date) => {
+        setDate((prev) => ({ ...prev, selectedDate: date }));
+        console.log(`Date = ${date}`);
+        };
+        
+    // useEffect sera déclenché chaque fois que la date change
+    useEffect(() => {
+        if (date.selectedDate) {
+        getTimes();
+        }
+        }, [date.selectedDate]);
     
     return (
     <div >

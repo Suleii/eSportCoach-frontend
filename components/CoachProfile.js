@@ -37,7 +37,7 @@ useEffect(() => {
     setProfile(data.profile);
     let reviewsdata = data.profile.reviews;
     setReviewCount(reviewsdata.length);
-    setReviews(reviewsdata);
+    setReviewsData(reviewsdata);
     let experiencedata = data.profile.experience;
     setExperience(experiencedata);
     let prices = data.profile.price;
@@ -46,16 +46,6 @@ useEffect(() => {
     setSocials(socialslinks);
     let gamesData=data.profile.games;
     setGames(gamesData);
-    });
-  }, [])
-
-  //get all reviews
-  useEffect(() => {
-    fetch(`http://localhost:3000/reviews/${props.username}`)
-    .then(response => response.json())
-    .then(data => {
-        let allreviews=data.reviews;
-        setReviewsData(allreviews);
     });
   }, [])
 
@@ -79,7 +69,7 @@ const ExperienceList = experience.map((item, i)=>
 <li key={i} className="mb-4">{item}</li>);
 
 const gamesTags = games.map((item, i)=>
-<div className="badge badge-accent text-xs mr-2">{item}</div>
+<div className="badge badge-accent text-xs mr-2" key={i}>{item}</div>
 );
 
 
