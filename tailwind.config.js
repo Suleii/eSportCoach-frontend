@@ -16,11 +16,11 @@ daisyui: {
         'accent': '#fc8366', // ORANGE
         'accent-focus': '#fff3f0', // LIGHT ORANGE
         'accent-content': '#ffffff', // WHITE
-        'neutral': '#C0C0CB',// SECONDARY BLUE 2
+        'neutral': '#212144',// SECONDARY BLUE 2
         'neutral-focus': '#2a2e37',
         'neutral-content': '#ffffff',
         'base-100': '#323153', //SECONDARY BLUE
-        'base-200': '#C0C0CB', // SECONDARY BLUE 2
+        'base-200': '#212144', // SECONDARY BLUE 2
         'base-300': '#d1d5db',
         'base-content': '#1f2937',
         'info': '#accdaf', // LIGHT GREEN
