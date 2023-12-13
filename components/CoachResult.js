@@ -36,7 +36,7 @@ function CoachResult(props) {
 
       <div className="flex mt-2">
         {props.gameTag.map((game, index) => (
-          <div key={index} className="badge badge-accent text-m text-black bg-white border-none mr-2">{game}</div>
+          <div key={index} className="badge badge-accent text-xs mr-2">{game}</div>
         ))}
       </div>
     </div>
