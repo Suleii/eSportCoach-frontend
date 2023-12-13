@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={inter.className}>
         <StoreProvider>
-            <main className="w-screen h-screen pt-16">{children}</main>
+            <main className="">{children}</main>
           </StoreProvider>
         </body>
     </html>

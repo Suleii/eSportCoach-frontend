@@ -36,7 +36,6 @@ daisyui: {
     extend: {
       backgroundImage: {
         'bck-img': "url('../public/Bgrd.png')",
-        
       }
     },
   },
