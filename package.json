@@ -21,6 +21,7 @@
     "next": "14.0.4",
     "react": "^18",
     "react-big-calendar": "^1.8.5",
+    "react-calendar": "^4.7.0",
     "react-dom": "^18",
     "react-redux": "^9.0.3",
     "redux-persist": "^6.0.0"

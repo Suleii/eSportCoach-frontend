@@ -18,13 +18,13 @@ import Review from './Reviews';
 function CoachProfile (props) {
 const [reviewCount, setReviewCount] = useState(0);
 const [profile, setProfile] = useState([]);
-const [reviews, setReviews] = useState([]);
+const [reviewsdata, setReviewsData] = useState([]);
 const [experience, setExperience] = useState([]);
 const [price, setPrice] = useState([]);
 const [socials, setSocials] = useState({});
 const [games, setGames] = useState([]);
 
-const [reviewsdata, setReviewsData] = useState([]);
+
 
 const user = useSelector((state) => state.user.value); 
 
@@ -37,7 +37,7 @@ useEffect(() => {
     setProfile(data.profile);
     let reviewsdata = data.profile.reviews;
     setReviewCount(reviewsdata.length);
-    setReviews(reviewsdata);
+    setReviewsData(reviewsdata);
     let experiencedata = data.profile.experience;
     setExperience(experiencedata);
     let prices = data.profile.price;
@@ -49,17 +49,8 @@ useEffect(() => {
     });
   }, [])
 
-  //get all reviews
-  useEffect(() => {
-    fetch(`http://localhost:3000/reviews/${props.username}`)
-    .then(response => response.json())
-    .then(data => {
-        let allreviews=data.reviews;
-        setReviewsData(allreviews);
-    });
-  }, [])
 
-  const reviewcards = reviewsdata.map((data, i) => {
+  const reviews = reviewsdata.map((data, i) => {
     console.log(data)
     return <Review key={i} rating={data.rating} username={data.username.username} photo={data.photo} game={data.game} content={data.content}/>;
   });
@@ -79,7 +70,7 @@ const ExperienceList = experience.map((item, i)=>
 <li key={i} className="mb-4">{item}</li>);
 
 const gamesTags = games.map((item, i)=>
-<div className="badge badge-accent text-xs mr-2">{item}</div>
+<div className="badge badge-accent text-xs mr-2" key={i}>{item}</div>
 );
 
 
@@ -221,7 +212,7 @@ const gamesTags = games.map((item, i)=>
                 
 
                <h3 className="text-lg mt-6 mb-6">Reviews</h3>
-                {reviewcards}
+                {reviews}
             
             </div>
         </div>
