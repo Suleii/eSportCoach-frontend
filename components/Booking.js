@@ -15,7 +15,6 @@ function Booking() {
 
     const handleSessionCount = (event) => {
         setSessionCount(parseInt(event.target.value));
-        // console.log(sessionCount)
     };
     
 useEffect(() =>{
