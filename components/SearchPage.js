@@ -10,6 +10,7 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false;
 
 
+
 function SearchPage({ searchQuery }) {
     const [results, setResults] = useState([]);
     const [minRating, setMinRating] = useState(0);
@@ -83,19 +84,32 @@ function SearchPage({ searchQuery }) {
         setIsModalVisible(false);
     };
     
-    // Open modal
-    const showModal = () => {
+    // Open review modal
+    const showReviewsModal = () => {
         setIsModalVisible(true);
     };
 
     // Rating modal componant
     const RatingModal = () => (
         <Modal
-            title="Select Minimum Rating"
-            open={isModalVisible}
-            onCancel={() => setIsModalVisible(false)}
-            footer={null}
-        >
+        title="Select Minimum Rating"
+        open={isModalVisible}
+        onCancel={() => {
+          setIsModalVisible(false);
+          setMinRating(0); // Reset filter on click on cancel button
+        }}
+        footer={[
+          <button key="cancel" onClick={() => {
+            setIsModalVisible(false);
+            setMinRating(0); // Reset filter on click on cancel button
+          }}>
+            Cancel filter
+          </button>,
+          <button key="submit"  onClick={handleMinRatingSelection}>
+            Filter
+          </button>,
+        ]}
+      >
             {[1, 2, 3, 4, 5].map(rating => (
                 <div key={rating} onClick={() => handleMinRatingSelection(rating)}>
                     {Array.from({ length: rating }, (_, i) => ( // Create a temporary array where length = rating 
@@ -126,11 +140,17 @@ function SearchPage({ searchQuery }) {
     
         return (
             <Modal
-                title="Select Price Range"
-                open={isPriceModalVisible}
-                onCancel={() => setIsPriceModalVisible(false)}
-                onOk={handleOk}
-            >
+            title="Select Price Range"
+            open={isPriceModalVisible}
+            onCancel={() => {
+              setIsPriceModalVisible(false);
+              setMinPrice(null);
+              setMaxPrice(null); // Reset filter after click on Cancel button
+            }}
+            onOk={handleOk}
+            okText="Filter"
+            okButtonProps={{ style: { backgroundColor: '#4B71A0' } }}
+          >
                 <div>
                     <input type="number" placeholder="Min Price" value={localMinPrice || ''} onChange={e => setLocalMinPrice(parseInt(e.target.value, 10) || null)} /> 
                     <input type="number" placeholder="Max Price" value={localMaxPrice || ''} onChange={e => setLocalMaxPrice(parseInt(e.target.value, 10) || null)} />
@@ -142,16 +162,30 @@ function SearchPage({ searchQuery }) {
     
 
     return (
-        <div>
-            <div>Find the best coach for you...</div>
-            <SearchBar />
-            <div>Filters</div>
-            <FontAwesomeIcon icon={faStar} onClick={showModal} />
-            <RatingModal />
-            <FontAwesomeIcon icon={faFilterCircleDollar} onClick={showPriceModal} />
-            <PriceModal />
-            {resultData}
+        <div className="flex flex-col items-center justify-center text-white">
+        <div className="text-center text-2xl mb-10">Find the best coach for you...</div>
+        <SearchBar />
+        <div className="flex flex-col items-center justify-center text-xl my-4 p-3">
+          Filters
         </div>
+        <div className="flex flex-row items-center">
+        <div className="flex flex-col items-center space-y-2 mb-4 mr-10">
+          <div className={`rounded-2xl w-12 h-12 flex justify-center items-center  ${minRating !== 0 ? 'bg-orange-500' : 'bg-zinc-400'}`}>
+            <FontAwesomeIcon icon={faStar} onClick={showReviewsModal} className="text-white" />
+            <RatingModal />
+          </div>
+          <div className="text-sm">Reviews</div>
+        </div>
+        <div className="flex flex-col items-center justify-around space-y-2 mb-4">
+          <div className={`rounded-2xl w-12 h-12 flex justify-center items-center p-3 ${minPrice || maxPrice !== null ? 'bg-orange-500' : 'bg-zinc-400'}`}>
+            <FontAwesomeIcon icon={faFilterCircleDollar} onClick={showPriceModal} className="text-white" />
+            <PriceModal />
+          </div>
+          <div className="text-sm">Price</div>
+        </div>
+        </div>
+        {resultData}
+      </div>
     );
 }
 

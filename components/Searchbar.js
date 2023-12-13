@@ -34,7 +34,7 @@ function SearchBar() {
     };
 
     return (
-        <div className="flex justify-center mt-5">
+        <div className="flex flex-row justify-center mt-5">
             <div className="relative w-full max-w-xs"> 
                 <FontAwesomeIcon 
                     icon={faMagnifyingGlass} 
@@ -43,7 +43,7 @@ function SearchBar() {
                 />
                 <input
                     type="text"
-                    placeholder="Find a coach by name or game"
+                    placeholder="Search"
                     className="input input-bordered w-full pl-10 rounded-xl" 
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}

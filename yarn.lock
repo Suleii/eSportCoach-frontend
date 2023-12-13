@@ -1409,6 +1409,7 @@ rc-virtual-list@^3.11.1, rc-virtual-list@^3.5.1, rc-virtual-list@^3.5.2:
     rc-resize-observer "^1.0.0"
     rc-util "^5.36.0"
 
+<<<<<<< HEAD
 react-big-calendar@^1.8.5:
   version "1.8.5"
   resolved "https://registry.yarnpkg.com/react-big-calendar/-/react-big-calendar-1.8.5.tgz#fdada71f84d53ff13bc9543666b69183e91ad6a5"
@@ -1431,6 +1432,8 @@ react-big-calendar@^1.8.5:
     react-overlays "^5.2.1"
     uncontrollable "^7.2.1"
 
+=======
+>>>>>>> 5201ed222825994af0f45aaab9292922bf40be10
 react-dom@^18:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.2.0.tgz#22aaf38708db2674ed9ada224ca4aa708d821e3d"

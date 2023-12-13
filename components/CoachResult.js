@@ -1,6 +1,6 @@
 "use client"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar, faCircleArrowRight} from '@fortawesome/free-solid-svg-icons';
+import { faStar, faArrowRight} from '@fortawesome/free-solid-svg-icons';
 import '@fortawesome/fontawesome-svg-core/styles.css';
 import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false;
@@ -18,15 +18,38 @@ function CoachResult(props) {
       stars.push(<FontAwesomeIcon key={i} icon={faStar} style={style} />);
     }
 
+   
+
     return (
-        <div>
-            <h3>@{props.username}</h3>
-            <img src= {props.photo} alt="profile picture" width="150" heigth="150"></img>
-            <div>{stars}</div>
-            <div>({props.reviewsNumber})</div>
-            <div>{props.gameTag}</div>
-            <div>From €{props.price}</div>
-            <FontAwesomeIcon icon={faCircleArrowRight} onClick={() => router.push(`/coaches/${props.username}`)} />
+        <div className="m-4 border-b border-white border-opacity-10">
+           <div className="flex items-center space-x-4 m-5">
+    <div className="avatar">
+      <div className="w-14 h-14 rounded-full">
+        <img src={props.photo} alt="profile picture" />
+      </div>
+    </div>
+    <div className="flex-1">
+      <div className="font-bold text-xl">@{props.username}</div>
+      <div> 
+        {stars} ({props.reviewsNumber})
+      </div>
+
+      <div className="flex mt-2">
+        {props.gameTag.map((game, index) => (
+          <div key={index} className="badge badge-accent text-m text-black bg-white border-none mr-2">{game}</div>
+        ))}
+      </div>
+    </div>
+    <div>
+      <div className="text-sm font-semibold mt-2 ml-2">From €{props.price}</div>
+      <button
+        className="btn btn-success text-white rounded-full flex items-center justify-center w-12 h-12 mt-2 ml-2"
+        onClick={() => router.push(`/coaches/${props.username}`)}
+      >
+        <FontAwesomeIcon icon={faArrowRight} size="lg" />
+      </button>
+    </div>
+  </div>
         </div>
     );
 }
