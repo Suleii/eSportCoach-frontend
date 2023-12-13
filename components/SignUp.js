@@ -36,7 +36,7 @@ function SignUp() {
 					setSignUpMail('');
 					setSignUpPassword('');
 					setSignUpCoach(false);
-                    router.push('/home');
+                    router.push('/');
 				}
 			});
 	};

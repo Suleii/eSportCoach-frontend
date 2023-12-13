@@ -32,7 +32,7 @@ function SignIn() {
 					dispatch(login({ firstname: data.firstname, username: signInUsername, token: data.token , isCoach: data.isCoach}));
 					setSignInUsername('');
 					setSignInPassword('');
-                    router.push('/home');
+                    router.push('/');
 				}
 			});
 	};
