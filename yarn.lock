@@ -1473,8 +1473,6 @@ react-big-calendar@^1.8.5:
     react-overlays "^5.2.1"
     uncontrollable "^7.2.1"
 
-<<<<<<< HEAD
-=======
 react-calendar@^4.7.0:
   version "4.7.0"
   resolved "https://registry.yarnpkg.com/react-calendar/-/react-calendar-4.7.0.tgz#80df8a31a2daa31121a6bd7f8f20a727c3df5a3c"
@@ -1486,7 +1484,6 @@ react-calendar@^4.7.0:
     prop-types "^15.6.0"
     tiny-warning "^1.0.0"
 
->>>>>>> 32c1cde69f7d09d12ad68484a949ad62aebdd6d7
 react-dom@^18:
   version "18.2.0"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-18.2.0.tgz#22aaf38708db2674ed9ada224ca4aa708d821e3d"
