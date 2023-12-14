@@ -18,22 +18,31 @@ import {
 const stripePromise = loadStripe("pk_test_51OMp3uB5PJ0t72PEmVwASiNtiAVzCa2Sd2CG8vQbWAv0VxxCibF4ZsPQryv7hzSWyni9XEeeNtDICtRZmDdhCNEm00jVJzFUnd");
 
 const CheckoutForm = () => {
-  const [clientSecret, setClientSecret] = useState('');
-  const [coachId, setCoachId] = useState('')
-  const [sessionType, setSessionType] = useState('')
+  const [clientSecret, setClientSecret] = useState(''); // Identifiant de session 
+  // const [coachId, setCoachId] = useState('')
+  // const [sessionType, setSessionType] = useState('')
   const user = useSelector((state) => state.user.value);
-  // const coachId = '65785516dbc6cc8be9b8003f'; 
-  // const sessionType = 'oneSession'; 
+  const coachId = '65785516dbc6cc8be9b8003f'; 
+  const sessionType = 'oneSession'; 
 
-  useEffect(() => {
-    fetch(`http://localhost:3000/coaches/profile/dont_delete_me`)
-    .then(response => response.json())
-    .then(data => {
-      console.log(data)
-      setCoachId(data.profile._id)
-      setSessionType(data.profile.price)
-    });
-  }, [])
+  // useEffect(() => {
+  //   fetch(`http://localhost:3000/coaches/profile/${user}`)
+  //   .then(response => response.json())
+  //   .then(data => {
+  //     console.log(data)
+  //     setCoachId(data.profile._id)
+  //     setSessionType(data.profile.price)
+  //   });
+  // }, [])
+
+  // useEffect(() => {
+  //   fetch(`http://localhost:3000/coaches/profile/${props.username}`)
+  //   .then(response => response.json())
+  //   .then(data => {
+  //     console.log(data.profile.price)
+  //     setSessionType(data.profile.price)
+  //   });
+  // }, [])
 
   useEffect(() => {
     // Create a Checkout Session as soon as we get sessionType and coachID
