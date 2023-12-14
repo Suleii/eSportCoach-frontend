@@ -20,16 +20,16 @@ function Menu () {
             </div> 
             <div className="drawer-side">
                 <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
-                <ul className="menu p-4 w-56 min-h-full bg-base-100 text-base-content text-white opacity-90">
+                <ul className="menu p-4 w-56 min-h-full bg-base-100 text-base-content text-white flex justify-between h-14 opacity-95">
                 {/* Sidebar content here */}
-                <div className=''>
+                <div className='space-y-6 mt-14'>
                     <li className='text-white'><a href='/'> <FontAwesomeIcon icon={faHouse} />Home</a></li>
                     <li className='text-white'><a href='/search'><FontAwesomeIcon icon={faMagnifyingGlass} />Search</a></li>
                     {/* <li className='text-white'><a href='/'>My Profile</a></li> */}
                     <li className='text-white'><a href='/settings'><FontAwesomeIcon icon={faGear} />Settings</a></li>
                 </div>
-                <div className='absolute inset-x-0 bottom-0'>
-                    <li className='text-white' onClick={() => handleLogout()}><a href='/login'><FontAwesomeIcon className='rotate-180' icon={faRightFromBracket} />Logout</a></li>
+                <div className=''>
+                    <li className='text-white mb-28' onClick={() => handleLogout()}><a href='/login'><FontAwesomeIcon className='rotate-180' icon={faRightFromBracket} />Logout</a></li>
                 </div>
                 </ul>
             </div>
