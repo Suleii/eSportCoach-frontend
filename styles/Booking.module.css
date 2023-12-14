@@ -4,8 +4,12 @@
     font-weight: bold;
 }
 
-.selected {
+/* .selected {
     background-color: #599c5f;
+} */
+
+.button_reset:focus-visible{
+    background-color: #fc8366;
 }
 
 .rdp {
@@ -13,5 +17,14 @@
 }
 
 .nav {
-    background-color: #323153;
+    color: #323153;
+}
+
+.selected,
+.selected:focus-visible,
+.selected:hover {
+  color: black;
+  font-weight: bold;
+  opacity: 1;
+  background-color: #599c5f;
 }
