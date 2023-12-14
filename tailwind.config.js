@@ -16,7 +16,7 @@ daisyui: {
         'accent': '#fc8366', // ORANGE
         'accent-focus': '#fff3f0', // DONT USE
         'accent-content': '#ffffff', // WHITE
-        'neutral': '#212144',// SECONDARY BLUE 2
+        'neutral': '#C0C0CB',// SECONDARY BLUE 2
         'neutral-focus': '#2a2e37',
         'neutral-content': '#ffffff',
         'base-100': '#323153', //SECONDARY BLUE
@@ -36,9 +36,15 @@ daisyui: {
     extend: {
       backgroundImage: {
         'bck-img': "url('../public/Bgrd.png')",
-      }
+      },
     },
   },
-  plugins: [require("daisyui")],
+  plugins: [
+    require("daisyui"),
+    require ( 'tailwind-scrollbar' )( {  nocompatible : true  } ) ,
+  ],
+  variants: {
+    scrollbar: ['rounded']
+  }
 }
 
