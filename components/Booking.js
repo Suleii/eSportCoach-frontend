@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import {add, format} from 'date-fns'
 import {useRouter} from 'next/navigation'
 import { useSelector } from 'react-redux';
-import {selectDate} from '../reducers/selectedDate'
+import {selectDate} from '../reducers/booking'
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import styles from '../styles/Booking.module.css';
@@ -63,7 +63,7 @@ const handleBooking = () => {
         setMessage('Please select a date.')
     } 
     else {
-        dispatch(selectDate(date.dateTime))
+        dispatch(selectDate({date: date.dateTime, nbOfSessions: sessionCount}))
         router.push('/payment')
         }
 }

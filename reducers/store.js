@@ -8,9 +8,9 @@ import storage from "redux-persist/lib/storage";
 /* ---------------------------------------------------------------- */
 
 import user from "../reducers/user"
-import date from "../reducers/selectedDate"
+import booking from "../reducers/booking"
 
-const reducers = combineReducers({ user, date });
+const reducers = combineReducers({ user, booking });
 
 /* ---------------------------------------------------------------- */
 /*                      Persistor configuration                     */
@@ -20,7 +20,7 @@ const persistConfig = {
 	key: "exp",
 	storage,
 	blacklist: [],
-	whitelist: ["user", "date"],
+	whitelist: ["user", "booking"],
 };
 
 const persistedReducers = persistReducer(persistConfig, reducers);
