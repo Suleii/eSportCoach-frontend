@@ -12,8 +12,8 @@ return (
     </aside> 
     <div className='flex row-end mr-10 space-x-8'>
         <a href='/privacy'>Privacy</a>
-        <a href='/'>Contact</a>
-        <a href='/'>Terms</a>  
+        <a href='/contact'>Contact</a>
+        <a href='/terms'>Terms</a>  
     </div>
     </footer>
 )
