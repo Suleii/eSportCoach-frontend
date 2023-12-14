@@ -1,26 +1,19 @@
 "use client";
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { login, logout } from '../reducers/user';
+import { login, logout } from '../reducers/user';
 import styles from '../styles/Login.module.css';
-//import Link from 'next/link';
+//import { Modal } from 'antd';
+import SignUp from './SignUp';
+import SignIn from './SignIn';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation'
+// import { login, logout } from '../reducers/user';
 
 
 
 function Login() {
 
-    // const [isSignUpModalVisible, setIsSignUpModalVisible] = useState(false);
-
-    // const showSignUpModal = () => {
-	// 	setIsSignUpModalVisible(!isSignUpModalVisible);
-	// };
-
-    // const [isSignInModalVisible, setIsSignInModalVisible] = useState(false);
-
-    // const showSignInModal = () => {
-	// 	setIsSignInModalVisible(!isSignInModalVisible);
-	// };
     const router = useRouter()
 
     const [signUpLastname, setSignUpLastname] = useState('');
