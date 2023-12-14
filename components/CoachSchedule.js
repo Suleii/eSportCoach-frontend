@@ -43,7 +43,7 @@ return (
         </button> */}
         <Modal open={open}>
           <ul className="py-4">
-          {listOfSessions}
+         {/* {listOfSessions}*/}
           </ul>
           <div className="modal-action">
             {/* closes the modal */}

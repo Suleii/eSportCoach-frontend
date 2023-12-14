@@ -24,15 +24,6 @@ function Home () {
 
 return (
         <body className='h-screen flex flex-col'>
-            <header className='mx-4 '>
-                <div className='flex flex-row mt-6 mx-5'>
-                    <Menu />
-                    <a href='/gamer' className='text-white  mb-10'>
-                        <FontAwesomeIcon icon={faUser} className='bg-success h-10 w-10 rounded-full py-3 '/>
-                    </a>
-                </div>
-                <h1 className='ml-8'>Hello eSport Coach</h1>
-            </header>
                 
              <div className='mx-4 mt-5 h-screen'>
                 <SearchBar onSearch={handleSearch} /> 

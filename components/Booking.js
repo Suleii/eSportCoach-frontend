@@ -70,10 +70,8 @@ const handleBooking = () => {
 }
     console.log(date.dateTime)
 return (
-    <div>
-    
-      
-        <div className=' flex flex-col items-center align-center'>
+    <div class="flex flex-col h-screen items-center">
+        <div className=' flex flex-col '>
             <p className="text-xl mb-10 items-center">Booking</p>       
             <select
                 className="select select-bordered  rounded-md mb-10 flex"
@@ -125,13 +123,13 @@ return (
             </div>
        
             {message !==''
-            ?<div  className="w-80 mb-2  flex align-center ">
+            ?<div  className="w-80 mb-2 mx-auto flex align-center ">
                     <span className="text-xs text-accent ">{message}</span>
                 </div>
             : ""
             } 
                 
-            <button type='button' className="w-80 btn btn-success text-white" onClick={handleBooking}>Book my coach</button> 
+            <button type='button' className="w-80 mx-auto btn btn-success text-white" onClick={handleBooking}>Book my coach</button> 
      </div>  
 
     </div>

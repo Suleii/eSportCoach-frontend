@@ -2,7 +2,9 @@ import Home from "@/components/Home";
 
 
 function app() {
-    return <Home />;
+    return(
+       <Home />
+    )
   }
   
   export default app;
