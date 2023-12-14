@@ -5,4 +5,4 @@ function PaymentReturn() {
     return <PaymentSession />
   }
   
-  export default PaymentReturn;
+  export default PaymentReturn; 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-
+import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 import {loadStripe} from '@stripe/stripe-js';
 import {
   EmbeddedCheckoutProvider,
@@ -19,35 +19,18 @@ const stripePromise = loadStripe("pk_test_51OMp3uB5PJ0t72PEmVwASiNtiAVzCa2Sd2CG8
 
 const CheckoutForm = () => {
   const [clientSecret, setClientSecret] = useState(''); // Identifiant de session 
-  // const [coachId, setCoachId] = useState('')
-  // const [sessionType, setSessionType] = useState('')
-  const user = useSelector((state) => state.user.value);
-  const coachId = '65785516dbc6cc8be9b8003f'; 
-  const sessionType = 'oneSession'; 
+  const booking = useSelector((state) => state.booking.value);
+  const username = booking.coach
+  const sessionType = booking.sessionType;
+  
 
-  // useEffect(() => {
-  //   fetch(`http://localhost:3000/coaches/profile/${user}`)
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     console.log(data)
-  //     setCoachId(data.profile._id)
-  //     setSessionType(data.profile.price)
-  //   });
-  // }, [])
-
-  // useEffect(() => {
-  //   fetch(`http://localhost:3000/coaches/profile/${props.username}`)
-  //   .then(response => response.json())
-  //   .then(data => {
-  //     console.log(data.profile.price)
-  //     setSessionType(data.profile.price)
-  //   });
-  // }, [])
 
   useEffect(() => {
     // Create a Checkout Session as soon as we get sessionType and coachID
-    fetch(`http://localhost:3000/checkout_session/create-checkout-session?coachId=${coachId}&sessionType=${sessionType}`, {
+    fetch(`http://localhost:3000/checkout_session/create-checkout-session`, {
       method: "POST",
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, sessionType }),
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
@@ -70,40 +53,68 @@ const CheckoutForm = () => {
 const Return = () => {
   const [status, setStatus] = useState(null);
   const [customerEmail, setCustomerEmail] = useState('');
+  const router = useRouter();
+  const booking = useSelector((state) => state.booking.value);
+  const username = booking.coach
 
   useEffect(() => {
-    const queryString = window.location.search;
-    const urlParams = new URLSearchParams(queryString);
-    const sessionId = urlParams.get('session_id');
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const sessionId = urlParams.get('session_id');
 
-    fetch(`http://localhost:3000/checkout_session/session-status?session_id=${sessionId}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setStatus(data.status);
-        setCustomerEmail(data.customer_email);
-      });
+      fetch(`http://localhost:3000/checkout_session/session-status?session_id=${sessionId}`)
+          .then(res => res.json())
+          .then(data => {
+              setStatus(data.status);
+              setCustomerEmail(data.customer_email);
+              if (data.status === 'complete') {
+                  createBooking();
+              }
+          });
   }, []);
 
+  const createBooking = () => {
+      const bookingData = {
+          game: "NomDuJeu", // Exemple
+          username: "UserId", // Exemple, ID de l'utilisateur
+          coachUsername: username,
+          startDate: new Date(), // Date de début
+          endDate: new Date(), // Date de fin
+      };
+
+      fetch('http://localhost:3000/booking', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(bookingData),
+      })
+      .then(response => response.json())
+      .then(data => console.log("Booking Created:", data))
+      .catch(error => console.error("Booking Error:", error));
+  };
+
+  const handleReturnHome = () => router.push('/');
+
   if (status === 'open') {
-    return (
-      <Navigate to="/payment" />
-    )
+      return <p>Le paiement est en cours de traitement...</p>;
   }
 
   if (status === 'complete') {
-    return (
-      <section id="success">
-        <p>
-          We appreciate your business! A confirmation email will be sent to {customerEmail}.
-
-          If you have any questions, please email <a href="mailto:contact@exp.com">contact@exp.com</a>.
-        </p>
-      </section>
-    )
+      return (
+        <div className="flex items-center justify-center min-h-screen">
+        <section className="shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col items-center justify-center">
+            <h1 className="text-lg font-bold mb-2">Confirmation de Paiement</h1>
+            <p>Merci pour votre confiance ! Un email de confirmation a été envoyé à <strong>{customerEmail}</strong>.</p>
+            <p className="mt-5">Si vous avez des questions, n'hésitez pas à envoyer un email à <a href="mailto:contact@exp.com">contact@exp.com</a>.</p>
+            <button onClick={handleReturnHome} className="mt-5 btn btn-success hover:bg-orange-700 border-none text-white font-bold py-2 px-4 rounded">
+                Retour à l'accueil
+            </button>
+        </section>
+    </div>
+      );
   }
 
   return null;
-}
+};
 
 const PaymentSession = () => {
   return (

@@ -5,6 +5,7 @@ value: {
     date: null,
     nbOfSessions: 0,
     coach: "",
+    sessionType: ""
 },
 };
 
@@ -16,6 +17,7 @@ export const bookingSlice = createSlice({
     state.value.date = action.payload.date;
     state.value.nbOfSessions = action.payload.nbOfSessions;
     state.value.coach = action.payload.coach;
+    state.value.sessionType = action.payload.sessionType
     },
     },
     });

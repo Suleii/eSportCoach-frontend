@@ -64,7 +64,8 @@ const handleBooking = () => {
         setMessage('Please choose the number of sessions and a date.')
     } 
     else {
-        dispatch(selectDate({date: date.dateTime, nbOfSessions: sessionCount , coach: props.username}))
+        const selectedSessionType = sessionCount === 1 ? "oneSession" : "tenSessions";
+        dispatch(selectDate({date: date.dateTime, nbOfSessions: sessionCount , coach: props.username, sessionType: selectedSessionType }))
         router.push('/payment')
         }
 }
