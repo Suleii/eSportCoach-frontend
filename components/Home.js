@@ -33,7 +33,7 @@ return (
                 
             
                 <h1 className='mt-10 ml-8'>Top games</h1>
-                <div className="carousel carousel-center rounded-box flex space-x-4 h-64 mt-10 ">
+                <div className="carousel  rounded-box flex space-x-4 h-64 mt-10 ">
                     <div className="carousel-item">
                         <img className=' w-40 rounded-lg' src="lol.jpg" alt="League of Legends" />
                     </div> 
@@ -85,7 +85,6 @@ return (
                     <a href='/'>Contact</a>
                     <a href='/'>Terms</a>  
                 </div>
-                
             </footer>
         </body>
     )
