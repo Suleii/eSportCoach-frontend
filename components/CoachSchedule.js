@@ -66,7 +66,7 @@ export default function CoachSchedule() {
           selectable={true}
           localizer={localizer}
           defaultDate={new Date()}
-          defaultView="day"
+          defaultView="month"
           events={eventsData}
           style={{ height: "100vh" }}
           onSelectEvent={(event) => alert(event.title)}

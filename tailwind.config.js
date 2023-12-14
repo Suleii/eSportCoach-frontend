@@ -14,14 +14,14 @@ daisyui: {
         'secondary-focus': '#accdaf', // LIGHT GREEN
         'secondary-content': '#EEF5EF', //LIGHT GREEN 2
         'accent': '#fc8366', // ORANGE
-        'accent-focus': '#fff3f0', // LIGHT ORANGE
+        'accent-focus': '#fff3f0', // DONT USE
         'accent-content': '#ffffff', // WHITE
         'neutral': '#212144',// SECONDARY BLUE 2
         'neutral-focus': '#2a2e37',
         'neutral-content': '#ffffff',
         'base-100': '#323153', //SECONDARY BLUE
         'base-200': '#212144', // SECONDARY BLUE 2
-        'base-300': '#d1d5db',
+        'base-300': '#FFF3F0', //LIGHT ORANGE
         'base-content': '#1f2937',
         'info': '#accdaf', // LIGHT GREEN
         'success': '#599c5f', //GREEN
