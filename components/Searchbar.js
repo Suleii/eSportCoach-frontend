@@ -39,12 +39,12 @@ function SearchBar() {
                 <FontAwesomeIcon 
                     icon={faMagnifyingGlass} 
                     onClick={handleSearch}
-                    className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
                 />
                 <input
                     type="text"
                     placeholder="Search"
-                    className="input input-bordered w-full pl-10 rounded-xl" 
+                    className="input input-bordered w-full rounded-xl" 
                     value={searchInput}
                     onChange={(e) => setSearchInput(e.target.value)}
                     onKeyDown={handleKeyDown}
