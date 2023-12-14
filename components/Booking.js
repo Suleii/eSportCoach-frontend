@@ -69,12 +69,11 @@ const handleBooking = () => {
         router.push('/payment')
         }
 }
-    
+    console.log(date.dateTime)
 return (
-    <div className={styles.main}>
-        <p className="text-xl mb-10 ml-10">Booking</p>
-        <div className=' flex flex-col items-center align-center'>
-                
+    <div class="flex flex-col h-screen items-center">
+        <div className=' flex flex-col '>
+            <p className="text-xl mb-10 items-center">Booking</p>       
             <select
                 className="select select-bordered  rounded-md mb-10 flex"
                 onChange={handleSessionCount}>
@@ -82,7 +81,18 @@ return (
                 <option className='hover:bg-base-100 focus:bg-base-100 w-100' value="1">1 session</option>
                 <option className='hover:bg-base-100 focus:bg-base-100 w-100' value="10">10 sessions</option>
             </select>
-            
+          
+           {/* <div>
+                <label htmlFor="session" className="block text-sm font-medium leading-6 text-white">
+                Please choose the number of sessions:
+                </label>
+                <select id="session"name="session" onChange={handleSessionCount}
+                className="mt-2 block w-80 rounded-md border-0 py-1.5 pl-3 pr-10 text-white bg-base-100 sm:text-base sm:leading-6"
+                >
+                <option value="1">1 session</option>
+                <option value="10">10 sessions</option>
+                </select>
+</div> */}
 
                 
             <div className='flex flex-col justify-center w-full items-center'>
@@ -114,13 +124,13 @@ return (
             </div>
        
             {message !==''
-            ?<div  className="w-80 mb-2  flex align-center ">
+            ?<div  className="w-80 mb-2 mx-auto flex align-center ">
                     <span className="text-xs text-accent ">{message}</span>
                 </div>
             : ""
             } 
                 
-            <button type='button' className="w-80 btn btn-success text-white" onClick={handleBooking}>Book my coach</button> 
+            <button type='button' className="w-80 mx-auto btn btn-success text-white" onClick={handleBooking}>Book my coach</button> 
      </div>  
 
     </div>

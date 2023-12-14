@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body{
-height: 100vh;
+height: 100%;
 margin:0;
 background-image: url('../public/Bgrd.png');
 background-size: cover;
@@ -12,5 +12,20 @@ background-attachment:fixed;
 background-repeat: repeat;
 background-repeat: no-repeat;
 color: #fff
+
 }
 
+
+body::-webkit-scrollbar {
+  width: 10px;               /* width of the entire scrollbar */
+}
+
+body::-webkit-scrollbar-track {
+  background: #323153;        /* color of the tracking area */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: rgba(252, 131, 102, .7);    /* color of the scroll thumb */
+  border-radius: 20px;       /* roundness of the scroll thumb */
+  /* creates padding around scroll thumb */
+}

@@ -12,7 +12,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import Review from './Reviews';
-
+import Header from './Header'
 
 
 function CoachProfile (props) {
