@@ -84,8 +84,9 @@ const gamesTags = games.map((item, i)=>
                 </div>
                 <div>
                     <div>
-                    <span className="text-white mb-1">@{props.username}</span>
-                    <span className="ml-5"><FontAwesomeIcon icon={faEllipsisVertical} style={{'color':"#ffffff"}} /></span></div>
+                        <span className="text-white mb-1">@{props.username}</span>
+                        <span className="ml-5"><FontAwesomeIcon icon={faEllipsisVertical} style={{'color':"#ffffff"}} /></span>
+                    </div>
                     <div className="text-xs mb-6"><span>{stars}</span><span className="text-white"> ({reviewCount})</span></div>
                     { user.isCoach 
                         ? <Link href={`/coaches/${props.username}/settings`} type="button" className="btn btn-success text-white">Edit Profile <span className="text-white"><FontAwesomeIcon icon={faPencil} /></span> </Link>
