@@ -1,91 +1,121 @@
-import React, { useState } from 'react'
-import { CardNumberElement, CardCvcElement, CardExpiryElement, useStripe, useElements} from '@stripe/react-stripe-js';
-import axios from 'axios';
-import styles from "../styles/CheckoutForm.module.css"
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
-const CARD_OPTIONS = {
-	iconStyle: "solid",
-	style: {
-		base: {
-			iconColor: "#c4f0ff",
-			color: "black",
-			fontWeight: 500,
-			fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
-			fontSize: "16px",
-			fontSmoothing: "antialiased",
-			":-webkit-autofill": { color: "black" },
-			"::placeholder": { color: "black" }
-		},
-		invalid: {
-			iconColor: "#ffc7ee",
-			color: "black"
-		}
-	}
+import {loadStripe} from '@stripe/stripe-js';
+import {
+  EmbeddedCheckoutProvider,
+  EmbeddedCheckout
+} from '@stripe/react-stripe-js';
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate
+} from "react-router-dom";
+
+
+// This is our test public API key.
+const stripePromise = loadStripe("pk_test_51OMp3uB5PJ0t72PEmVwASiNtiAVzCa2Sd2CG8vQbWAv0VxxCibF4ZsPQryv7hzSWyni9XEeeNtDICtRZmDdhCNEm00jVJzFUnd");
+
+const CheckoutForm = () => {
+  const [clientSecret, setClientSecret] = useState(''); // Identifiant de session 
+  // const [coachId, setCoachId] = useState('')
+  // const [sessionType, setSessionType] = useState('')
+  const user = useSelector((state) => state.user.value);
+  const coachId = '65785516dbc6cc8be9b8003f'; 
+  const sessionType = 'oneSession'; 
+
+  // useEffect(() => {
+  //   fetch(`http://localhost:3000/coaches/profile/${user}`)
+  //   .then(response => response.json())
+  //   .then(data => {
+  //     console.log(data)
+  //     setCoachId(data.profile._id)
+  //     setSessionType(data.profile.price)
+  //   });
+  // }, [])
+
+  // useEffect(() => {
+  //   fetch(`http://localhost:3000/coaches/profile/${props.username}`)
+  //   .then(response => response.json())
+  //   .then(data => {
+  //     console.log(data.profile.price)
+  //     setSessionType(data.profile.price)
+  //   });
+  // }, [])
+
+  useEffect(() => {
+    // Create a Checkout Session as soon as we get sessionType and coachID
+    fetch(`http://localhost:3000/checkout_session/create-checkout-session?coachId=${coachId}&sessionType=${sessionType}`, {
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then((data) => setClientSecret(data.clientSecret));
+  }, []);
+
+  return (
+    <div id="checkout">
+      {clientSecret && (
+        <EmbeddedCheckoutProvider
+          stripe={stripePromise}
+          options={{clientSecret}}
+        >
+          <EmbeddedCheckout />
+        </EmbeddedCheckoutProvider>
+      )}
+    </div>
+  )
 }
-  
 
-export default function PaymentForm() {
-    const [success, setSuccess] = useState(false)
-    const stripe = useStripe()
-    const elements = useElements()
+const Return = () => {
+  const [status, setStatus] = useState(null);
+  const [customerEmail, setCustomerEmail] = useState('');
 
-    const handleSubmit = async (e) =>{
-        e.preventDefault()
-        const cardElement = elements.getElement(CardNumberElement);
+  useEffect(() => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const sessionId = urlParams.get('session_id');
 
-        const {error, paymentMethod} = await stripe.createPaymentMethod({
-            type: "card",
-            card: cardElement,
-        })
+    fetch(`http://localhost:3000/checkout_session/session-status?session_id=${sessionId}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setStatus(data.status);
+        setCustomerEmail(data.customer_email);
+      });
+  }, []);
 
-        if(!error){
-            try {
-                const {id: paymentMethodId} = paymentMethod
-                const response = await axios.post("http://localhost:3000/checkout_session/process_payment", {
-                    amount: 10000,
-                    paymentMethodId
-                })
-
-                if(response.data.success){
-                    console.log("Successful Payment")
-                    setSuccess(true)
-                }
-
-            } catch (error) {
-                console.log("Error", error)
-            }
-        } else {
-            console.log(error.message)
-        }
-    }
-
+  if (status === 'open') {
     return (
-        <>
-            {!success ? 
-            <form onSubmit={handleSubmit}>
-                <fieldset className={styles.FormGroup}>
-                    <div className={styles.FormRow}>
-                        <CardNumberElement options={CARD_OPTIONS} />
-                    </div>
-                </fieldset>
-                <fieldset className={styles.FormGroup}>
-                    <div className={styles.FormRow}>
-                        <CardExpiryElement options={CARD_OPTIONS} />
-                    </div>
-                </fieldset>
-                <fieldset className={styles.FormGroup}>
-                    <div className={styles.FormRow}>
-                        <CardCvcElement options={CARD_OPTIONS} />
-                    </div>
-                </fieldset>
-                <button className={styles.button}>Pay</button>
-            </form>
-            :
-            <div className={styles.paymentSuccess}>
-                <h2>Payment successful</h2>
-                <h3 className={styles.thankYou}>Thank you for your purchase</h3>
-            </div>
-        }
-        </>
-      )
+      <Navigate to="/payment" />
+    )
+  }
+
+  if (status === 'complete') {
+    return (
+      <section id="success">
+        <p>
+          We appreciate your business! A confirmation email will be sent to {customerEmail}.
+
+          If you have any questions, please email <a href="mailto:contact@exp.com">contact@exp.com</a>.
+        </p>
+      </section>
+    )
+  }
+
+  return null;
 }
+
+const PaymentSession = () => {
+  return (
+    <div className="App">
+      <Router>
+        <Routes>
+          <Route path="/payment" element={<CheckoutForm />} />
+          <Route path="/paymentReturn" element={<Return />} />
+        </Routes>
+      </Router>
+    </div>
+  )
+}
+
+export default PaymentSession;
