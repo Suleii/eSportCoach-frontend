@@ -11,7 +11,7 @@ import 'react-day-picker/dist/style.css';
 import styles from '../styles/Booking.module.css';
 
 
-function Booking() {
+function Booking(props) {
 const router = useRouter();
 const [sessionCount, setSessionCount] = useState(0);
 const [message, setMessage] = useState('');
@@ -20,6 +20,7 @@ const [times, setTimes] = useState([]);
 
 
 const dispatch = useDispatch();
+
 
 //Choose how many sessions to book
 const handleSessionCount = (event) => {
@@ -59,15 +60,15 @@ useEffect(() => {
 
 //click on Book will redirect to payment page if date and time are selected
 const handleBooking = () => {
-    if (date.selectedDate===null) {
-        setMessage('Please select a date.')
+    if (date.selectedDate===null || sessionCount ===0) {
+        setMessage('Please choose the number of sessions and a date.')
     } 
     else {
-        dispatch(selectDate({date: date.dateTime, nbOfSessions: sessionCount}))
+        dispatch(selectDate({date: date.dateTime, nbOfSessions: sessionCount , coach: props.username}))
         router.push('/payment')
         }
 }
-    console.log(date.dateTime)
+    
 return (
     <div className={styles.main}>
         <p className="text-xl mb-10 ml-10">Booking</p>
@@ -112,9 +113,8 @@ return (
             </div>
        
             {message !==''
-            ?<div role="alert" className="mb-2 alert alert-warning h-10 flex align-center w-fit">
-                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                    <span className="text-sm">{message}</span>
+            ?<div  className="w-80 mb-2  flex align-center ">
+                    <span className="text-xs text-accent ">{message}</span>
                 </div>
             : ""
             } 
