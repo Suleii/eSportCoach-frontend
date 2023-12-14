@@ -165,15 +165,6 @@ function SearchPage({ searchQuery }) {
 
     return (
       <body className='h-screen flex flex-col'>
-        <header className='mx-4 '>
-          <div className='flex flex-row mt-6 mx-5'>
-            <Menu />              
-            <a href='/gamer' className='text-white  mb-10'>
-              <FontAwesomeIcon icon={faUser} className='bg-success h-10 w-10 rounded-full py-3 '/>
-            </a>
-          </div>
-          <h1 className='ml-8'>Hello eSport Coach</h1>
-        </header>
         <div className="flex flex-col items-center justify-center text-white mx-4 mt-5 ">
           <div className="text-center text-2xl mb-10">Find the best coach for you...</div>
           <SearchBar />
