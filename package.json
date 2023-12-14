@@ -28,6 +28,7 @@
     "react-calendar": "^4.7.0",
     "react-dom": "^18",
     "react-redux": "^9.0.3",
+    "react-router-dom": "^6.21.0",
     "redux-persist": "^6.0.0"
   },
   "devDependencies": {

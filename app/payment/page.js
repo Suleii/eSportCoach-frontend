@@ -1,8 +1,9 @@
 "use client"
-import Stripe from "../../components/StripePayment"
+import React from 'react'
+import PaymentSession from '@/components/CheckoutForm';
 
-function Payment() {
-    return <Stripe />
+function PaymentPage() {
+    return <PaymentSession  />
   }
   
-  export default Payment;
+  export default PaymentPage;
