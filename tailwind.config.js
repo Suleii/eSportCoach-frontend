@@ -41,7 +41,7 @@ daisyui: {
   },
   plugins: [
     require("daisyui"),
-    require ( 'tailwind-scrollbar' ) ,
+    require ( 'tailwind-scrollbar' )( {  nocompatible : true  } ) ,
   ],
   variants: {
     scrollbar: ['rounded']
