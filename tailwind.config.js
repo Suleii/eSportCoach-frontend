@@ -36,9 +36,15 @@ daisyui: {
     extend: {
       backgroundImage: {
         'bck-img': "url('../public/Bgrd.png')",
-      }
+      },
     },
   },
-  plugins: [require("daisyui")],
+  plugins: [
+    require("daisyui"),
+    require ( 'tailwind-scrollbar' ) ,
+  ],
+  variants: {
+    scrollbar: ['rounded']
+  }
 }
 

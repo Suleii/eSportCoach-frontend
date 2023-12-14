@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { login, logout } from '../reducers/user';
 import styles from '../styles/Login.module.css';
 //import { Modal } from 'antd';
-import SignUp from './SignUp';
-import SignIn from './SignIn';
+// import SignUp from './SignUp';
+// import SignIn from './SignIn';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
-// import { login, logout } from '../reducers/user';
+
 
 
 
@@ -31,11 +31,11 @@ function Login() {
 		fetch('http://localhost:3000/users/signup', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ lastname: signUpLastname, firstname: signUpFirstname, username: signUpUsername, mail: signUpMail, password: signUpPassword, isCoach: signUpCoach}),
+			body: JSON.stringify({ lastname: signUpLastname, firstname: signUpFirstname, username: signUpUsername, email: signUpMail, password: signUpPassword, isCoach: signUpCoach}),
 		}).then(response => response.json())
 			.then(data => {
 				if (data.result) {
-					dispatch(login({ lastname: data.lastname, firstname: data.firstname, username: data.username, mail: data.mail, token: data.token, isCoach: data.isCoach }));
+					dispatch(login({ lastname: data.lastname, firstname: data.firstname, username: data.username, email: data.email, token: data.token, isCoach: data.isCoach }));
                     setSignUpLastname('');
 					setSignUpFirstname('');
 					setSignUpUsername('');

@@ -37,7 +37,7 @@ return (
                 
             
                 <h1 className='mt-10 ml-8'>Top games</h1>
-                <div className=" rounded-box flex space-x-4 h-64 mt-10 overflow-x-auto  md:overflow-x-scroll  ">
+                <div className=" rounded-box flex space-x-4 h-64 mt-10 overflow-x-auto pb-2 md:overflow-x-scroll w-[100%] scrollbar scrollbar-thumb-accent scrollbar-track-base-100 scrollbar-thin scrollbar-rounded-lg">
                     <div className="carousel-item ">
                         <img className=' w-40 rounded-lg' src="lol.jpg" alt="League of Legends" />
                     </div> 
@@ -82,6 +82,11 @@ return (
                 <h1 className='mt-10 ml-8'>
                     Best Coaches
                 </h1>
+                <div>
+                    <div className='w-36'>
+                        <img className='rounded-full' src='gotaga.jpg'/>
+                    </div>
+                </div>
                 
 
             </div>
