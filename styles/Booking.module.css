@@ -1,0 +1,17 @@
+
+.today{
+    color:#fc8366;
+    font-weight: bold;
+}
+
+.selected {
+    background-color: #599c5f;
+}
+
+.rdp {
+    --rdp-cell-size: 45px;  
+}
+
+.nav {
+    background-color: #323153;
+}
