@@ -1,14 +1,14 @@
 "use client"
 import React from 'react';
-import Calendar from 'react-calendar';
 import { useState , useEffect} from 'react';
 import { useDispatch } from 'react-redux';
-import 'react-calendar/dist/Calendar.css';
-import styles from '../styles/DateTimepicker.module.css';
 import {add, format} from 'date-fns'
 import {useRouter} from 'next/navigation'
 import { useSelector } from 'react-redux';
 import {selectDate} from '../reducers/selectedDate'
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
+import styles from '../styles/Booking.module.css';
 
 
 function Booking() {
@@ -17,6 +17,7 @@ const [sessionCount, setSessionCount] = useState(0);
 const [message, setMessage] = useState('');
 const [date, setDate] = useState({selectedDate: null, dateTime: null});
 const [times, setTimes] = useState([]);
+
 
 const dispatch = useDispatch();
 
@@ -40,7 +41,7 @@ const getTimes = () => {
     const {selectedDate} = date
     const beginning = add(selectedDate, {hours: 1})
     const end = add(selectedDate, { hours: 24})
-    const interval = 60 // in minutes
+    const interval = 120 // in minutes
 
 const times = []
     for (let i = beginning; i<= end; i=add(i, {minutes: interval})) {
@@ -68,41 +69,59 @@ const handleBooking = () => {
 }
     console.log(date.dateTime)
 return (
-    <div>
-        <div>
+    <div className={styles.main}>
+        <p className="text-xl mb-10 ml-10">Booking</p>
+        <div className=' flex flex-col items-center align-center'>
+                
             <select
-                className="select select-bordered w-64 h-10 rounded-md"
+                className="select select-bordered  rounded-md mb-10 flex"
                 onChange={handleSessionCount}>
-                <option disabled selected>Please choose the number of sessions:</option>
-                <option value="1">1 session</option>
-                <option value="10">10 sessions</option>
+                <option className='btn m-1 w-100' disabled selected >Please choose the number of sessions:</option>
+                <option className='hover:bg-base-100 focus:bg-base-100 w-100' value="1">1 session</option>
+                <option className='hover:bg-base-100 focus:bg-base-100 w-100' value="10">10 sessions</option>
             </select>
-            <div >
-         <div className='flex flex-col justify-center items-center'>
+            
+
+                
+            <div className='flex flex-col justify-center w-full items-center'>
                     <div>
-                        <Calendar 
-                            minDate={new Date()} 
-                            className="bg-neutral text-white text-lg"  
-                            view='month' 
-                            onClickDay={(date) => handleDayClick(date) } 
-                            locale='en-GB'/>
+    
+                        <DayPicker className={styles.rdp}
+                        showOutsideDays 
+                        mode="single"
+                        selected={date.selectedDate}
+                        onSelect={(date) => handleDayClick(date) } 
+                        modifiersClassNames={{
+                            selected: styles.selected,
+                            today: styles.today,
+                          }}
+                        />
                     </div>
 
-                    <div className='flex flex-row flex-wrap gap-4 mt-10 justify-center'>
+                    <div className='grid grid-cols-3 gap-x-6 gap-y-2 mb-10'>
                         {times.map((time,i) =>{
                             return (
-                            <div key={`time-${i}`} className=' rounded-sm bg-accent p-2 hover:bg-accent-focus'>
-                                <button type='button' onClick={()=>{setDate((prev) => ({...prev, dateTime: time})) }}>{format(time, "kk:mm")}</button>
+                            <div key={`time-${i}`} className='rounded mt-2 h-8 w-20 text-sm border border-accent border-1.25 bg-primary hover:bg-accent text-white flex justify-center '>
+                                <button type='button'  onClick={()=>{setDate((prev) => ({...prev, dateTime: time})) }}>{format(time, "kk:mm")}</button>
                             </div>
                             )
                         })}
                     </div>
-        </div>
-    </div>
-        </div>
-        <p>{message}</p>
-        <button type='button' onClick={handleBooking}>Book my coach</button> 
         
+    
+            </div>
+       
+            {message !==''
+            ?<div role="alert" className="mb-2 alert alert-warning h-10 flex align-center w-fit">
+                    <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                    <span className="text-sm">{message}</span>
+                </div>
+            : ""
+            } 
+                
+            <button type='button' className="w-80 btn btn-success text-white" onClick={handleBooking}>Book my coach</button> 
+     </div>  
+
     </div>
     
 
