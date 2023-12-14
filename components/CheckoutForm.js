@@ -18,7 +18,7 @@ import {
 const stripePromise = loadStripe("pk_test_51OMp3uB5PJ0t72PEmVwASiNtiAVzCa2Sd2CG8vQbWAv0VxxCibF4ZsPQryv7hzSWyni9XEeeNtDICtRZmDdhCNEm00jVJzFUnd");
 
 const CheckoutForm = () => {
-  const [clientSecret, setClientSecret] = useState('');
+  const [clientSecret, setClientSecret] = useState(''); // Identifiant de session 
   // const [coachId, setCoachId] = useState('')
   // const [sessionType, setSessionType] = useState('')
   const user = useSelector((state) => state.user.value);
