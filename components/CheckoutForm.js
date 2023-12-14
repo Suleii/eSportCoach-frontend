@@ -103,8 +103,8 @@ const Return = () => {
         <div className="flex items-center justify-center min-h-screen">
         <section className="shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col items-center justify-center">
             <h1 className="text-lg font-bold mb-2">Confirmation de Paiement</h1>
-            <p>Un email de confirmation a été envoyé à <strong>{customerEmail}</strong>.</p>
-            <p className="mt-5">Si vous avez des questions, veuillez envoyer un email à <a href="mailto:contact@exp.com">contact@exp.com</a>.</p>
+            <p>Merci pour votre confiance ! Un email de confirmation a été envoyé à <strong>{customerEmail}</strong>.</p>
+            <p className="mt-5">Si vous avez des questions, n'hésitez pas à envoyer un email à <a href="mailto:contact@exp.com">contact@exp.com</a>.</p>
             <button onClick={handleReturnHome} className="mt-5 btn btn-success hover:bg-orange-700 border-none text-white font-bold py-2 px-4 rounded">
                 Retour à l'accueil
             </button>
