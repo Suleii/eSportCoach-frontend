@@ -2,7 +2,7 @@
 import React from 'react';
 import { useState , useEffect} from 'react';
 import { useDispatch } from 'react-redux';
-import {add, format} from 'date-fns'
+import {add, format, subDays} from 'date-fns'
 import {useRouter} from 'next/navigation'
 import { useSelector } from 'react-redux';
 import {selectDate} from '../reducers/booking'
@@ -20,6 +20,12 @@ const [games, setGames]= useState([])
 const [gameSelected, setGameSelected]= useState('')
 
 const dispatch = useDispatch();
+
+// disable booking for days before today
+const disabledDays = [
+    { from: new Date(2023, 1, 1), to: new Date(subDays(new Date(), 1)) }
+  ];
+  
 
 // Fetch the games listed in the coach profile
 useEffect(() => {
@@ -121,8 +127,9 @@ return (
                         modifiersClassNames={{
                             selected: styles.selected,
                             today: styles.today,
+                            
                           }}
-                        />
+                        disabled={disabledDays}/>
                     </div>
 
                     <div className='grid grid-cols-3 gap-x-6 gap-y-2 mb-10'>

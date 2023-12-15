@@ -2,7 +2,7 @@
 import React from 'react';
 import { useState , useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {add, format} from 'date-fns'
+import {add, format, startOfDay, endOfDay, isWithinInterval} from 'date-fns'
 import {useRouter} from 'next/navigation'
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
@@ -14,13 +14,14 @@ import Event from './Event'
 function CoachSchedule(props) {
 const router = useRouter();
 const token = useSelector((state) => state.user.value.token);
-const [selectedDate, setSelectedDate] = useState(null);
+const [selectedDate, setSelectedDate] = useState("");
 const [open, setOpen] = useState(false);
 const [bookings, setBookings] = useState([]);
 const tokenTemp ="KsbJxFobf6hJF-rGVjW2w4qKgSeZm36X"
 
-const handleToggle = () => setOpen((prev) => !prev);
-
+const handleToggle = () => {
+  setOpen((prev) => !prev);
+}
 const dispatch = useDispatch();
 
 
@@ -36,18 +37,27 @@ const handleDayClick = (date) => {
     })
     };
 
+console.log(`All bookings = ${bookings}`)
 
-    
+//Filter all the bookings by date
+const bookingsSelected = bookings.filter((booking) => 
+  isWithinInterval(new Date(booking.date), {
+    start:startOfDay(selectedDate),
+    end: endOfDay(selectedDate)}))
+
+const events = bookingsSelected.map((booking, i) => {
+          return <Event key={i} game={booking.game} gamer={booking.username.user.username} date={booking.date}/>
+}) 
+
+console.log({bookingsSelected})
+
 return (
 <div className={styles.main}>
       <div className="container">
         {/* opens the modal */}
-        {/* <button className="btn btn-primary" onClick={handleToggle}> 
-          Hello
-        </button> */}
         <Modal open={open}>
           <ul className="py-4">
-         <Event game="LoL" gamer="Machin" date="2023-12-16T20:00:00.000+00:00"/>
+              {events}
           </ul>
           <div className="modal-action">
             {/* closes the modal */}
@@ -76,6 +86,7 @@ return (
                             selected: styles.selected,
                             today: styles.today,
                           }}
+                        
                         />
                     </div>
             </div>
