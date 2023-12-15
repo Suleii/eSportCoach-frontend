@@ -17,37 +17,34 @@ const token = useSelector((state) => state.user.value.token);
 const [selectedDate, setSelectedDate] = useState("");
 const [open, setOpen] = useState(false);
 const [bookings, setBookings] = useState([]);
+const [bookingsSelected, setBookingsSelected] = useState([]);
 const tokenTemp ="KsbJxFobf6hJF-rGVjW2w4qKgSeZm36X"
 
-const handleToggle = () => {
-  setOpen((prev) => !prev);
-}
-const dispatch = useDispatch();
-
-
-//click on a date to display the sessions for the day
-const handleDayClick = (date) => {
-    handleToggle()
-    setSelectedDate(date);
+//Get all bookings for this coach
+useEffect(() => {
     fetch(`http://localhost:3000/bookings/${tokenTemp}`) // search sessions according to the user's token
     .then(response=> response.json())
     .then(data => {
       setBookings(data.bookings)
-      
-    })
-    };
+      })
+  },[])
+
+const handleToggle = () => {
+  setOpen((prev) => !prev);
+}
+  
+//click on a date to display the sessions for the day
+const handleDayClick = (date) => {
+    handleToggle()
+    setSelectedDate(date); // used to select the date in calendar 
+    let bookingsoftheday = bookings.filter((booking) => 
+    isWithinInterval(new Date(booking.date), {
+      start:startOfDay(date),
+      end: endOfDay(date)}))
+    setBookingsSelected(bookingsoftheday)
+     }
 
 console.log(`All bookings = ${bookings}`)
-
-//Filter all the bookings by date
-const bookingsSelected = bookings.filter((booking) => 
-  isWithinInterval(new Date(booking.date), {
-    start:startOfDay(selectedDate),
-    end: endOfDay(selectedDate)}))
-
-const events = bookingsSelected.map((booking, i) => {
-          return <Event key={i} game={booking.game} gamer={booking.username.user.username} date={booking.date}/>
-}) 
 
 console.log({bookingsSelected})
 
@@ -57,7 +54,11 @@ return (
         {/* opens the modal */}
         <Modal open={open}>
           <ul className="py-4">
-              {events}
+              {bookingsSelected.length > 0 
+                ? (bookingsSelected.map((booking, i) => {
+                  return <Event key={i} game={booking.game} gamer={booking.username.user.username} date={booking.date} coach={booking.coachUsername} id={booking._id}/>}))
+                : ""
+              }
           </ul>
           <div className="modal-action">
             {/* closes the modal */}
