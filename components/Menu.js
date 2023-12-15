@@ -16,7 +16,7 @@ function Menu () {
             <input id="my-drawer" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content">
                 {/* Page content here */}
-                <label htmlFor="my-drawer" className="btn btn-square btn-ghost ">
+                <label htmlFor="my-drawer" className="btn btn-square btn-ghost justify-self-start">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-7 h-7 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </label>
             </div> 
