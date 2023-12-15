@@ -20,7 +20,7 @@ const [reviewCount, setReviewCount] = useState(0);
 const [profile, setProfile] = useState([]);
 const [reviewsdata, setReviewsData] = useState([]);
 const [experience, setExperience] = useState([]);
-const [price, setPrice] = useState([]);
+const [price, setPrice] = useState();
 const [socials, setSocials] = useState({});
 const [games, setGames] = useState([]);
 
