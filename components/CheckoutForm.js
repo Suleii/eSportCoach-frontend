@@ -14,23 +14,22 @@ import {
 } from "react-router-dom";
 
 
-// This is our test public API key.
+// This is our test public API key called outside of components to avoid multiple call
 const stripePromise = loadStripe("pk_test_51OMp3uB5PJ0t72PEmVwASiNtiAVzCa2Sd2CG8vQbWAv0VxxCibF4ZsPQryv7hzSWyni9XEeeNtDICtRZmDdhCNEm00jVJzFUnd");
 
 const CheckoutForm = () => {
   const [clientSecret, setClientSecret] = useState(''); // Identifiant de session 
   const booking = useSelector((state) => state.booking.value);
-  const username = booking.coach
-  const sessionType = booking.sessionType;
+  const coachName = booking.coach
   
 
 
   useEffect(() => {
-    // Create a Checkout Session as soon as we get sessionType and coachID
+    // Create a Checkout Session as soon as we get coachName
     fetch(`http://localhost:3000/checkout_session/create-checkout-session`, {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, sessionType }),
+      body: JSON.stringify({ coachName }),
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
@@ -55,7 +54,8 @@ const Return = () => {
   const [customerEmail, setCustomerEmail] = useState('');
   const router = useRouter();
   const booking = useSelector((state) => state.booking.value);
-  const username = booking.coach
+  const user = useSelector((state) => state.user.value)
+  const coachName = booking.coach
 
   useEffect(() => {
       const queryString = window.location.search;
@@ -71,26 +71,61 @@ const Return = () => {
                   createBooking();
               }
           });
-  }, []);
+  }, [status]);
 
+
+  // Create a booking reservation in database
   const createBooking = () => {
-      const bookingData = {
-          game: "NomDuJeu", // Exemple
-          username: "UserId", // Exemple, ID de l'utilisateur
-          coachUsername: username,
-          startDate: new Date(), // Date de début
-          endDate: new Date(), // Date de fin
-      };
+    // Premier fetch pour obtenir les données du coach
+    fetch(`http://localhost:3000/coaches/profile/${coachName}`)
+    .then(res => res.json())
+    .then(coachData => {
+        if (!coachData.result) {
+            console.error("Coach data not found");
+        }
 
-      fetch('http://localhost:3000/booking', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(bookingData),
-      })
-      .then(response => response.json())
-      .then(data => console.log("Booking Created:", data))
-      .catch(error => console.error("Booking Error:", error));
-  };
+        // Deuxième fetch pour obtenir les données de l'utilisateur connecté
+        return fetch(`http://localhost:3000/bookings/profile/${user.username}`)
+        .then(res => res.json())
+        .then(userData => {
+            if (!userData.result) {
+                console.error("User data not found");
+            }
+
+            // Préparation des données de réservation
+            const bookingData = {
+                date: booking.date,
+                coachUsername: coachData.profile._id, 
+                game: booking.game,
+                username: userData.profile.user._id,
+            };
+
+            // Troisième fetch pour créer la réservation
+            return fetch('http://localhost:3000/bookings', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(bookingData)
+            });
+        })
+        .then(response => response.json())
+        .then(bookingData => {
+            console.log("Booking Created:", bookingData);
+
+            // Quatrième fetch pour créer l'indisponibilité
+            return fetch('http://localhost:3000/unavailabilities', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(bookingData),
+            });
+        })
+        .then(response => response.json())
+        .then(unavailabilityData => console.log("Unavailability Created:", unavailabilityData))
+        .catch(error => console.error("Error in creating booking or unavailability:", error));
+    });
+}
+
+
+
 
   const handleReturnHome = () => router.push('/');
 

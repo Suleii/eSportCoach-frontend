@@ -77,9 +77,9 @@ const gamesTags = games.map((item, i)=>
 <div className="badge badge-accent text-xs mr-2" key={i}>{item}</div>
 );
 
-
+console.log(reviewsdata)
     return(
-        <div className="h-screen flex flex-col items-center">
+        <div className=" flex flex-col items-center">
             <div className="flex flex-row justify-between w-5/6">
                 <div className="avatar">
                     <div className="w-24 h-24 rounded-full">
