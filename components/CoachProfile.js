@@ -20,7 +20,7 @@ const [reviewCount, setReviewCount] = useState(0);
 const [profile, setProfile] = useState([]);
 const [reviewsdata, setReviewsData] = useState([]);
 const [experience, setExperience] = useState([]);
-const [price, setPrice] = useState([]);
+const [price, setPrice] = useState();
 const [socials, setSocials] = useState({});
 const [games, setGames] = useState([]);
 
@@ -35,9 +35,6 @@ useEffect(() => {
     .then(response => response.json())
     .then(data => {
     setProfile(data.profile);
-    let reviewsdata = data.profile.reviews;
-    setReviewCount(reviewsdata.length);
-    setReviewsData(reviewsdata);
     let experiencedata = data.profile.experience;
     setExperience(experiencedata);
     let prices = data.profile.price;
@@ -49,11 +46,17 @@ useEffect(() => {
     });
   }, [])
 
+useEffect(() => {
+    fetch(`http://localhost:3000/reviews/${props.username}`)
+    .then(response => response.json())
+    .then(data => {
+        let reviewsdata = data.reviews
+        setReviewCount(reviewsdata.length);
+        setReviewsData(reviewsdata)
+    })
+},[])
 
-  const reviews = reviewsdata.map((data, i) => {
-    console.log(data)
-    return <Review key={i} rating={data.rating} username={data.username.username} photo={data.photo} game={data.game} content={data.content}/>;
-  });
+
 
 const stars = [];
   for (let i = 0; i < 5; i++) {
@@ -64,7 +67,8 @@ const stars = [];
     stars.push(<FontAwesomeIcon key={i} icon={faStar} style={style} />);
   }
 
-
+const reviews =reviewsdata.map((data, i) => {
+    <Review key={i} rating={data.rating} username={data.username.username} photo={data.photo} game={data.game} content={data.content}/>;})
 
 const ExperienceList = experience.map((item, i)=>
 <li key={i} className="mb-4">{item}</li>);
@@ -73,9 +77,9 @@ const gamesTags = games.map((item, i)=>
 <div className="badge badge-accent text-xs mr-2" key={i}>{item}</div>
 );
 
-
+console.log(reviewsdata)
     return(
-        <div className={styles.main}>
+        <div className=" flex flex-col items-center">
             <div className="flex flex-row justify-between w-5/6">
                 <div className="avatar">
                     <div className="w-24 h-24 rounded-full">
@@ -186,35 +190,18 @@ const gamesTags = games.map((item, i)=>
                     </ul>
                  
                 </div>
-                <h3 className="text-lg">Prices</h3>
-                <div className="collapse collapse-arrow bg-base-100 mt-6 w-full">
-                    <input type="checkbox" /> 
-                    <div className="collapse-title text-sm font-medium text-white p-6 ">
-                        Solo Sessions
-                    </div>
-                    <div className="collapse-content text-white"> 
-                        <p>1 session: €{price.oneSession}</p>
-                        <div className="divider divider-neutral h-0.5"></div> 
-                        <p>10 sessions: €{price.TenSession}</p>
-                    </div>
-                </div>
-                <div className="collapse collapse-arrow bg-base-100 mt-6 w-full">
-                    <input type="checkbox" /> 
-                    <div className="collapse-title text-sm font-medium text-white p-6">
-                        Group Sessions
-                    </div>
-                    <div className="collapse-content text-white "> 
-                        <p>1 session: €{price.oneGroupSession}</p>
-                        <div className="divider divider-neutral h-0.5"></div> 
-                        <p>10 sessions: €{price.tenGroupSessions}</p>
-                    </div>
+                <h3 className="text-lg">Price</h3>
+                <div className="">
+                    1 session : €{price}
                 </div>
                 
                 
 
                <h3 className="text-lg mt-6 mb-6">Reviews</h3>
-                {reviews}
-            
+                {reviews.length>0
+                ?(reviews)
+                :( <p> No reviews yet for this coach! </p>)
+                }
             </div>
         </div>
     )

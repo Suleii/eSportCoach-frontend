@@ -23,7 +23,7 @@ function Home () {
    
 
 return (
-        <div className='flex flex-col'>
+        <div className='h-screen flex flex-col'>
                 
              <div className='mx-4 mt-5'>
                 <SearchBar onSearch={handleSearch} /> 
@@ -116,8 +116,6 @@ return (
                 
 
             </div>
-             
-            
         </div>
     )
 }

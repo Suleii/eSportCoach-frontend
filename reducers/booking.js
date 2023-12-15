@@ -3,9 +3,9 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
 value: {
     date: null,
-    nbOfSessions: 0,
+    game: "",
     coach: "",
-    sessionType: ""
+    
 },
 };
 
@@ -15,9 +15,8 @@ export const bookingSlice = createSlice({
     reducers: {
     selectDate: (state, action) => {
     state.value.date = action.payload.date;
-    state.value.nbOfSessions = action.payload.nbOfSessions;
     state.value.coach = action.payload.coach;
-    state.value.sessionType = action.payload.sessionType
+    state.value.game = action.payload.game
     },
     },
     });

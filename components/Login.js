@@ -28,7 +28,7 @@ function Login() {
 
 
     const handleSignUp = () => {
-		fetch('http://localhost:3000/users/signup', {
+		fetch('http://localhost:3000/users/signup/gamer', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ lastname: signUpLastname, firstname: signUpFirstname, username: signUpUsername, email: signUpMail, password: signUpPassword, isCoach: signUpCoach}),
@@ -62,7 +62,7 @@ function Login() {
 		}).then(response => response.json())
 			.then(data => {
 				if (data.result) {
-					dispatch(login({ firstname: data.firstname, username: signInUsername, token: data.token , isCoach: data.isCoach}));
+					dispatch(login({ username: data.username, token: data.token , isCoach: data.isCoach}));
 					setSignInUsername('');
 					setSignInPassword('');
                     router.push('/');
