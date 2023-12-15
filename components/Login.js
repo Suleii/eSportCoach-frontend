@@ -21,35 +21,57 @@ function Login() {
 	const [signUpMail, setSignUpMail] = useState('');
     const [signUpUsername, setSignUpUsername] = useState('');
 	const [signUpPassword, setSignUpPassword] = useState('');
+    const [signInUsername, setSignInUsername] = useState('');
+    const [signInPassword, setSignInPassword] = useState('');
 	const [signUpCoach, setSignUpCoach] = useState(false);
+    
 
     const dispatch = useDispatch();
 	const user = useSelector((state) => state.user.value);
 
 
     const handleSignUp = () => {
-		fetch('http://localhost:3000/users/signup/gamer', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ lastname: signUpLastname, firstname: signUpFirstname, username: signUpUsername, email: signUpMail, password: signUpPassword, isCoach: signUpCoach}),
-		}).then(response => response.json())
-			.then(data => {
-				if (data.result) {
-					dispatch(login({ lastname: data.lastname, firstname: data.firstname, username: data.username, email: data.email, token: data.token, isCoach: data.isCoach }));
-                    setSignUpLastname('');
-					setSignUpFirstname('');
-					setSignUpUsername('');
-					setSignUpMail('');
-					setSignUpPassword('');
-					setSignUpCoach(false);
-                    router.push('/');
-				}
-			});
-        }
-
-        const [signInUsername, setSignInUsername] = useState('');
-	    const [signInPassword, setSignInPassword] = useState('');
-
+        fetch('http://localhost:3000/users/signup/gamer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                lastname: signUpLastname,
+                firstname: signUpFirstname,
+                username: signUpUsername,
+                email: signUpMail,
+                password: signUpPassword,
+                iscoach: signUpCoach,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.result) {
+              
+                dispatch(login({
+                    lastname: signUpLastname,
+                    firstname: signUpFirstname,
+                    username: signUpUsername,
+                    email: signUpMail,
+                    token: data.token,
+                    isCoach: data.isCoach
+                }));
+    
+                
+                setSignUpLastname('');
+                setSignUpFirstname('');
+                setSignUpUsername('');
+                setSignUpMail('');
+                setSignUpPassword('');
+                setSignUpCoach(false)
+    
+              
+                router.push('/');
+            } else {
+           
+                console.log(data.error);
+            }
+        })
+    }
     
 
 

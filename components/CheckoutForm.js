@@ -14,7 +14,7 @@ import {
 } from "react-router-dom";
 
 
-// This is our test public API key called outside of components to avoir multiple call
+// This is our test public API key called outside of components to avoid multiple call
 const stripePromise = loadStripe("pk_test_51OMp3uB5PJ0t72PEmVwASiNtiAVzCa2Sd2CG8vQbWAv0VxxCibF4ZsPQryv7hzSWyni9XEeeNtDICtRZmDdhCNEm00jVJzFUnd");
 
 const CheckoutForm = () => {
@@ -71,7 +71,7 @@ const Return = () => {
                   createBooking();
               }
           });
-  }, []);
+  }, [status]);
 
 
   // Create a booking reservation in database
@@ -81,27 +81,23 @@ const Return = () => {
     .then(res => res.json())
     .then(coachData => {
         if (!coachData.result) {
-            console.log("Coach data not found");
+            console.error("Coach data not found");
         }
 
-        console.log("Coach Data:", coachData.profile);
-
-        // Deuxième fetch pour obtenir les données de l'utilisateur
+        // Deuxième fetch pour obtenir les données de l'utilisateur connecté
         return fetch(`http://localhost:3000/bookings/profile/${user.username}`)
         .then(res => res.json())
         .then(userData => {
             if (!userData.result) {
-                console.log("User data not found");
+                console.error("User data not found");
             }
-
-            console.log("User Data:", userData.profile, userData._id);
 
             // Préparation des données de réservation
             const bookingData = {
                 date: booking.date,
-                coach: coachData.profile._id, 
+                coachUsername: coachData.profile._id, 
                 game: booking.game,
-                username: userData._id,
+                username: userData.profile.user._id,
             };
 
             // Troisième fetch pour créer la réservation
@@ -110,31 +106,26 @@ const Return = () => {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(bookingData)
             });
-        });
-    })
-    .then(response => response.json())
-    .then(data => console.log("Booking Created:", data))
-    .catch(error => console.error("Booking Error:", error));
-};
+        })
+        .then(response => response.json())
+        .then(bookingData => {
+            console.log("Booking Created:", bookingData);
+
+            // Quatrième fetch pour créer l'indisponibilité
+            return fetch('http://localhost:3000/unavailabilities', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(bookingData),
+            });
+        })
+        .then(response => response.json())
+        .then(unavailabilityData => console.log("Unavailability Created:", unavailabilityData))
+        .catch(error => console.error("Error in creating booking or unavailability:", error));
+    });
+}
 
 
-//   const createUnavailability = () => {
-//     const unavailabilityData = {
-//         date: booking.date,
-//         coach: coachName,
-//         game: booking.game, 
-//         username: user.username,
-//     };
 
-//     fetch('http://localhost:3000/unavailabilities', {
-//         method: 'POST',
-//         headers: { 'Content-Type': 'application/json' },
-//         body: JSON.stringify(unavailabilityData),
-//     })
-//     .then(response => response.json())
-//     .then(data => console.log("UnavailabilityCreated:", data))
-//     .catch(error => console.error("Unavailability Error:", error));
-// };
 
   const handleReturnHome = () => router.push('/');
 
