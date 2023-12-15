@@ -28,7 +28,7 @@ function Login() {
 
 
     const handleSignUp = () => {
-		fetch('http://localhost:3000/users/signup', {
+		fetch('http://localhost:3000/users/signup/gamer', {
 			method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ lastname: signUpLastname, firstname: signUpFirstname, username: signUpUsername, email: signUpMail, password: signUpPassword, isCoach: signUpCoach}),
