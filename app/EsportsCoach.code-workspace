@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "../.."
+		},
+		{
+			"path": "../../../lacapsule-fullstack-js"
+		}
+	],
+	"settings": {
+		"liveServer.settings.multiRootWorkspaceName": "EsportsCoach"
+	}
+}

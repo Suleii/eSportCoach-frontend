@@ -3,8 +3,9 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
 value: {
     date: null,
-    coach: '',
-    game: '',
+    game: "",
+    coach: "",
+    
 },
 };
 
