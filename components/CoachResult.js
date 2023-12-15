@@ -41,7 +41,7 @@ function CoachResult(props) {
       </div>
     </div>
     <div>
-      <div className="text-sm font-semibold mt-2 ml-2">From €{props.price}</div>
+      <div className="text-sm font-semibold mt-2 ml-2">€{props.price}</div>
       <button
         className="btn btn-success text-white rounded-full flex items-center justify-center w-12 h-12 mt-2 ml-2"
         onClick={() => router.push(`/coaches/${props.username}`)}

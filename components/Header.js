@@ -7,10 +7,6 @@ function Header () {
 
 const user = useSelector((state) => state.user.value); 
 
-
-    
-
-
 return (
   
     <div className="navbar pt-10 mb-10 justify-between">
