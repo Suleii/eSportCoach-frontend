@@ -61,7 +61,7 @@ function Login() {
 		}).then(response => response.json())
 			.then(data => {
 				if (data.result) {
-					dispatch(login({ firstname: data.firstname, username: signInUsername, token: data.token , isCoach: data.isCoach}));
+					dispatch(login({ username: data.username, token: data.token , isCoach: data.isCoach}));
 					setSignInUsername('');
 					setSignInPassword('');
                     router.push('/');

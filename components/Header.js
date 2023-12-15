@@ -13,7 +13,8 @@ const user = useSelector((state) => state.user.value);
 
 return (
   
-    <div className="navbar mb-10 justify-between">
+    <div className="navbar pt-10 mb-10 justify-between">
+      <div className="w-5/6">
         <Menu />
   <div>
     <a href="/" className="btn btn-ghost w-40">
@@ -42,6 +43,7 @@ return (
         </div>
       </div>
     </div>
+  </div>
   </div>
 </div>
 
