@@ -8,6 +8,7 @@ import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import styles from '../styles/Booking.module.css';
 import Modal from './Modal'
+import Event from './Event'
 
 
 function CoachSchedule(props) {
@@ -15,7 +16,8 @@ const router = useRouter();
 const token = useSelector((state) => state.user.value.token);
 const [selectedDate, setSelectedDate] = useState(null);
 const [open, setOpen] = useState(false);
-
+const [bookings, setBookings] = useState([]);
+const tokenTemp ="KsbJxFobf6hJF-rGVjW2w4qKgSeZm36X"
 
 const handleToggle = () => setOpen((prev) => !prev);
 
@@ -26,13 +28,15 @@ const dispatch = useDispatch();
 const handleDayClick = (date) => {
     handleToggle()
     setSelectedDate(date);
-    fetch(`http://localhost:3000/bookings/${token}`) // search sessions according to the user's token
-    .then(response=> resonse.json())
+    fetch(`http://localhost:3000/bookings/${tokenTemp}`) // search sessions according to the user's token
+    .then(response=> response.json())
     .then(data => {
+      setBookings(data.bookings)
       
     })
     };
-    
+
+
     
 return (
 <div className={styles.main}>
@@ -43,7 +47,7 @@ return (
         </button> */}
         <Modal open={open}>
           <ul className="py-4">
-         {/* {listOfSessions}*/}
+         <Event game="LoL" gamer="Machin" date="2023-12-16T20:00:00.000+00:00"/>
           </ul>
           <div className="modal-action">
             {/* closes the modal */}

@@ -20,7 +20,7 @@ const [reviewCount, setReviewCount] = useState(0);
 const [profile, setProfile] = useState([]);
 const [reviewsdata, setReviewsData] = useState([]);
 const [experience, setExperience] = useState([]);
-const [price, setPrice] = useState([]);
+const [price, setPrice] = useState();
 const [socials, setSocials] = useState({});
 const [games, setGames] = useState([]);
 
@@ -77,9 +77,9 @@ const gamesTags = games.map((item, i)=>
 <div className="badge badge-accent text-xs mr-2" key={i}>{item}</div>
 );
 
-
+console.log(reviewsdata)
     return(
-        <div className="h-screen flex flex-col items-center">
+        <div className=" flex flex-col items-center">
             <div className="flex flex-row justify-between w-5/6">
                 <div className="avatar">
                     <div className="w-24 h-24 rounded-full">

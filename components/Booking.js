@@ -13,18 +13,31 @@ import styles from '../styles/Booking.module.css';
 
 function Booking(props) {
 const router = useRouter();
-const [sessionCount, setSessionCount] = useState(0);
 const [message, setMessage] = useState('');
 const [date, setDate] = useState({selectedDate: null, dateTime: null});
 const [times, setTimes] = useState([]);
-
+const [games, setGames]= useState([])
+const [gameSelected, setGameSelected]= useState('')
 
 const dispatch = useDispatch();
 
+// Fetch the games listed in the coach profile
+useEffect(() => {
+    fetch(`http://localhost:3000/coaches/profile/${props.username}`)
+    .then(response => response.json())
+    .then(data => {
+    let gamesData=data.profile.games;
+    setGames(gamesData);
+    });
+  }, [])
+
+const gamesList = games.map((data, i) =>
+<option className='hover:bg-base-100 focus:bg-base-100 w-100' value={data}>{data}</option>
+)
 
 //Choose how many sessions to book
-const handleSessionCount = (event) => {
-        setSessionCount(parseInt(event.target.value));
+const handleGameSelection = (event) => {
+        setGameSelected(event.target.value);
     };
 
 //click on a date 
@@ -60,26 +73,28 @@ useEffect(() => {
 
 //click on Book will redirect to payment page if date and time are selected
 const handleBooking = () => {
-    if (date.selectedDate===null || sessionCount ===0) {
-        setMessage('Please choose the number of sessions and a date.')
+    if (date.selectedDate===null || gameSelected ==="") {
+        setMessage('Please choose the game and date.')
     } 
     else {
-        const selectedSessionType = sessionCount === 1 ? "oneSession" : "tenSessions";
-        dispatch(selectDate({date: date.dateTime, nbOfSessions: sessionCount , coach: props.username, sessionType: selectedSessionType }))
+        dispatch(selectDate({date: date.dateTime, game: gameSelected , coach: props.username, }))
         router.push('/payment')
         }
 }
     console.log(date.dateTime)
 return (
-    <div class="flex flex-col h-screen items-center">
+    <div className="flex flex-col h-screen items-center">
         <div className=' flex flex-col '>
             <p className="text-xl mb-10 items-center">Booking</p>       
             <select
                 className="select select-bordered  rounded-md mb-10 flex"
-                onChange={handleSessionCount}>
-                <option className='btn m-1 w-100' disabled selected >Please choose the number of sessions:</option>
-                <option className='hover:bg-base-100 focus:bg-base-100 w-100' value="1">1 session</option>
-                <option className='hover:bg-base-100 focus:bg-base-100 w-100' value="10">10 sessions</option>
+                onChange={handleGameSelection}>
+                <option className='btn m-1 w-100' disabled selected >Please choose your game:</option>
+                {games.length>0 
+                ?(gamesList)
+                : <option className='btn m-1 w-100' value="" disabled >No games for this coach</option>
+                }
+                
             </select>
           
            {/* <div>
