@@ -23,6 +23,7 @@ function SearchPage({ searchQuery }) {
 
     // Function to get the lowestPrice according the different options of coaches
     const getLowestPrice = (prices) => {
+        if (!prices) return null
         return Math.min(...Object.values(prices).filter(Boolean));
     };
 
@@ -61,9 +62,7 @@ function SearchPage({ searchQuery }) {
     // Iterate on results to return every results  with CoachResult componant
     const resultData = results.map((result, index) => {
         // Get the lowest price
-        const { oneSession, tenSessions, oneGroupSession, tenGroupSessions } = result.price;
-        const prices = [oneSession, tenSessions, oneGroupSession, tenGroupSessions].filter(Boolean)
-        const lowestPrice = Math.min(...prices); // spread operator to get one array with all argument
+        const lowestPrice = result.price
 
         const reviewsNumber = result.reviews ? result.reviews.length : 0;
 

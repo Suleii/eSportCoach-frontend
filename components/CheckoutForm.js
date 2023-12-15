@@ -20,8 +20,7 @@ const stripePromise = loadStripe("pk_test_51OMp3uB5PJ0t72PEmVwASiNtiAVzCa2Sd2CG8
 const CheckoutForm = () => {
   const [clientSecret, setClientSecret] = useState(''); // Identifiant de session 
   const booking = useSelector((state) => state.booking.value);
-  const username = booking.coach
-  const sessionType = booking.sessionType;
+  const coachName = booking.coach
   
 
 
@@ -30,7 +29,7 @@ const CheckoutForm = () => {
     fetch(`http://localhost:3000/checkout_session/create-checkout-session`, {
       method: "POST",
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ username, sessionType }),
+      body: JSON.stringify({ username: coachName }),
     })
       .then((res) => res.json())
       .then((data) => setClientSecret(data.clientSecret));
@@ -55,7 +54,8 @@ const Return = () => {
   const [customerEmail, setCustomerEmail] = useState('');
   const router = useRouter();
   const booking = useSelector((state) => state.booking.value);
-  const username = booking.coach
+  const user = useSelector((state) => state.user.value)
+  const coachName = booking.coach
 
   useEffect(() => {
       const queryString = window.location.search;
@@ -73,24 +73,23 @@ const Return = () => {
           });
   }, []);
 
-  const createBooking = () => {
-      const bookingData = {
-          game: "NomDuJeu", // Exemple
-          username: "UserId", // Exemple, ID de l'utilisateur
-          coachUsername: username,
-          startDate: new Date(), // Date de début
-          endDate: new Date(), // Date de fin
-      };
+  // const createBooking = () => {
+  //     const bookingData = {
+  //         date: booking.date,
+  //         coach: coachName,
+  //         game: booking.game, 
+  //         username: user.username,
+  //     };
 
-      fetch('http://localhost:3000/booking', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(bookingData),
-      })
-      .then(response => response.json())
-      .then(data => console.log("Booking Created:", data))
-      .catch(error => console.error("Booking Error:", error));
-  };
+  //     fetch('http://localhost:3000/booking', {
+  //         method: 'POST',
+  //         headers: { 'Content-Type': 'application/json' },
+  //         body: JSON.stringify(bookingData),
+  //     })
+  //     .then(response => response.json())
+  //     .then(data => console.log("Booking Created:", data))
+  //     .catch(error => console.error("Booking Error:", error));
+  // };
 
   const handleReturnHome = () => router.push('/');
 
