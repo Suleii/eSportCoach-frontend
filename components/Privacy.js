@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from '../styles/Privacy.module.css'
 
-const PrivacyPage = () => {
+const Privacy = () => {
   return (
     <div className="flex flex-col items-center min-h-screen">
     <div className='w-5/6 flex-1'>
@@ -47,4 +47,4 @@ const PrivacyPage = () => {
   );
 };
 
-export default PrivacyPage;
+export default Privacy;
