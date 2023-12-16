@@ -21,8 +21,8 @@ function CoachResult(props) {
    
 
     return (
-        <div className="m-4 border-b border-white border-opacity-10">
-           <div className="flex items-center space-x-4 m-5">
+        <div className="border-b-2 border-white border-opacity-10 mb-2">
+           <div className="flex items-center space-x-4 ">
     <div className="avatar">
       <div className="w-14 h-14 rounded-full">
         <img src={props.photo} alt="profile picture" />
@@ -43,7 +43,7 @@ function CoachResult(props) {
     <div>
       <div className="text-sm font-semibold mt-2 ml-2">€{props.price}</div>
       <button
-        className="btn btn-success text-white rounded-full flex items-center justify-center w-12 h-12 mt-2 ml-2"
+        className="btn btn-success text-white rounded-full flex items-center justify-center w-12 h-12 mt-2 ml-2 mb-4"
         onClick={() => router.push(`/coaches/${props.username}`)}
       >
         <FontAwesomeIcon icon={faArrowRight} size="lg" />

@@ -6,7 +6,7 @@ import {add, format, startOfDay, endOfDay, isWithinInterval} from 'date-fns'
 import {useRouter} from 'next/navigation'
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
-import styles from '../styles/Booking.module.css';
+import styles from '../styles/CoachSchedule.module.css';
 import Modal from './Modal'
 import Event from './Event'
 
@@ -49,7 +49,8 @@ console.log(`All bookings = ${bookings}`)
 console.log({bookingsSelected})
 
 return (
-<div className={styles.main}>
+<div className="flex flex-col items-center min-h-screen">
+  <div className='w-5/6 flex-1'>
       <div className="container">
         {/* opens the modal */}
         <Modal open={open}>
@@ -93,7 +94,7 @@ return (
             </div>
           
      </div>  
-
+     </div>
     </div>
     
 

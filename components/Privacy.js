@@ -3,8 +3,8 @@ import styles from '../styles/Privacy.module.css'
 
 const PrivacyPage = () => {
   return (
-    <div className="h-full flex flex-col items-center">
-    <div className='w-5/6 h-full'>
+    <div className="flex flex-col items-center min-h-screen">
+    <div className='w-5/6 flex-1'>
       <h1 className="text-xl mb-4">Privacy Policy</h1>
       <p className='mb-10'>Welcome to Experience! Your privacy is important to us.</p>
 

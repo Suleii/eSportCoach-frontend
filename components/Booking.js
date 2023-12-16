@@ -89,8 +89,8 @@ const handleBooking = () => {
 }
     console.log(date.dateTime)
 return (
-    <div className="flex flex-col h-screen items-center">
-        <div className=' flex flex-col '>
+    <div className="flex flex-col items-center min-h-screen">
+        <div className=' flex flex-col w-5/6 flex-1'>
             <p className="text-xl mb-10 items-center">Booking</p>       
             <select
                 className="select select-bordered  rounded-md mb-10 flex"

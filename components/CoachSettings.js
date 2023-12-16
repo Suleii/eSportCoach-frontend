@@ -162,7 +162,8 @@ function CoachSettings(props) {
   
   
     return (
-      <div>
+      <div className="flex flex-col items-center min-h-screen">
+        <div className='w-5/6 flex-1'>
         <h1>{props.username}'s Settings</h1>
         <form onSubmit={handleSubmit}>
           {/* Input fields for coach information */}
@@ -195,7 +196,7 @@ function CoachSettings(props) {
               name="email"
               value={email}
               onChange={handleInputChange}
-              disabled={!isEditing}
+              disabled={true}
             />
           </label>
   
@@ -313,7 +314,8 @@ function CoachSettings(props) {
             </>
           )}
         </form>
-      </div>
+        </div>
+        </div>
     );
   }
 

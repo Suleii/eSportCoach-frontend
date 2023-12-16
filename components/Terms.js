@@ -3,8 +3,8 @@ import styles from '../styles/Privacy.module.css'
 
 const PrivacyPage = () => {
   return (
-    <div className="h-full flex flex-col items-center">
-    <div className='w-5/6 h-full'>
+    <div className="flex flex-col items-center min-h-screen">
+    <div className='w-5/6 flex-1'>
       <h1 className="text-xl mb-4">Terms and Conditions</h1>
 
       <h2 className="text-lg mt-4 mb-4">1. Acceptance of Terms</h2>

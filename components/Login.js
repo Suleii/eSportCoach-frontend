@@ -133,14 +133,14 @@ function Login() {
 
 
 	return (
-        <div className='h-screen flex flex-col'>
-            <div className="flex flex-col  text-center mx-auto text-white h-full ">
-                <div className="space-y-4 ">
-                    <h1 className={styles.textTop}>eSport Coach</h1>
-                    <h3 className={styles.textTop2}>Join the coaching platform.</h3>
+        <div className='flex flex-col items-center min-h-screen'>
+            <div className="flex flex-col  text-center mx-auto text-white w-5/6 flex-1 ">
+                <div className=" ">
+                    <h1 className="mb-10 text-xl">Welcome</h1>
+                    <h3 className="mb-2">Start the experience.</h3>
 
                     {/* BOUTON SIGN UP */}
-                    <button className="bg-success h-10 w-24 rounded-lg" onClick={()=>document.getElementById('my_modal_1').showModal()}>Sign Up</button>
+                    <button className="bg-success h-10 w-24 rounded-lg mb-10" onClick={()=>document.getElementById('my_modal_1').showModal()}>Sign Up</button>
                     <dialog id="my_modal_1" className="modal">
                         <div className="modal-box bg-bck-img">
                             <div className="flex flex-col space-y-4 grid justify-items-center h-96 ">
@@ -212,7 +212,7 @@ function Login() {
                         </div>
                     </dialog>
 
-                    <p className="{styles.textBottom}">Already have an account?</p>
+                    <p className="mb-2">Already a member?</p>
 
                     {/* BOUTON SIGN IN */}
                     <button className="bg-success h-10 w-24 rounded-lg" onClick={()=>document.getElementById('my_modal_2').showModal()}>Sign In</button>
