@@ -65,7 +65,7 @@ function Login() {
                 setSignUpCoach('')
     
               
-                router.push('/');
+                router.push('/quiz');
             } else {
                 console.log(data.error);
                 setMessage(data.error)
@@ -201,7 +201,7 @@ function Login() {
                                                         : signUpCoach === 'Gamer'
                                                         ? handleSignUpGamer()
                                                         : handleSignUpCoach()}}
-                                >Sign up and take the quiz</button>
+                                >Sign up</button>
                             </div>
                             <div className="modal-action">
                                 <form method="dialog">

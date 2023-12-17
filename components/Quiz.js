@@ -1,6 +1,8 @@
 "use client"
 import React from 'react';
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+
 
 const Quiz = () => {
 const [games, setGames] = useState([])
@@ -34,18 +36,20 @@ const handleTypeOfCoach = (value) => {
   return (
     <div className="flex flex-col items-center min-h-screen">
         <div className='w-5/6 flex-1'>
+            <p className='mb-10 text-lg'>Let us help find the best coach for you!</p>
             <select
-                className="select select-bordered w-full rounded-md mb-10 flex"
-                onChange={handleGameSelection}>
-                <option className='btn m-1 w-full' disabled defaultValue >What game do you need a coach for?</option>
+                className="select select-bordered w-full rounded-md mb-5 flex lg:mb-10"
+                onChange={handleGameSelection}
+                defaultValue={'question'}>
+                <option className='btn m-1 w-full' disabled value='question' >What game do you need a coach for?</option>
                 {games.length>0 
                 ?(gamesList)
                 : <option className='btn m-1 w-full' value="" disabled >No games in our database</option>
                 }
             </select>
-            <div className='bg-base-100 rounded-md mb-10 p-4'>
-                <p className='mb-2'>Do you want to play with a pro player?</p>
-                <div className="flex " >
+            <div className='bg-base-100 rounded-md mb-5 p-4 lg:mb-10'>
+                <p className='mb-2 lg:mb-5'>Do you want to play with a pro player?</p>
+                <div className="flex justify-between w-full" >
                 {/* first radio button */}
                 <div className="mb-[0.125rem] mr-4 inline-block min-h-[1.5rem] pl-[1.5rem]">
                     <input
@@ -94,10 +98,57 @@ const handleTypeOfCoach = (value) => {
                 </div>
             
             </div>
-            <div className="form-control bg-base-100 rounded-md p-4 flex items-start mb-2">
-                <p>Why do you need a coach?</p>
-               {/* checkbox */}
+            <div className="form-control bg-base-100 rounded-md p-4 flex items-start mb-5 lg:mb-10">
+                <p className="mb-2 lg:mb-5">Why do you need a coach?</p>
+                <div className="space-y-4 lg:flex lg:justify-between lg:w-full lg:space-y-0">
+                <div className="flex items-center">
+                    <input
+                    id="c1"
+                    type="checkbox"
+                    className="appearance-none rounded-sm h-4 w-4 cursor-pointer bg-white  focus:ring-success ring-2 ring-info focus:ring-2 checked:bg-success"
+                    />
+                    <p className="pl-2 text-sm">
+                    Win competitions
+                    </p>
+                </div>
+                <div className="flex items-center">
+                    <input
+                    id="c1"
+                    type="checkbox"
+                    className="appearance-none rounded-sm h-4 w-4 cursor-pointer bg-white  focus:ring-success ring-2 ring-info focus:ring-2 checked:bg-success"
+                    />
+                    <p className="pl-2 text-sm">
+                    Improve my skills
+                    </p>
+                </div>
+                <div className="flex items-center">
+                    <input
+                    id="c1"
+                    type="checkbox"
+                    className="appearance-none rounded-sm h-4 w-4 cursor-pointer bg-white  focus:ring-success ring-2 ring-info focus:ring-2 checked:bg-success"
+                    />
+                    <p className="pl-2 text-sm">
+                    Get some tips
+                    </p>
+                </div>
+                </div>
             </div>
+            <select className="select select-bordered w-full rounded-md mb-5 flex lg:mb-10" defaultValue={'question'}>
+                <option className='btn m-1 w-full' disabled value='question' >What is your level?</option>
+                <option className='btn m-1 w-full' value=""  >Beginner</option>
+                <option className='btn m-1 w-full' value=""  >Intermediate</option>
+                <option className='btn m-1 w-full' value=""  >Expert</option>
+            </select>
+            <select className="select select-bordered w-full rounded-md mb-10 flex lg:mb-10" defaultValue={'question'}>
+                <option className='btn m-1 w-full' disabled value='question' >Pick a language</option>
+                <option className='btn m-1 w-full' value=""  >English</option>
+                <option className='btn m-1 w-full' value=""  >French</option>
+                <option className='btn m-1 w-full' value=""  >Russian</option>
+            </select>
+            <div className='w-full flex items-center'>
+                <button type='button' className="w-80 mx-auto btn btn-success text-white mb-3" >Find my coach</button> 
+            </div>
+            <Link href='/' className='flex justify-end w-full'>Skip {">"}{">"}</Link>
         </div>
     </div>
   );

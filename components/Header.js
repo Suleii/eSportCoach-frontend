@@ -23,11 +23,11 @@ return (
         <div className="w-10 rounded-full">
         {
             user.username && user.isCoach===true? (
-                <a href="/" >
+                <a href={`/coaches/${user.username}`} >
                 <img alt="Profile pic" src="" />
                 </a>
         ) : user.username && user.isCoach===false? (
-            <a href="/" >
+            <a href={`/gamer/${user.username}`} >
             <img alt="Profile pic" src="" />
             </a>
         ) : (

@@ -43,7 +43,7 @@ useEffect(() => {
 
   const reviews = reviewsdata.map((data, i) => {
     console.log(data)
-    return <Review key={i} rating={data.rating} username={data.username.username} photo={data.photo} game={data.game} content={data.content}/>;
+    return <Review key={i} rating={data.rating} username={user.username} photo={data.photo} game={data.game} content={data.content}/>;
   });
 
 const stars = [];
@@ -62,8 +62,9 @@ const gamesTags = games.map((item, i)=>
 
 
     return(
-        <div className={styles.main}>
-            <div className="flex flex-row justify-between w-5/6">
+        <div className="flex flex-col items-center min-h-screen">
+          <div className='w-5/6 flex-1'>
+            <div className="flex flex-row justify-between">
                 <div className="avatar">
                     <div className="w-24 h-24 rounded-full">
                         <img src={profile.photo} alt="Profile pic" />
@@ -88,7 +89,7 @@ const gamesTags = games.map((item, i)=>
                <h3 className="text-lg mt-6 mb-6">My reviews</h3>
                 {reviews}
             
-            
+            </div>
         </div>
     )
 }
