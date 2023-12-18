@@ -25,11 +25,7 @@ function Home () {
 return (
         <div className="flex flex-col items-center min-h-screen">
                 
-<<<<<<< HEAD
-             <div className='mx-4 mt-5'>
-=======
              <div className='w-5/6 flex-1'>
->>>>>>> b6c8e4729c94ef22d8d68f71b07bf1999130f7c4
                 <SearchBar onSearch={handleSearch} /> 
                 
             
