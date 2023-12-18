@@ -23,9 +23,9 @@ function Home () {
    
 
 return (
-        <div className="flex flex-col items-center min-h-screen">
+        <div className="flex flex-col items-center w-[100%]">
                 
-             <div className='w-5/6 flex-1'>
+             <div className='w-5/6 h-full flex-1'>
                 <SearchBar onSearch={handleSearch} /> 
                 
             

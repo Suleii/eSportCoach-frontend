@@ -32,7 +32,7 @@ function Menu () {
                     <li className='text-white'><a href='/settings'><FontAwesomeIcon icon={faGear} />Settings</a></li>
                 </div>
                 <div className=''>
-                    <li className='text-white mb-28' onClick={() => handleLogout()}><a href='/login'><FontAwesomeIcon className='rotate-180' icon={faRightFromBracket} />Logout</a></li>
+                    <li className='text-white mb-28' onClick={() => handleLogout()}><a href='/signup'><FontAwesomeIcon className='rotate-180' icon={faRightFromBracket} />Logout</a></li>
                 </div>
                 </ul>
             </div>

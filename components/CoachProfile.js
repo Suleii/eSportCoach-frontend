@@ -85,7 +85,7 @@ const gamesTags = games.map((item, i)=>
 
 console.log(reviewsdata)
     return(
-        <div className="flex flex-col items-center min-h-screen">
+        <div className="flex flex-col items-center ">
             <div className='w-5/6 flex-1'>
             <div className="flex flex-row justify-between">
                 <div className="avatar">
