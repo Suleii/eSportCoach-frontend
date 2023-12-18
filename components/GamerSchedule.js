@@ -10,7 +10,7 @@ import Modal from './Modal'
 import Event from './Event'
 
 
-function CoachSchedule(props) {
+function GamerSchedule(props) {
 const user = useSelector((state) => state.user.value);
 const [profile, setProfile]=useState([])
 const [selectedDate, setSelectedDate] = useState("");
@@ -176,4 +176,4 @@ return (
 
 )
 }
-export default CoachSchedule;
+export default GamerSchedule;
