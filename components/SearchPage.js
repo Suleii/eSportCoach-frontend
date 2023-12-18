@@ -162,15 +162,15 @@ function SearchPage({ searchQuery }) {
     
 
       return (
-        <div className='h-screen flex flex-col'>
-          <div className="flex flex-col items-center justify-center text-white mx-4 mt-5 ">
-            <div className="text-center text-2xl mb-10">Find the best coach for you...</div>
+        <div className='flex flex-col items-center min-h-screen'>
+          <div className="w-5/6 flex-1 text-white ">
+            <div className="text-lg mb-10">Find the best coach for you...</div>
             <SearchBar />
               <>
-                <div className="flex flex-col items-center justify-center text-xl my-4 p-3">
+                <div className="flex flex-col items-center justify-center text-lg mt-5">
                   Filters
                 </div>
-                <div className="flex flex-row items-center">
+                <div className="flex flex-row items-center w-full justify-center mt-5">
                   <div className="flex flex-col items-center space-y-2 mb-4 mr-10">
                     <div onClick={showReviewsModal} className={`rounded-2xl w-12 h-12 flex justify-center items-center  ${minRating !== 0 ? 'bg-orange-500 hover:bg-orange-400' : 'bg-zinc-400 hover:bg-zinc-300'} cursor-pointer`}>
                       <FontAwesomeIcon icon={faStar}  className="text-white" />
@@ -178,11 +178,11 @@ function SearchPage({ searchQuery }) {
                     <div className="text-sm">Reviews</div>
                     {isModalVisible && <RatingModal />}
                   </div>
-                  <div className="flex flex-col items-center justify-around space-y-2 mb-4">
+                  <div className="flex flex-col items-center justify-between space-y-2 mb-4">
                     <div onClick={showPriceModal}  className={`rounded-2xl w-12 h-12 flex justify-center items-center p-3 ${minPrice !== null || maxPrice !== null ? 'bg-orange-500 hover:bg-orange-400' : 'bg-zinc-400 hover:bg-zinc-300'} cursor-pointer `}>
                       <FontAwesomeIcon icon={faFilterCircleDollar} className="text-white" />
                     </div>
-                    <div className="text-sm">Price</div>
+                    <div className="text-base">Price</div>
                     {isPriceModalVisible && <PriceModal />}
                   </div>
                 </div>

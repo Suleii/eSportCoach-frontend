@@ -35,14 +35,20 @@ useEffect(() => {
     .then(response => response.json())
     .then(data => {
     setProfile(data.profile);
+    
     let experiencedata = data.profile.experience;
     setExperience(experiencedata);
+    
     let prices = data.profile.price;
     setPrice(prices);
+    
     let socialslinks = data.profile.social;
     setSocials(socialslinks);
+    
     let gamesData=data.profile.games;
     setGames(gamesData);
+
+    
     });
   }, [])
 
@@ -68,7 +74,7 @@ const stars = [];
   }
 
 const reviews =reviewsdata.map((data, i) => {
-    <Review key={i} rating={data.rating} username={data.username.username} photo={data.photo} game={data.game} content={data.content}/>;})
+    return <Review key={i} rating={data.rating} username={data.username.username} photo={data.photo} game={data.game} content={data.content}/>;})
 
 const ExperienceList = experience.map((item, i)=>
 <li key={i} className="mb-4">{item}</li>);
@@ -79,8 +85,9 @@ const gamesTags = games.map((item, i)=>
 
 console.log(reviewsdata)
     return(
-        <div className=" flex flex-col items-center">
-            <div className="flex flex-row justify-between w-5/6">
+        <div className="flex flex-col items-center min-h-screen">
+            <div className='w-5/6 flex-1'>
+            <div className="flex flex-row justify-between">
                 <div className="avatar">
                     <div className="w-24 h-24 rounded-full">
                         <img src={profile.photo} alt="Profile pic" />
@@ -100,15 +107,15 @@ console.log(reviewsdata)
                 </div>
                 
             </div>
-            <div className="text-white  w-5/6">
+            <div className="text-white w-full">
                 <h3 className="text-lg mb-1"> About me</h3>
                 <p className="text-sm mb-2">{profile.about}</p>
                 {gamesTags}
                 <div>
-                <h3 className="text-lg mt-6">Experience/Achievements</h3>
-                <div className="text-base mx-10 mt-4">
-                    <ul className='list-image-[url(../public/circle-check-solid.svg)]'>{ExperienceList}</ul> 
-                </div> 
+                    <h3 className="text-lg mt-6">Experience/Achievements</h3>
+                    <div className="text-base mx-10 mt-4">
+                        <ul className='list-image-[url(../public/circle-check-solid.svg)]'>{ExperienceList}</ul> 
+                    </div> 
                 </div>
                 <div className='flex flex-row'>
                 <ul className="menu menu-horizontal bg-base-100 rounded-box mb-6">
@@ -190,7 +197,7 @@ console.log(reviewsdata)
                     </ul>
                  
                 </div>
-                <h3 className="text-lg">Price</h3>
+                <h3 className="text-lg mb-1">Price</h3>
                 <div className="">
                     1 session : €{price}
                 </div>
@@ -202,6 +209,7 @@ console.log(reviewsdata)
                 ?(reviews)
                 :( <p> No reviews yet for this coach! </p>)
                 }
+            </div>
             </div>
         </div>
     )

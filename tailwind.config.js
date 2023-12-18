@@ -21,7 +21,7 @@ daisyui: {
         'neutral-content': '#ffffff',
         'base-100': '#323153', //SECONDARY BLUE
         'base-200': '#212144', // SECONDARY BLUE 2
-        'base-300': '#FFF3F0', //LIGHT ORANGE
+        'base-300': '#F4C38D', //LIGHT ORANGE
         'base-content': '#1f2937',
         'info': '#accdaf', // LIGHT GREEN
         'success': '#599c5f', //GREEN

@@ -21,12 +21,17 @@ function Login() {
 	const [signUpMail, setSignUpMail] = useState('');
     const [signUpUsername, setSignUpUsername] = useState('');
 	const [signUpPassword, setSignUpPassword] = useState('');
-	const [signUpCoach, setSignUpCoach] = useState(false);
+    const [signInUsername, setSignInUsername] = useState('');
+    const [signInPassword, setSignInPassword] = useState('');
+	const [signUpCoach, setSignUpCoach] = useState("");
+    const [message, setMessage] = useState('')
+    
 
     const dispatch = useDispatch();
 	const user = useSelector((state) => state.user.value);
 
 
+<<<<<<< HEAD
     const handleSignUp = () => {
 		fetch('http://localhost:3000/users/signup/gamer', {
 			method: 'POST',
@@ -53,6 +58,91 @@ function Login() {
 
        
 
+=======
+    const handleSignUpGamer = () => {
+        fetch('http://localhost:3000/users/signup/gamer', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                lastname: signUpLastname,
+                firstname: signUpFirstname,
+                username: signUpUsername,
+                email: signUpMail,
+                password: signUpPassword,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.result) {
+              
+                dispatch(login({
+                    lastname: signUpLastname,
+                    firstname: signUpFirstname,
+                    username: signUpUsername,
+                    email: signUpMail,
+                    token: data.token,
+                    isCoach: false
+                }));
+    
+                
+                setSignUpLastname('');
+                setSignUpFirstname('');
+                setSignUpUsername('');
+                setSignUpMail('');
+                setSignUpPassword('');
+                setSignUpCoach('')
+    
+              
+                router.push('/quiz');
+            } else {
+                console.log(data.error);
+                setMessage(data.error)
+            }
+        })
+    }
+    
+    const handleSignUpCoach = () => {
+        fetch('http://localhost:3000/users/signup/coach', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                lastname: signUpLastname,
+                firstname: signUpFirstname,
+                username: signUpUsername,
+                email: signUpMail,
+                password: signUpPassword,
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.result) {
+              
+                dispatch(login({
+                    lastname: signUpLastname,
+                    firstname: signUpFirstname,
+                    username: signUpUsername,
+                    email: signUpMail,
+                    token: data.token,
+                    isCoach: true,
+                }));
+    
+                
+                setSignUpLastname('');
+                setSignUpFirstname('');
+                setSignUpUsername('');
+                setSignUpMail('');
+                setSignUpPassword('');
+                setSignUpCoach('')
+    
+              
+                router.push('/');
+            } else {
+                console.log(data.error);
+                setMessage(data.error)
+            }
+        })
+    }
+>>>>>>> b6c8e4729c94ef22d8d68f71b07bf1999130f7c4
 
     const handleSignIn = () => {
 		fetch('http://localhost:3000/users/signin', {
@@ -72,14 +162,14 @@ function Login() {
 
 
 	return (
-        <div className='h-screen flex flex-col'>
-            <div className="flex flex-col  text-center mx-auto text-white h-full ">
-                <div className="space-y-4 ">
-                    <h1 className={styles.textTop}>eSport Coach</h1>
-                    <h3 className={styles.textTop2}>Join the coaching platform.</h3>
+        <div className='flex flex-col items-center min-h-screen'>
+            <div className="flex flex-col  text-center mx-auto text-white w-5/6 flex-1 ">
+                <div className=" ">
+                    <h1 className="mb-10 text-xl">Welcome</h1>
+                    <h3 className="mb-2">Start the experience.</h3>
 
                     {/* BOUTON SIGN UP */}
-                    <button className="bg-success h-10 w-24 rounded-lg" onClick={()=>document.getElementById('my_modal_1').showModal()}>Sign Up</button>
+                    <button className="bg-success h-10 w-24 rounded-lg mb-10" onClick={()=>document.getElementById('my_modal_1').showModal()}>Sign Up</button>
                     <dialog id="my_modal_1" className="modal">
                         <div className="modal-box bg-bck-img">
                             <div className="flex flex-col space-y-4 grid justify-items-center h-96 ">
@@ -122,13 +212,25 @@ function Login() {
                                 />
                                 <select
                                     className="select select-bordered w-64 h-10 rounded-md "
-                                    onChange={(e) => setSignUpCoach(e.target.value === 'Coach')}
+                                    onChange={(e) => setSignUpCoach(e.target.value)}
                                     >
                                     <option disabled selected>Choose :</option>
                                     <option value="Gamer">Gamer</option>
                                     <option value="Coach">Coach</option>
                                 </select>
-                                <button className="text-white bg-success w-64 h-10 rounded-md" onClick={() => handleSignUp()}>Sign up and take the quiz</button>
+                                {message !==''
+                                    ?<div  className="w-80 mb-2 mx-auto flex align-center ">
+                                            <span className="text-xs text-accent ">{message}</span>
+                                        </div>
+                                    : ""
+                                    } 
+                                <button className="text-white bg-success w-64 h-10 rounded-md" 
+                                onClick={() => {signUpCoach === ''
+                                                        ? setMessage("Sign up as a gamer or a coach")
+                                                        : signUpCoach === 'Gamer'
+                                                        ? handleSignUpGamer()
+                                                        : handleSignUpCoach()}}
+                                >Sign up</button>
                             </div>
                             <div className="modal-action">
                                 <form method="dialog">
@@ -139,7 +241,7 @@ function Login() {
                         </div>
                     </dialog>
 
-                    <p className="{styles.textBottom}">Already have an account?</p>
+                    <p className="mb-2">Already a member?</p>
 
                     {/* BOUTON SIGN IN */}
                     <button className="bg-success h-10 w-24 rounded-lg" onClick={()=>document.getElementById('my_modal_2').showModal()}>Sign In</button>
