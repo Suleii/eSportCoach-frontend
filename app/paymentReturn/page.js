@@ -1,8 +1,8 @@
-"use client"
-import PaymentSession from "@/components/CheckoutForm";
+"use client";
+import { Return } from "@/components/CheckoutForm";
 
 function PaymentReturn() {
-    return <PaymentSession />
-  }
-  
-  export default PaymentReturn; 
+  return <Return />;
+}
+
+export default PaymentReturn;

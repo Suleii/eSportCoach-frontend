@@ -1,9 +1,9 @@
-"use client"
-import React from 'react'
-import PaymentSession from '@/components/CheckoutForm';
+"use client";
+import React from "react";
+import { CheckoutForm } from "@/components/CheckoutForm";
 
 function PaymentPage() {
-    return <PaymentSession  />
-  }
-  
-  export default PaymentPage;
+  return <CheckoutForm />;
+}
+
+export default PaymentPage;

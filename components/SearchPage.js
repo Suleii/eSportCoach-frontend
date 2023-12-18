@@ -1,201 +1,348 @@
-"use client"
-import Menu from './Menu'
-import { useState, useEffect } from 'react';
-import { Modal } from 'antd';
-import CoachResult from './CoachResult';
+"use client";
+import { useState, useEffect } from "react";
+import CoachResult from "./CoachResult";
 import SearchBar from "./Searchbar";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser } from '@fortawesome/free-solid-svg-icons';
-import { faStar, faFilterCircleDollar} from '@fortawesome/free-solid-svg-icons';
-import '@fortawesome/fontawesome-svg-core/styles.css';
-import { config } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faStar,
+  faFilterCircleDollar,
+  faLanguage,
+} from "@fortawesome/free-solid-svg-icons";
+import "@fortawesome/fontawesome-svg-core/styles.css";
+
+import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false;
 
-
-
 function SearchPage({ searchQuery }) {
-    const [results, setResults] = useState([]);
-    const [minRating, setMinRating] = useState(0);
-    const [isModalVisible, setIsModalVisible] = useState(false);
-    const [minPrice, setMinPrice] = useState(null);
-    const [maxPrice, setMaxPrice] = useState(null);
-    const [isPriceModalVisible, setIsPriceModalVisible] = useState(false);
+  const [results, setResults] = useState([]);
+  const [minRating, setMinRating] = useState(0);
+  const [isRatingModalVisible, setIsRatingModalVisible] = useState(false);
+  const [minPrice, setMinPrice] = useState(null);
+  const [maxPrice, setMaxPrice] = useState(null);
+  const [isPriceModalVisible, setIsPriceModalVisible] = useState(false);
+  const [languageFilter, setLanguageFilter] = useState(null);
+  const [isLanguageModalVisible, setIsLanguageModalVisible] = useState(false);
 
-    // Function to get the lowestPrice according the different options of coaches
-    const getLowestPrice = (prices) => {
-        if (!prices) return null
-        return Math.min(...Object.values(prices).filter(Boolean));
-    };
+  // useEffect is triggered with the modification of searchQuery, minRating, minPrice, maxPrice and language
+  useEffect(() => {
+    // Récupération des réponses du quiz depuis le Local Storage
+    const storedAnswers = localStorage.getItem("quizAnswers");
+    let gameFilter, budgetFilter, languageFilterFromQuiz;
 
-    // useEffect is triggered with the modification of searchQuery, minRating, minPrice or maxPrice
-    useEffect(() => {
-        // searchQuery is a prop which is used on app/search/page.js
-        if (searchQuery) {
-            fetch(`http://localhost:3000/search/globalSearch?search=${searchQuery}`)
-                .then(response => response.json())
-                .then(data => {
-                    console.log(data)
-                    if (data.result) {
-                        // coachData if search by username of gameData if search by game name
-                        const searchResults = data.coachData ? [data.coachData] : data.gameData; 
-                        
-                        // Sort randomly the arrays displayed
-                        searchResults.sort(() => 0.5 - Math.random()); 
-            
-                        // Optionnaly filter the results according to rating score
-                        const resultsWithRating = searchResults.filter(item => item.rating >= minRating);
+    if (storedAnswers) {
+      const quizAnswers = JSON.parse(storedAnswers);
+      gameFilter = quizAnswers.game; // Assurez-vous que ceci correspond à vos filtres existants
+      budgetFilter = quizAnswers.maxBudget;
+      languageFilterFromQuiz = quizAnswers.language;
 
-                        // Optionnaly filter the results according to price
-                        const resultsWithPrice = resultsWithRating.filter(item => {
-                             const lowestPrice = getLowestPrice(item.price);
-                             return (minPrice === null || lowestPrice >= minPrice) && (maxPrice === null || lowestPrice <= maxPrice);
-                        });
-                        setResults(resultsWithPrice);
-                    } else {
-                        setResults([]);
-                    }
-                })
-        }
-    }, [searchQuery, minRating, minPrice, maxPrice]);
+      // Effacer les réponses du quiz stockées pour éviter des comportements inattendus lors de visites ultérieures
+      localStorage.removeItem("quizAnswers");
+    }
 
+    // Requête API pour récupérer les résultats de recherche
+    if (searchQuery) {
+      fetch(`http://localhost:3000/search/globalSearch?search=${searchQuery}`)
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.result) {
+            const searchResults = data.coachData
+              ? [data.coachData]
+              : data.gameData;
+            searchResults.sort(() => 0.5 - Math.random());
 
-    // Iterate on results to return every results  with CoachResult componant
-    const resultData = results.map((result, index) => {
-        // Get the lowest price
-        const lowestPrice = result.price
+            // Appliquer les filtres (y compris ceux du quiz)
+            const filteredResults = searchResults.filter((item) => {
+              return (
+                item.rating >= minRating &&
+                (minPrice === null || item.price >= minPrice) &&
+                (maxPrice === null || item.price <= maxPrice) &&
+                (languageFilter === null ||
+                  item.language.includes(languageFilter)) &&
+                (!gameFilter || item.games.includes(gameFilter)) && // Ajoutez ce filtre si applicable
+                (!budgetFilter || item.price <= budgetFilter) &&
+                (!languageFilterFromQuiz ||
+                  item.language.includes(languageFilterFromQuiz))
+              );
+            });
 
-        const reviewsNumber = result.reviews ? result.reviews.length : 0;
+            setResults(filteredResults);
+          } else {
+            setResults([]);
+          }
+        });
+    }
+  }, [searchQuery, minRating, minPrice, maxPrice, languageFilter]);
 
-        return (
-            <CoachResult 
-            key={index} 
-            username={result.user.username} 
-            reviewsNumber={reviewsNumber}
-            gameTag={result.games}
-            price={lowestPrice}
-            reviewsAvg={result.rating}
-            photo={result.photo}
-            />
-        );
-    });
+  // Iterate on results to return every results  with CoachResult componant
+  const resultData = results.map((result, index) => {
+    const reviewsNumber = result.reviews ? result.reviews.length : 0;
 
-    // Update minRating and close modal
-    const handleMinRatingSelection = (rating) => {
-        setMinRating(rating);
-        setIsModalVisible(false);
-    };
-    
-    // Open review modal
-    const showReviewsModal = () => {
-        setIsModalVisible(true);
-    };
-
-    // Rating modal componant
-    const RatingModal = () => (
-        <Modal
-        title="Select Minimum Rating"
-        open={isModalVisible}
-        onCancel={() => {
-          setIsModalVisible(false);
-          setMinRating(0); // Reset filter on click on cancel button
-        }}
-        footer={[
-          <button key="cancel" onClick={() => {
-            setIsModalVisible(false);
-            setMinRating(0); // Reset filter on click on cancel button
-          }}>
-            Cancel filter
-          </button>,
-          <button key="submit"  onClick={handleMinRatingSelection}>
-            Filter
-          </button>,
-        ]}
-      >
-            {[1, 2, 3, 4, 5].map(rating => (
-                <div key={rating} onClick={() => handleMinRatingSelection(rating)}>
-                    {Array.from({ length: rating }, (_, i) => ( // Create a temporary array where length = rating 
-                        <FontAwesomeIcon key={i} icon={faStar} style={{ color: '599c5f' }} />
-                    ))}
-                </div>
-            ))}
-        </Modal>
+    return (
+      <CoachResult
+        key={index}
+        username={result.user.username}
+        reviewsNumber={reviewsNumber}
+        gameTag={result.games}
+        languagesTag={result.language}
+        price={result.price}
+        reviewsAvg={result.rating}
+        photo={result.photo}
+      />
     );
+  });
 
-    // Open Price modal
-    const showPriceModal = () => {
-        setIsPriceModalVisible(true);
-    };
-    
-    // Price modal component
-    const PriceModal = () => {
-        // Local state of modal to avoid reload everytime we put a number
-        const [localMinPrice, setLocalMinPrice] = useState(minPrice);
-        const [localMaxPrice, setLocalMaxPrice] = useState(maxPrice);
-    
-        // update MinPrice, MaxPrice and close modal
-        const handleOk = () => {
-            setMinPrice(localMinPrice);
-            setMaxPrice(localMaxPrice);
-            setIsPriceModalVisible(false);
-        };
-    
-        return (
-            <Modal
-            title="Select Price Range"
-            open={isPriceModalVisible}
-            onCancel={() => {
-              setIsPriceModalVisible(false);
-              setMinPrice(null);
-              setMaxPrice(null); // Reset filter after click on Cancel button
-            }}
-            onOk={handleOk}
-            okText="Filter"
-            okButtonProps={{ style: { backgroundColor: '#4B71A0' } }}
+  // LANGUAGE MODAL
+
+  // Open language modal
+  const showLanguageModal = () => {
+    setIsLanguageModalVisible(true);
+  };
+
+  // Update language and close modal
+  const handleLanguageSelection = (language) => {
+    setLanguageFilter(language);
+    setIsLanguageModalVisible(false);
+  };
+
+  // Close language modal and reset filter
+  const handleResetLanguageFilter = () => {
+    setIsLanguageModalVisible(false);
+    setLanguageFilter(null);
+  };
+
+  const LanguageModal = () => (
+    <div className={`modal ${isLanguageModalVisible ? "modal-open" : ""}`}>
+      <div className="modal-box">
+        <h3 className="font-bold text-lg">Select Language</h3>
+        <div className="py-4 space-y-2">
+          {["English", "French", "Spanish"].map((language) => (
+            <div
+              key={language}
+              onClick={() => handleLanguageSelection(language)}
+              className="cursor-pointer"
+            >
+              <span className="badge badge-accent text-lg mr-2 bg-white text-black border-none m-2">
+                {language}
+              </span>
+            </div>
+          ))}
+        </div>
+        <div className="modal-action">
+          <button
+            className="btn btn-success text-white"
+            onClick={handleResetLanguageFilter}
           >
-                <div>
-                    <input type="number" placeholder="Min Price" value={localMinPrice || ''} onChange={e => setLocalMinPrice(parseInt(e.target.value, 10) || null)} /> 
-                    <input type="number" placeholder="Max Price" value={localMaxPrice || ''} onChange={e => setLocalMaxPrice(parseInt(e.target.value, 10) || null)} />
-                </div>
-            </Modal>
-        );
-    };
-    
+            Reset Filter
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 
-      return (
-        <div className='flex flex-col items-center min-h-screen'>
-          <div className="w-5/6 flex-1 text-white ">
-            <div className="text-lg mb-10">Find the best coach for you...</div>
-            <SearchBar />
-              <>
-                <div className="flex flex-col items-center justify-center text-lg mt-5">
-                  Filters
-                </div>
-                <div className="flex flex-row items-center w-full justify-center mt-5">
-                  <div className="flex flex-col items-center space-y-2 mb-4 mr-10">
-                    <div onClick={showReviewsModal} className={`rounded-2xl w-12 h-12 flex justify-center items-center  ${minRating !== 0 ? 'bg-orange-500 hover:bg-orange-400' : 'bg-zinc-400 hover:bg-zinc-300'} cursor-pointer`}>
-                      <FontAwesomeIcon icon={faStar}  className="text-white" />
-                    </div>
-                    <div className="text-sm">Reviews</div>
-                    {isModalVisible && <RatingModal />}
-                  </div>
-                  <div className="flex flex-col items-center justify-between space-y-2 mb-4">
-                    <div onClick={showPriceModal}  className={`rounded-2xl w-12 h-12 flex justify-center items-center p-3 ${minPrice !== null || maxPrice !== null ? 'bg-orange-500 hover:bg-orange-400' : 'bg-zinc-400 hover:bg-zinc-300'} cursor-pointer `}>
-                      <FontAwesomeIcon icon={faFilterCircleDollar} className="text-white" />
-                    </div>
-                    <div className="text-base">Price</div>
-                    {isPriceModalVisible && <PriceModal />}
-                  </div>
-                </div>
-              </>
-              {
-          resultData.length > 0 ? (
-            resultData
-          ) : searchQuery ? (
-            <div className="mt-5 text-xl">Sorry, no result matching your criteria</div>
-          ) : (
-            <div className="mt-5 text-xl">Use the search bar to find a coach</div>
-          )
-        }
+  // RATING MODAL
+
+  // Open rating modal
+  const showReviewsModal = () => {
+    setIsRatingModalVisible(true);
+  };
+
+  // Update minRating and close modal
+  const handleMinRatingSelection = (rating) => {
+    setMinRating(rating);
+    setIsRatingModalVisible(false);
+  };
+
+  // Close review modal and reset filter
+  const handleResetRatingFilter = () => {
+    setIsRatingModalVisible(false);
+    setMinRating(0);
+  };
+
+  // Rating modal componant
+  const RatingModal = () => (
+    <div className={`modal ${isRatingModalVisible ? "modal-open" : ""}`}>
+      <div className="modal-box">
+        <h3 className="font-bold text-lg text-center">Select Minimum Rating</h3>
+        <div className="py-4 space-y-2">
+          {[5, 4, 3, 2, 1].reverse().map((rating) => (
+            <div
+              key={rating}
+              onClick={() => handleMinRatingSelection(rating)}
+              className="cursor-pointer flex items-center"
+            >
+              <div className="flex">
+                {Array.from({ length: 5 }, (_, i) => (
+                  <FontAwesomeIcon
+                    key={i}
+                    icon={faStar}
+                    className={`${
+                      i < rating ? "text-green-700" : "text-gray-200"
+                    } text-xl`}
+                  />
+                ))}
+              </div>
+              <span className="ml-2 text-sm text-white text-xl">{`${rating} star${
+                rating > 1 ? "s" : ""
+              }`}</span>
+            </div>
+          ))}
+        </div>
+        <div className="modal-action">
+          <button
+            className="btn btn-success text-white"
+            onClick={handleResetRatingFilter}
+          >
+            Reset Filter
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+
+  // PRICE MODAL
+
+  // Open Price modal
+  const showPriceModal = () => {
+    setIsPriceModalVisible(true);
+  };
+
+  // Price modal component
+  const PriceModal = () => {
+    // Local state of modal to avoid reload everytime we put a number
+    const [localMinPrice, setLocalMinPrice] = useState(minPrice);
+    const [localMaxPrice, setLocalMaxPrice] = useState(maxPrice);
+
+    // update MinPrice, MaxPrice and close modal
+    const handleFilterByPrice = () => {
+      setMinPrice(localMinPrice);
+      setMaxPrice(localMaxPrice);
+      setIsPriceModalVisible(false);
+    };
+
+    // Close review modal and reset filter
+    const handleResetPriceFilter = () => {
+      setIsPriceModalVisible(false);
+      setMinPrice(null);
+      setMaxPrice(null);
+    };
+
+    return (
+      <div className={`modal ${isPriceModalVisible ? "modal-open" : ""}`}>
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Select Price Range</h3>
+
+          <div className="flex justify-between my-4">
+            <span>Min: €{localMinPrice}</span>
+            <span>Max: €{localMaxPrice}</span>
+          </div>
+
+          <div className="flex flex-col gap-4">
+            <input
+              type="range"
+              min="0"
+              max="1000"
+              value={localMinPrice || 0}
+              onChange={(e) => setLocalMinPrice(parseInt(e.target.value, 10))}
+              className="range range-primary bg-white"
+            />
+            <input
+              type="range"
+              min="10"
+              max="200"
+              value={localMaxPrice || "200"}
+              onChange={(e) => setLocalMaxPrice(parseInt(e.target.value, 10))}
+              className="range range-primary bg-white"
+            />
+          </div>
+
+          <div className="modal-action">
+            <button
+              className="btn btn-success text-white"
+              onClick={handleFilterByPrice}
+            >
+              Filter
+            </button>
+            <button
+              className="btn btn-success text-white"
+              onClick={handleResetPriceFilter}
+            >
+              Reset Filter
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // FRONTEND USER INTERFACE
+
+  return (
+    <div className="flex flex-col items-center min-h-screen">
+      <div className="w-5/6 flex-1 text-white ">
+        <div className="text-lg mb-10">Find the best coach for you...</div>
+        <SearchBar />
+        <>
+          <div className="flex flex-col items-center justify-center text-lg mt-5">
+            Filters
+          </div>
+          <div className="flex flex-row items-center w-full justify-center mt-5 justify-between">
+            <div className="flex flex-col items-center space-y-2 mb-4">
+              <div
+                onClick={showReviewsModal}
+                className={`rounded-2xl w-12 h-12 flex justify-center items-center  ${
+                  minRating !== 0
+                    ? "bg-orange-500 hover:bg-orange-400"
+                    : "bg-zinc-400 hover:bg-zinc-300"
+                } cursor-pointer`}
+              >
+                <FontAwesomeIcon icon={faStar} className="text-white" />
+              </div>
+              <div className="text-sm">Reviews</div>
+              {isRatingModalVisible && <RatingModal />}
+            </div>
+            <div className="flex flex-col items-center justify-between space-y-2 mb-4">
+              <div
+                onClick={showPriceModal}
+                className={`rounded-2xl w-12 h-12 flex justify-center items-center p-3 ${
+                  minPrice !== null || maxPrice !== null
+                    ? "bg-orange-500 hover:bg-orange-400"
+                    : "bg-zinc-400 hover:bg-zinc-300"
+                } cursor-pointer `}
+              >
+                <FontAwesomeIcon
+                  icon={faFilterCircleDollar}
+                  className="text-white"
+                />
+              </div>
+              <div className="text-base">Price</div>
+              {isPriceModalVisible && <PriceModal />}
+            </div>
+
+            <div className="flex flex-col items-center space-y-2 mb-4">
+              <div
+                onClick={showLanguageModal}
+                className={`rounded-2xl w-12 h-12 flex justify-center items-center ${
+                  languageFilter
+                    ? "bg-orange-500 hover:bg-orange-400"
+                    : "bg-zinc-400 hover:bg-zinc-300"
+                } cursor-pointer`}
+              >
+                <FontAwesomeIcon icon={faLanguage} className="text-white" />
+              </div>
+              <div className="text-sm">Language</div>
+              {isLanguageModalVisible && <LanguageModal />}
+            </div>
+          </div>
+        </>
+        {resultData.length > 0 ? (
+          resultData
+        ) : searchQuery ? (
+          <div className="mt-5 text-xl">
+            Sorry, no result matching your criteria
+          </div>
+        ) : (
+          <div className="mt-5 text-xl">Use the search bar to find a coach</div>
+        )}
       </div>
     </div>
   );

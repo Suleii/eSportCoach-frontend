@@ -1,155 +1,152 @@
-"use client"
-import React from 'react';
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-
+"use client";
+import React, { useState, useEffect } from "react";
+import Link from "next/link";
 
 const Quiz = () => {
-const [games, setGames] = useState([])
-const [proCoach, setproCoach] = useState("");
+  const [games, setGames] = useState([]);
+  const [selectedGame, setSelectedGame] = useState(null);
+  const [languages, setLanguages] = useState([]);
+  const [maxBudget, setMaxBudget] = useState("");
+  const [selectedLanguage, setSelectedLanguage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  
-
-useEffect(() => {
+  // Fetch available games
+  useEffect(() => {
     fetch(`http://localhost:3000/coaches/games`)
-    .then(response => response.json())
-    .then(data => {
-    let gamesData=data.availableGames;
-    setGames(gamesData);
-    });
-  }, [])
+      .then((response) => response.json())
+      .then((data) => {
+        setGames(data.availableGames);
+      });
+  }, []);
 
-const gamesList = games.map((data, i) =>
-  <option className='hover:bg-base-100 focus:bg-base-100 w-100' key={i} value={data}>{data}</option>
-  )
+  // Fetch available languages
+  useEffect(() => {
+    fetch(`http://localhost:3000/coaches/languages`)
+      .then((response) => response.json())
+      .then((data) => {
+        setLanguages(data.availableLanguages);
+      });
+  }, []);
 
-const handleGameSelection = (event) => {
-    setGameSelected(event.target.value);
-};
+  const handleGameSelection = (event) => {
+    setSelectedGame(event.target.value);
+  };
 
-const handleTypeOfCoach = (value) => {
-    setproCoach(value);}
+  const handleLanguageSelection = (event) => {
+    setSelectedLanguage(event.target.value);
+  };
 
-    console.log(proCoach)
+  const handleMaxBudgetSelection = (event) => {
+    setMaxBudget(event.target.value);
+  };
 
-    
+  const handleSubmit = () => {
+    if (!selectedGame) {
+      setErrorMessage("Please select a game before proceed");
+      return;
+    }
+
+    const quizAnswers = {
+      maxBudget: maxBudget,
+      language: selectedLanguage,
+    };
+
+    // Save
+    localStorage.setItem("quizAnswers", JSON.stringify(quizAnswers));
+
+    window.location.href = `/search?search=${selectedGame}`;
+  };
+
+  console.log({ games, maxBudget, selectedLanguage });
+
   return (
     <div className="flex flex-col items-center min-h-screen">
-        <div className='w-5/6 flex-1'>
-            <p className='mb-10 text-lg'>Let us help find the best coach for you!</p>
-            <select
-                className="select select-bordered w-full rounded-md mb-5 flex lg:mb-10"
-                onChange={handleGameSelection}
-                defaultValue={'question'}>
-                <option className='btn m-1 w-full' disabled value='question' >What game do you need a coach for?</option>
-                {games.length>0 
-                ?(gamesList)
-                : <option className='btn m-1 w-full' value="" disabled >No games in our database</option>
-                }
-            </select>
-            <div className='bg-base-100 rounded-md mb-5 p-4 lg:mb-10'>
-                <p className='mb-2 lg:mb-5'>Do you want to play with a pro player?</p>
-                <div className="flex justify-between w-full" >
-                {/* first radio button */}
-                <div className="mb-[0.125rem] mr-4 inline-block min-h-[1.5rem] pl-[1.5rem]">
-                    <input
-                    className="relative float-left -ml-[1.5rem] mr-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-info before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-success checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-success checked:after:bg-success checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-success checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] dark:border-info-600 dark:checked:border-success dark:checked:after:border-success dark:checked:after:bg-success dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:border-success dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
-                    type="radio"
-                    name="inlineRadioOptions"
-                    id="inlineRadio1"
-                    value="Yes" 
-                    onChange={(e)=>{handleTypeOfCoach(e.target.value)}}/>
-                    <label
-                    className="mt-px inline-block pl-[0.15rem] hover:cursor-pointer"
-                    htmlFor="inlineRadio1"
-                    
-                    >Yes</label>
-                </div>
+      <div className="w-5/6 flex-1">
+        <p className="mb-10 text-lg">
+          Let us help find the best coach for you!
+        </p>
 
-                {/* second radio */}
-                <div className="mb-[0.125rem] mr-4 inline-block min-h-[1.5rem] pl-[1.5rem]">
-                    <input
-                    className="relative float-left -ml-[1.5rem] mr-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-info before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-success checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-success checked:after:bg-success checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-success checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] dark:border-info-600 dark:checked:border-success dark:checked:after:border-success dark:checked:after:bg-success dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:border-success dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
-                    type="radio"
-                    name="inlineRadioOptions"
-                    id="inlineRadio1"
-                    value="No" 
-                    onChange={(e)=>{handleTypeOfCoach(e.target.value)}}/>
-                    <label
-                    className="mt-px inline-block pl-[0.15rem] hover:cursor-pointer"
-                    htmlFor="inlineRadio1"
-                    >No</label>
-                </div>
-
-                {/* Third radio */}
-                <div className="mb-[0.125rem] mr-4 inline-block min-h-[1.5rem] pl-[1.5rem]">
-                    <input
-                    className="relative float-left -ml-[1.5rem] mr-1 mt-0.5 h-5 w-5 appearance-none rounded-full border-2 border-solid border-info before:pointer-events-none before:absolute before:h-4 before:w-4 before:scale-0 before:rounded-full before:bg-transparent before:opacity-0 before:shadow-[0px_0px_0px_13px_transparent] before:content-[''] after:absolute after:z-[1] after:block after:h-4 after:w-4 after:rounded-full after:content-[''] checked:border-success checked:before:opacity-[0.16] checked:after:absolute checked:after:left-1/2 checked:after:top-1/2 checked:after:h-[0.625rem] checked:after:w-[0.625rem] checked:after:rounded-full checked:after:border-success checked:after:bg-success checked:after:content-[''] checked:after:[transform:translate(-50%,-50%)] hover:cursor-pointer hover:before:opacity-[0.04] hover:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:shadow-none focus:outline-none focus:ring-0 focus:before:scale-100 focus:before:opacity-[0.12] focus:before:shadow-[0px_0px_0px_13px_rgba(0,0,0,0.6)] focus:before:transition-[box-shadow_0.2s,transform_0.2s] checked:focus:border-success checked:focus:before:scale-100 checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca] checked:focus:before:transition-[box-shadow_0.2s,transform_0.2s] dark:border-info-600 dark:checked:border-success dark:checked:after:border-success dark:checked:after:bg-success dark:focus:before:shadow-[0px_0px_0px_13px_rgba(255,255,255,0.4)] dark:checked:focus:border-success dark:checked:focus:before:shadow-[0px_0px_0px_13px_#3b71ca]"
-                    type="radio"
-                    name="inlineRadioOptions"
-                    id="inlineRadio1"
-                    value="Any" 
-                    onChange={(e)=>{handleTypeOfCoach(e.target.value)}}/>
-                    <label
-                    className="mt-px inline-block pl-[0.15rem] hover:cursor-pointer"
-                    htmlFor="inlineRadio1"
-                    >Any</label>
-                </div>
-                </div>
-            
-            </div>
-            <div className="form-control bg-base-100 rounded-md p-4 flex items-start mb-5 lg:mb-10">
-                <p className="mb-2 lg:mb-5">Why do you need a coach?</p>
-                <div className="space-y-4 lg:flex lg:justify-between lg:w-full lg:space-y-0">
-                <div className="flex items-center">
-                    <input
-                    id="c1"
-                    type="checkbox"
-                    className="appearance-none rounded-sm h-4 w-4 cursor-pointer bg-white  focus:ring-success ring-2 ring-info focus:ring-2 checked:bg-success"
-                    />
-                    <p className="pl-2 text-sm">
-                    Win competitions
-                    </p>
-                </div>
-                <div className="flex items-center">
-                    <input
-                    id="c1"
-                    type="checkbox"
-                    className="appearance-none rounded-sm h-4 w-4 cursor-pointer bg-white  focus:ring-success ring-2 ring-info focus:ring-2 checked:bg-success"
-                    />
-                    <p className="pl-2 text-sm">
-                    Improve my skills
-                    </p>
-                </div>
-                <div className="flex items-center">
-                    <input
-                    id="c1"
-                    type="checkbox"
-                    className="appearance-none rounded-sm h-4 w-4 cursor-pointer bg-white  focus:ring-success ring-2 ring-info focus:ring-2 checked:bg-success"
-                    />
-                    <p className="pl-2 text-sm">
-                    Get some tips
-                    </p>
-                </div>
-                </div>
-            </div>
-            <select className="select select-bordered w-full rounded-md mb-5 flex lg:mb-10" defaultValue={'question'}>
-                <option className='btn m-1 w-full' disabled value='question' >What is your level?</option>
-                <option className='btn m-1 w-full' value=""  >Beginner</option>
-                <option className='btn m-1 w-full' value=""  >Intermediate</option>
-                <option className='btn m-1 w-full' value=""  >Expert</option>
-            </select>
-            <select className="select select-bordered w-full rounded-md mb-10 flex lg:mb-10" defaultValue={'question'}>
-                <option className='btn m-1 w-full' disabled value='question' >Pick a language</option>
-                <option className='btn m-1 w-full' value=""  >English</option>
-                <option className='btn m-1 w-full' value=""  >French</option>
-                <option className='btn m-1 w-full' value=""  >Russian</option>
-            </select>
-            <div className='w-full flex items-center'>
-                <button type='button' className="w-80 mx-auto btn btn-success text-white mb-3" >Find my coach</button> 
-            </div>
-            <Link href='/' className='flex justify-end w-full'>Skip {">"}{">"}</Link>
+        {/* Game Selection */}
+        <div className="mb-5">
+          <label htmlFor="gameSelection" className="label">
+            What game do you need a coach for?*
+          </label>
+          <select
+            id="gameSelection"
+            className="select select-bordered w-full rounded-md"
+            onChange={handleGameSelection}
+            value={selectedGame || ""}
+          >
+            <option disabled value="">
+              Select a game
+            </option>
+            {games.map((game, index) => (
+              <option key={index} value={game}>
+                {game}
+              </option>
+            ))}
+          </select>
         </div>
+
+        {/* Budget Question */}
+        <div className="form-control mb-5">
+          <label htmlFor="budget" className="label">
+            What is your maximum budget for a 2-hour session?
+          </label>
+          <input
+            type="number"
+            id="budget"
+            className="input input-bordered w-full"
+            value={maxBudget}
+            onChange={handleMaxBudgetSelection}
+            placeholder="100"
+          />
+        </div>
+
+        {/* Language Selection */}
+        <div className="mb-5">
+          <label htmlFor="languageSelection" className="label">
+            What language should your coach speak?
+          </label>
+          <select
+            id="languageSelection"
+            className="select select-bordered w-full rounded-md"
+            onChange={handleLanguageSelection}
+            value={selectedLanguage || ""}
+          >
+            <option disabled value="">
+              Select a language
+            </option>
+            {languages.length > 0 ? (
+              languages.map((language, index) => (
+                <option key={index} value={language}>
+                  {language}
+                </option>
+              ))
+            ) : (
+              <option disabled>No language available</option>
+            )}
+          </select>
+        </div>
+
+        {/* Submit Button */}
+        {errorMessage && (
+          <div className="text-red-500 mb-3">{errorMessage}</div>
+        )}
+
+        <button
+          type="button"
+          className="w-80 mx-auto btn btn-success text-white mb-3"
+          onClick={handleSubmit}
+        >
+          Find my coach
+        </button>
+
+        <Link href="/" className="flex justify-end w-full">
+          Skip {">"}
+          {">"}
+        </Link>
+      </div>
     </div>
   );
 };
