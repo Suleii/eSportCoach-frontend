@@ -25,21 +25,20 @@ function SearchPage({ searchQuery }) {
 
   // useEffect is triggered with the modification of searchQuery, minRating, minPrice, maxPrice and language
   useEffect(() => {
-    // Récupération des réponses du quiz depuis le Local Storage
+    // Collect quiz answers with local Storage
     const storedAnswers = localStorage.getItem("quizAnswers");
-    let gameFilter, budgetFilter, languageFilterFromQuiz;
+    let budgetFilter, languageFilterFromQuiz;
 
     if (storedAnswers) {
       const quizAnswers = JSON.parse(storedAnswers);
-      gameFilter = quizAnswers.game; // Assurez-vous que ceci correspond à vos filtres existants
       budgetFilter = quizAnswers.maxBudget;
       languageFilterFromQuiz = quizAnswers.language;
 
-      // Effacer les réponses du quiz stockées pour éviter des comportements inattendus lors de visites ultérieures
+      // Delete local Storage answers to avoid bug
       localStorage.removeItem("quizAnswers");
     }
 
-    // Requête API pour récupérer les résultats de recherche
+    // GET API to collect search data
     if (searchQuery) {
       fetch(`http://localhost:3000/search/globalSearch?search=${searchQuery}`)
         .then((response) => response.json())
@@ -50,7 +49,7 @@ function SearchPage({ searchQuery }) {
               : data.gameData;
             searchResults.sort(() => 0.5 - Math.random());
 
-            // Appliquer les filtres (y compris ceux du quiz)
+            // Apply filter
             const filteredResults = searchResults.filter((item) => {
               return (
                 item.rating >= minRating &&
@@ -58,7 +57,6 @@ function SearchPage({ searchQuery }) {
                 (maxPrice === null || item.price <= maxPrice) &&
                 (languageFilter === null ||
                   item.language.includes(languageFilter)) &&
-                (!gameFilter || item.games.includes(gameFilter)) && // Ajoutez ce filtre si applicable
                 (!budgetFilter || item.price <= budgetFilter) &&
                 (!languageFilterFromQuiz ||
                   item.language.includes(languageFilterFromQuiz))
