@@ -8,12 +8,26 @@
     background-color: #599c5f;
 } */
 
-.button_reset:focus-visible{
-    background-color: #fc8366;
-}
+.button[disabled] {
+    opacity: 0.25;
+  }
+  
+.button[disabled]{
+    cursor: pointer;
+  }
+  
+.button:focus-visible([disabled]) {
+    color: inherit;
+    background-color: var(--rdp-background-color);
+    border: var(--rdp-outline);
+  }
+  
+.button:hover:not([disabled]):not(.rdp-day_selected) {
+    background-color: var(--rdp-background-color);
+  }
 
 .rdp {
-    --rdp-cell-size: 45px;  
+    --rdp-cell-size: 40px;  
 }
 
 .nav {
