@@ -74,7 +74,7 @@ const stars = [];
   }
 
 const reviews =reviewsdata.map((data, i) => {
-    return <Review key={i} rating={data.rating} username={data.username.username} photo={data.photo} game={data.game} content={data.content}/>;})
+    return <Review key={i} rating={data.rating} username={data.username.user.username} photo={data.username.photo} game={data.game} content={data.content}/>;})
 
 const ExperienceList = experience.map((item, i)=>
 <li key={i} className="mb-4">{item}</li>);

@@ -20,7 +20,7 @@ function CoachSettings(props) {
     
     const router = useRouter()
     const user = useSelector((state) => state.user.value);
-      
+  
    
     
 // Fetch coach information when the component mounts
@@ -56,7 +56,7 @@ function CoachSettings(props) {
                 });
             } else {
                 // Redirect to login page if not logged in
-                router.push('/login');
+                //router.push('/login');
               }
             }, [user.token, user.username]);
  
@@ -72,7 +72,7 @@ function CoachSettings(props) {
             photo: setPhoto,
             about: setAbout,
             experience: setExperience,
-            games,
+            games: setGames,
             twitch: setTwitch,
             instagram: setInstagram,
             youtube: setYoutube,
@@ -139,7 +139,6 @@ function CoachSettings(props) {
   
      // Cancel button, disable editing mode, and reset the form to the original state
     const handleCancelClick = () => {
-      // Cancel editing and reset the form to the original state
       setIsEditing(false);
       fetch(`http://localhost:3000/coaches/profile/${props.username}`)
         .then((response) => response.json())
@@ -162,16 +161,22 @@ function CoachSettings(props) {
   
   
     return (
-      <div className="flex flex-col items-center min-h-screen">
-        <div className='w-5/6 flex-1'>
-        <h1>{props.username}'s Settings</h1>
-        <form onSubmit={handleSubmit}>
+    <div className="flex flex-col items-center min-h-screen mx-auto text-white w-5/6 flex-1 ">
+        <form onSubmit={handleSubmit} className="w-full max-w-md">
+          <div className='flex flex col justify-between'>
+        <h2 className=''>Basic informations</h2>
+        {!isEditing && (
+            <button className='bg-accent w-20 h-8 rounded-xl' type="button" onClick={handleEditClick}>
+              Edit
+            </button>
+          )}
+          </div>
           {/* Input fields for coach information */}
-          <label>
-            Last Name:
-            <input
-              type="text"
-              name="lastname"
+        <div className='mt-6'>
+          <label >
+            <input className="bg-base-100 w-80 h-10 rounded-xl p-2 mb-5 "
+              type="text" 
+              placeholder="Last Name"
               value={lastname}
               onChange={handleInputChange}
               disabled={!isEditing}
@@ -179,10 +184,9 @@ function CoachSettings(props) {
           </label>
   
           <label>
-            First Name:
-            <input
+            <input className="bg-base-100 w-80 h-10 rounded-xl p-2 mb-5"
               type="text"
-              name="firstname"
+              placeholder="First Name"
               value={firstname}
               onChange={handleInputChange}
               disabled={!isEditing}
@@ -190,10 +194,9 @@ function CoachSettings(props) {
           </label>
   
           <label>
-            Email:
-            <input
+            <input className="bg-base-100 w-80 h-10 rounded-xl p-2 mb-5"
               type="email"
-              name="email"
+              placeholder="Email"
               value={email}
               onChange={handleInputChange}
               disabled={true}
@@ -201,21 +204,21 @@ function CoachSettings(props) {
           </label>
   
           <label>
-            Photo:
-            <input
+            <input className="bg-base-100 w-80 h-10 rounded-xl p-2 mb-5"
               type="text"
-              name="photo"
+              placeholder="Photo"
               value={photo}
               onChange={handleInputChange}
               disabled={!isEditing}
             />
           </label>
+
+          <h2 className='flex flex col mt-3 mb-8 '>Gaming informations</h2>
   
           <label>
-           About:
-            <input
+            <input className="bg-base-100 w-80 h-10 rounded-xl p-2 mb-5"
               type="text"
-              name="about"
+              placeholder="About"
               value={about}
               onChange={handleInputChange}
               disabled={!isEditing}
@@ -223,10 +226,9 @@ function CoachSettings(props) {
           </label>
 
           <label>
-           Experiences:
-            <input
+            <input className="bg-base-100 w-80 h-10 rounded-xl p-2 mb-5"
               type="text"
-              name="experience"
+              placeholder="Experience"
               value={experience}
               onChange={handleInputChange}
               disabled={!isEditing}
@@ -234,10 +236,9 @@ function CoachSettings(props) {
           </label>
 
           <label>
-           Games:
-            <input
+            <input className="bg-base-100 w-80 h-10 rounded-xl p-2 mb-5"
               type="text"
-              name="games"
+              placeholder="Games"
               value={games}
               onChange={handleInputChange}
               disabled={!isEditing}
@@ -245,10 +246,9 @@ function CoachSettings(props) {
           </label>
   
           <label>
-            Twitch:
-            <input
+            <input className="bg-base-100 w-80 h-10 rounded-xl p-2 mb-5"
               type="text"
-              name="twitch"
+              placeholder="Twitch"
               value={twitch}
               onChange={handleInputChange}
               disabled={!isEditing}
@@ -256,10 +256,9 @@ function CoachSettings(props) {
           </label>
   
           <label>
-            Instagram:
-            <input
+            <input className="bg-base-100 w-80 h-10 rounded-xl p-2 mb-5"
               type="text"
-              name="instagram"
+              placeholder="Instagram"
               value={instagram}
               onChange={handleInputChange}
               disabled={!isEditing}
@@ -267,10 +266,9 @@ function CoachSettings(props) {
           </label>
   
           <label>
-            YouTube:
-            <input
+            <input className="bg-base-100 w-80 h-10 rounded-xl p-2 mb-5"
               type="text"
-              name="youtube"
+              placeholder="Youtube"
               value={youtube}
               onChange={handleInputChange}
               disabled={!isEditing}
@@ -278,10 +276,9 @@ function CoachSettings(props) {
           </label>
   
           <label>
-            Discord:
-            <input
+            <input className="bg-base-100 w-80 h-10 rounded-xl p-2 mb-5"
               type="text"
-              name="discord"
+              placeholder="Discord"
               value={discord}
               onChange={handleInputChange}
               disabled={!isEditing}
@@ -289,33 +286,29 @@ function CoachSettings(props) {
           </label>
   
           <label>
-            Price:
-            <textarea
-              name="price"
+            <input className="bg-base-100 w-80 h-10 rounded-xl p-2 mb-5"
+              placeholder="Price"
               value={price}
               onChange={handleInputChange}
               disabled={!isEditing}
             />
           </label>
-  
-          {!isEditing && (
-            <button type="button" onClick={handleEditClick}>
-              Edit
-            </button>
-          )}
+        </div>
+          <div className='flex justify-between mt-5'>
           {isEditing && (
             <>
-              <button type="button" onClick={handleSaveClick}>
+              <button className='bg-success w-36 h-10 rounded-xl p-2 mb-6' type="button" onClick={handleSaveClick}>
                 Save
               </button>
-              <button type="button" onClick={handleCancelClick}>
+              <button className='bg-success w-36 h-10 rounded-xl p-2 mb-6' type="button" onClick={handleCancelClick}>
                 Cancel
               </button>
             </>
           )}
+          </div>
         </form>
-        </div>
-        </div>
+    </div>
+  
     );
   }
 

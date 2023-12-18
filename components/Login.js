@@ -184,8 +184,8 @@ function Login() {
                                 <select
                                     className="select select-bordered w-64 h-10 rounded-md "
                                     onChange={(e) => setSignUpCoach(e.target.value)}
-                                    >
-                                    <option disabled selected>Choose :</option>
+                                    defaultValue={'question'}>
+                                    <option disabled value="question">Choose :</option>
                                     <option value="Gamer">Gamer</option>
                                     <option value="Coach">Coach</option>
                                 </select>
@@ -240,7 +240,7 @@ function Login() {
                                 <div className='flex flex-row space-x-10 mb-10'>
                                     <div>
                                         <input type="checkbox" id="exampleUniq" className='bg-success'/>
-                                        <label for="exampleUniq">Remember me</label>
+                                        <label htmlFor="exampleUniq">Remember me</label>
                                     </div>
                                     <p>Forgot password?</p>
                                 </div>
