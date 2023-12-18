@@ -23,7 +23,7 @@ const [experience, setExperience] = useState([]);
 const [price, setPrice] = useState();
 const [socials, setSocials] = useState({});
 const [games, setGames] = useState([]);
-
+const [coachToken, setcoachToken] = useState("")
 
 
 const user = useSelector((state) => state.user.value); 
@@ -47,6 +47,9 @@ useEffect(() => {
     
     let gamesData=data.profile.games;
     setGames(gamesData);
+
+    let profileToken = data.profile.user.token;
+    setcoachToken(profileToken)
 
     
     });
@@ -83,7 +86,7 @@ const gamesTags = games.map((item, i)=>
 <div className="badge badge-accent text-xs mr-2" key={i}>{item}</div>
 );
 
-console.log(reviewsdata)
+console.log("profile", profile)
     return(
         <div className="flex flex-col items-center min-h-screen">
             <div className='w-5/6 flex-1'>
@@ -99,7 +102,7 @@ console.log(reviewsdata)
                         <span className="ml-5"><FontAwesomeIcon icon={faEllipsisVertical} style={{'color':"#ffffff"}} /></span>
                     </div>
                     <div className="text-xs mb-6"><span>{stars}</span><span className="text-white"> ({reviewCount})</span></div>
-                    { user.isCoach 
+                    { user.token === coachToken
                         ? <Link href={`/coaches/${props.username}/settings`} type="button" className="btn btn-success text-white">Edit Profile <span className="text-white"><FontAwesomeIcon icon={faPencil} /></span> </Link>
                         : <Link href={`/coaches/${props.username}/booking`} type="button" className="btn btn-success text-white">Book Me <span className="text-white"><FontAwesomeIcon icon={faArrowRightLong} /></span> </Link>
                     }

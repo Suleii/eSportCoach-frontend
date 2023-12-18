@@ -22,7 +22,7 @@ const [disabledDays, setDisabledDays] = useState([])
 
 //Get the coach profile
 useEffect(()=> {
-  fetch(`http://localhost:3000/coaches/profile/${props.username}`)
+  fetch(`http://localhost:3000/gamers/profile/${props.username}`)
     .then(response => response.json())
     .then(data => {
     setProfile(data.profile);

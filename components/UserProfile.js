@@ -19,7 +19,7 @@ function UserProfile (props) {
 // const [reviewCount, setReviewCount] = useState(0);
 const [profile, setProfile] = useState([]);
 const [reviewsdata, setReviewsData] = useState([]);
-const [games, setGames] = useState([]);
+const [bookings, setBookings] = useState([]);
 
 
 
@@ -28,38 +28,64 @@ const user = useSelector((state) => state.user.value);
 
 
 useEffect(() => {
-    fetch(`http://localhost:3000/gamer/profile/${props.username}`)
+    fetch(`http://localhost:3000/gamers/profile/${props.username}`)
     .then(response => response.json())
     .then(data => {
-    setProfile(data.profile);
-    let reviewsdata = data.profile.reviews;
-    // setReviewCount(reviewsdata.length);
-    setReviewsData(reviewsdata);
-    let gamesData=data.profile.games;
-    setGames(gamesData);
+    setProfile(data.profile); // to get the profile pic
     });
+
+    fetch(`http://localhost:3000/bookings/gamer/${props.username}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data)
+      if(data.result){
+        setBookings(data.bookings)
+      }else{
+        setBookings([])
+      }
+    });
+
+    fetch(`http://localhost:3000/reviews/gamer/${props.username}`)
+    .then(response => response.json())
+    .then(data => {
+        let reviewsdb = data.reviews
+        setReviewsData(reviewsdb)
+    })
   }, [])
 
+  
+  console.log("reviewsdata", reviewsdata)
 
-  const reviews = reviewsdata.map((data, i) => {
-    console.log(data)
-    return <Review key={i} rating={data.rating} username={user.username} photo={data.photo} game={data.game} content={data.content}/>;
-  });
+  // const reviews = 
+  //   if(reviewsdata.length===0){
+  //     bookings.map((booking, j)=> {
+  //     return <Review key={j} rating={0} username={booking.coachUsername.user.username} photo={data.username.photo} game={booking.game} content="No reviews for this coach yet"/>;
+  //     })
+  //   }else{
+  //     reviewsdata.map((data) => {})
+  //   }
+  // });
 
-const stars = [];
-  for (let i = 0; i < 5; i++) {
-    let style = {};
-    if (i < profile.rating) {
-      style = { 'color': '#599c5f' };
+ 
+  const haveSameCoach = (bookings, reviewsdata) => {
+    for (let i = 0; i < bookings.length; i++) {
+      for (let j = 0; j < reviewsdata.length; j++) {
+        if (bookings[i].coachUsername.user.username === reviewsdata[j].coach.user.username) {
+          console.log("Found a match")
+          return true; // Found a common element with the same coach username
+        }
+      }
     }
-    stars.push(<FontAwesomeIcon key={i} icon={faStar} style={style} />);
+    console.log("No match")
+    return false; // No common element found
   }
 
 
-const gamesTags = games.map((item, i)=>
-<div className="badge badge-accent text-xs mr-2" key={i}>{item}</div>
-);
+// const gamesTags = games.map((item, i)=>
+// <div className="badge badge-accent text-xs mr-2" key={i}>{item}</div>
+// ); 
 
+// console.log("reviews data", reviewsdata)
 
     return(
         <div className="flex flex-col items-center min-h-screen">
@@ -82,12 +108,24 @@ const gamesTags = games.map((item, i)=>
                     
                 </div>
                 
+                
             </div>
           
                 
 
                <h3 className="text-lg mt-6 mb-6">My reviews</h3>
-                {reviews}
+               {bookings.map((booking, i) => {
+                const hasMatchingCoach = haveSameCoach([booking], reviewsdata);
+                
+                return hasMatchingCoach ? (
+                  reviewsdata.map((data, j) => (
+                    <Review key={j} rating={data.rating} username={data.coach.user.username} photo={data.coach.photo} game={data.game} content={data.content} />
+                  ))
+                ) : (
+                  <Review key={i} rating={0} username={booking.coachUsername.user.username} photo={booking.coachUsername.photo} game={booking.game} content="No reviews for this coach yet. Do it now!" />
+                );
+              })}
+                
             
             </div>
         </div>
