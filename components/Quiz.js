@@ -51,7 +51,7 @@ const Quiz = () => {
       language: selectedLanguage,
     };
 
-    // Save
+    // Save answers into localStorage in order to collect theses info in searchPage
     localStorage.setItem("quizAnswers", JSON.stringify(quizAnswers));
 
     window.location.href = `/search?search=${selectedGame}`;
