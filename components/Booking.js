@@ -94,8 +94,9 @@ return (
             <p className="text-xl mb-10 items-center">Booking</p>       
             <select
                 className="select select-bordered  rounded-md mb-10 flex"
-                onChange={handleGameSelection}>
-                <option className='btn m-1 w-100' disabled selected >Please choose your game:</option>
+                onChange={handleGameSelection}
+                defaultValue={'question'}>
+                <option className='btn m-1 w-100' disabled value="question" >Please choose your game:</option>
                 {games.length>0 
                 ?(gamesList)
                 : <option className='btn m-1 w-100' value="" disabled >No games for this coach</option>
