@@ -24,7 +24,7 @@ function Header() {
       };
       }      
   }, []);
-
+console.log(profile)
   return (
     <div className="navbar pt-10 mb-10">
       <div className="container mx-auto flex justify-between items-center">
