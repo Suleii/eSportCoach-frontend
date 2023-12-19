@@ -45,13 +45,13 @@ function CoachSettings(props) {
               setExperience(experience);
               const games = data.profile.games;
               setGames(games);
-              const twitch = data.profile.social.twitch;
+              const twitch = data.profile.socials.twitch;
               setTwitch(twitch);
-              const instagram = data.profile.social.instagram;
+              const instagram = data.profile.socials.instagram;
               setInstagram(instagram);
-              const youtube = data.profile.social.youtube;
+              const youtube = data.profile.socials.youtube;
               setYoutube(youtube);
-              const discord = data.profile.social.discord;
+              const discord = data.profile.socials.discord;
               setDiscord(discord);
               const price = data.profile.price;
               setPrice(price);
@@ -101,7 +101,7 @@ function CoachSettings(props) {
             about,
             experience,
             games,
-            social: {
+            socials: {
                 twitch,
                 instagram,
                 youtube,
