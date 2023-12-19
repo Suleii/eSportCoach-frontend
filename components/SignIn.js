@@ -46,7 +46,7 @@ function SignIn() {
           );
           setSignInUsername("");
           setSignInPassword("");
-          router.push("/");
+          router.back();
         }
       });
   };
@@ -58,7 +58,7 @@ function SignIn() {
       <input
         className="bg-base-100 w-80 h-10 rounded-md p-2 mb-6"
         type="text"
-        placeholder="Gamer"
+        placeholder="Username"
         id="signInUsername"
         onChange={(e) => setSignInUsername(e.target.value)}
         value={signInUsername}

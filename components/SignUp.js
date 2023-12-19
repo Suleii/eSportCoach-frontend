@@ -32,6 +32,7 @@ function SignUp() {
         firstname: signUpFirstname,
         username: signUpUsername,
         email: signUpMail,
+        photo: "",
         password: signUpPassword,
       }),
     })
@@ -73,6 +74,19 @@ function SignUp() {
         firstname: signUpFirstname,
         username: signUpUsername,
         email: signUpMail,
+        photo: "",
+        games: [],
+        price: 0,
+        socials: {
+          twitch: "",
+          instagram: "",
+          youtube: "",
+          discord: "",
+        },
+        about: "",
+        experience: [],
+        rating: 0,
+        language: [],
         password: signUpPassword,
       }),
     })
@@ -159,7 +173,10 @@ function SignUp() {
         <option value="Gamer">Gamer</option>
         <option value="Coach">Coach</option>
       </select>
-      <a href="/signin">Do you have an account? Please sign in.</a>
+      <a href="/signin">
+        Do you have an account? Please{" "}
+        <span className="underline">sign in</span>
+      </a>
       {message !== "" ? (
         <div className="w-80 mb-2 mx-auto flex align-center ">
           <span className="text-xs text-accent ">{message}</span>
