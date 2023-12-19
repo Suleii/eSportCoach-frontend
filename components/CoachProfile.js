@@ -44,7 +44,7 @@ function CoachProfile(props) {
         let prices = data.profile.price;
         setPrice(prices);
 
-        let socialslinks = data.profile.social;
+        let socialslinks = data.profile.socials;
         setSocials(socialslinks);
 
         let gamesData = data.profile.games;
