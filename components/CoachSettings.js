@@ -170,7 +170,7 @@ function CoachSettings(props) {
         <form onSubmit={handleSubmit} className="w-full max-w-md">
           <div className='flex flex col justify-between'>
            
-        <h2 className=''>Basic informations</h2>
+        <h2 className=''>Basic information</h2>
         {!isEditing && (
             <button className='bg-accent w-20 h-8 rounded-xl' type="button" onClick={handleEditClick}>
               Edit
@@ -210,7 +210,7 @@ function CoachSettings(props) {
           </label>
   
 
-          <h2 className='flex flex col mt-3 mb-8 '>Gaming informations</h2>
+          <h2 className='flex flex col mt-3 mb-8 '>Gaming information</h2>
   
           <label>
             <input className="bg-base-100 w-80 h-10 rounded-xl p-2 mb-5"
@@ -219,6 +219,7 @@ function CoachSettings(props) {
               value={about}
               onChange={handleInputChange}
               disabled={!isEditing}
+              name="about"
             />
           </label>
 
@@ -229,6 +230,7 @@ function CoachSettings(props) {
               value={experience}
               onChange={handleInputChange}
               disabled={!isEditing}
+              name="experience"
             />
           </label>
 
@@ -239,6 +241,7 @@ function CoachSettings(props) {
               value={games}
               onChange={handleInputChange}
               disabled={!isEditing}
+              name="games"
             />
           </label>
   
@@ -249,6 +252,7 @@ function CoachSettings(props) {
               value={twitch}
               onChange={handleInputChange}
               disabled={!isEditing}
+              name="twitch"
             />
           </label>
   
@@ -259,6 +263,7 @@ function CoachSettings(props) {
               value={instagram}
               onChange={handleInputChange}
               disabled={!isEditing}
+              name="instagram"
             />
           </label>
   
@@ -269,6 +274,7 @@ function CoachSettings(props) {
               value={youtube}
               onChange={handleInputChange}
               disabled={!isEditing}
+              name="youtube"
             />
           </label>
   
@@ -279,6 +285,7 @@ function CoachSettings(props) {
               value={discord}
               onChange={handleInputChange}
               disabled={!isEditing}
+              name="discord"
             />
           </label>
   
@@ -288,6 +295,7 @@ function CoachSettings(props) {
               value={price}
               onChange={handleInputChange}
               disabled={!isEditing}
+              name="price"
             />
           </label>
         </div>
