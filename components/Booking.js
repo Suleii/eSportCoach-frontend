@@ -18,16 +18,14 @@ const [date, setDate] = useState({selectedDate: null, dateTime: null});
 const [times, setTimes] = useState([]);
 const [games, setGames]= useState([])
 const [gameSelected, setGameSelected]= useState('')
+const [unavailabilitiesData, setUnavailabilitiesData] = useState([])
 
 const dispatch = useDispatch();
 
-// disable booking for days before today
-const disabledDays = [
-    { from: new Date(2023, 1, 1), to: new Date(subDays(new Date(), 1)) }
-  ];
+
   
 
-// Fetch the games listed in the coach profile
+// Fetch the games listed in the coach profile + the coach's unvailabilities
 useEffect(() => {
     fetch(`http://localhost:3000/coaches/profile/${props.username}`)
     .then(response => response.json())
@@ -35,8 +33,26 @@ useEffect(() => {
     let gamesData=data.profile.games;
     setGames(gamesData);
     });
+
+    fetch(`http://localhost:3000/unavailabilities/${props.username}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log("data",data)
+        let unvailabilities = data.unavailabilities.map((date) => (date.date))
+        setUnavailabilitiesData(unvailabilities)
+      })
   }, [])
 
+// disable booking for days before today
+const disabledDaysBefore = [
+    { from: new Date(2023, 1, 1), to: new Date(subDays(new Date(), 1)) }
+  ];
+
+ //disable booking for days marked as unavailable by the coach 
+const unDates = unavailabilitiesData.map((date)=> new Date (date))
+const disabledDays = disabledDaysBefore.concat(unDates)
+  
+// list of games for this coach
 const gamesList = games.map((data, i) =>
 <option className='hover:bg-base-100 focus:bg-base-100 w-100' value={data}>{data}</option>
 )
@@ -87,38 +103,25 @@ const handleBooking = () => {
         router.push('/payment')
         }
 }
-    console.log(date.dateTime)
+    
 return (
     <div className="flex flex-col items-center ">
         <div className=' flex flex-col w-5/6 flex-1'>
-            <p className="text-xl mb-10 items-center">Booking</p>       
-            <select
-                className="select select-bordered  rounded-md mb-10 flex"
-                onChange={handleGameSelection}
-                defaultValue={'question'}>
-                <option className='btn m-1 w-100' disabled value="question" >Please choose your game:</option>
-                {games.length>0 
-                ?(gamesList)
-                : <option className='btn m-1 w-100' value="" disabled >No games for this coach</option>
-                }
-                
-            </select>
-          
-           {/* <div>
-                <label htmlFor="session" className="block text-sm font-medium leading-6 text-white">
-                Please choose the number of sessions:
-                </label>
-                <select id="session"name="session" onChange={handleSessionCount}
-                className="mt-2 block w-80 rounded-md border-0 py-1.5 pl-3 pr-10 text-white bg-base-100 sm:text-base sm:leading-6"
-                >
-                <option value="1">1 session</option>
-                <option value="10">10 sessions</option>
-                </select>
-</div> */}
-
-                
+            <p className="text-xl mb-10 items-center">Booking</p>     
             <div className='flex flex-col justify-center w-full items-center'>
-                    <div>
+                <select
+                    className="select select-bordered w-full rounded-md mb-10 flex"
+                    onChange={handleGameSelection}
+                    defaultValue={'question'}>
+                    <option className='btn m-1 ' disabled value="question" >Please choose your game:</option>
+                    {games.length>0 
+                    ?(gamesList)
+                    : <option className='btn m-1' value="" disabled >No games for this coach</option>
+                    }
+                    
+                </select>
+
+                    <div className='bg-base-100 rounded-xl'>
     
                         <DayPicker className={styles.rdp}
                         showOutsideDays 
@@ -133,7 +136,7 @@ return (
                         disabled={disabledDays}/>
                     </div>
 
-                    <div className='grid grid-cols-3 gap-x-6 gap-y-2 mb-10'>
+                    <div className='grid grid-cols-3 gap-x-6 gap-y-2 mt-5 mb-10'>
                         {times.map((time,i) =>{
                             return (
                             <div key={`time-${i}`} className='rounded mt-2 h-8 w-20 text-sm border border-accent border-1.25 bg-primary hover:bg-accent text-white flex justify-center '>
