@@ -18,6 +18,7 @@
     "@reduxjs/toolkit": "^2.0.1",
     "@stripe/react-stripe-js": "^2.4.0",
     "@stripe/stripe-js": "^2.2.1",
+    "@testing-library/react": "^14.1.2",
     "antd": "^5.12.2",
     "axios": "^1.6.2",
     "date-fns": "^2.30.0",
@@ -35,6 +36,7 @@
   "devDependencies": {
     "autoprefixer": "^10.4.16",
     "daisyui": "^4.4.19",
+    "jest": "^29.7.0",
     "postcss": "^8.4.32",
     "tailwind-scrollbar": "^3.0.5",
     "tailwindcss": "^3.3.6"
