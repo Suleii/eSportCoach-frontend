@@ -74,7 +74,7 @@ function SignUp() {
         firstname: signUpFirstname,
         username: signUpUsername,
         email: signUpMail,
-        photo: "",
+        photo: "/profilepic.png",
         games: [],
         price: 0,
         socials: {

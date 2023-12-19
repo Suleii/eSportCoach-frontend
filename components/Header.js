@@ -1,11 +1,12 @@
 "use client";
 import { useRouter } from "next/navigation";
+import {useState,  useEffect} from 'react'
 import { useSelector } from "react-redux";
 import Menu from "../components/Menu";
 
 function Header() {
   const user = useSelector((state) => state.user.value);
-  const [profile, setProfile] = useState()
+  const [profile, setProfile] = useState("")
 
   useEffect(() => {
     if(user.username !== null){
