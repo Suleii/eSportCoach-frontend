@@ -15,6 +15,7 @@ function SignIn() {
   const [signInUsername, setSignInUsername] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
   const [message, setMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.value);
@@ -30,7 +31,12 @@ function SignIn() {
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.result) {
+        if (!data.result) {
+          setErrorMessage(
+            "Your username or password doesn't match any account"
+          );
+          return;
+        } else {
           dispatch(
             login({
               username: data.username,
@@ -73,6 +79,7 @@ function SignIn() {
         </div>
         <p>Forgot password?</p>
       </div>
+      {errorMessage && <div className="text-red-500 mb-3">{errorMessage}</div>}
       <button
         className="bg-success w-80 h-10 rounded-md p-2 mb-6"
         id="signInButton"
@@ -80,7 +87,10 @@ function SignIn() {
       >
         Sign in
       </button>
-      <a href="/signup">Don't have an account? Please sign up.</a>
+      <a href="/signup">
+        Don't have an account? Please <span className="underline">sign up</span>
+        .
+      </a>
       <p className="mb-4">or</p>
       <div className="flex flex-row ">
         <button className="bg-accent w-80 h-10 rounded-md p-2 mb-6">

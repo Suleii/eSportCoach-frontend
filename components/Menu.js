@@ -9,14 +9,16 @@ import {
   faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
 
 function Menu() {
   const dispatch = useDispatch();
   const router = useRouter();
+  const user = useSelector((state) => state.user.value);
 
   function handleLogout() {
     dispatch(logout());
-    router.push("/");
+    router.push("./");
   }
 
   return (
@@ -73,15 +75,19 @@ function Menu() {
               </a>
             </li>
           </div>
-          <div className="">
-            <li className="text-white mb-28" onClick={handleLogout}>
-              <FontAwesomeIcon
-                className="rotate-180"
-                icon={faRightFromBracket}
-              />
-              Logout
-            </li>
-          </div>
+          {user.token ? (
+            <div className="flex flex-row">
+              <li className="text-white mb-28" onClick={handleLogout}>
+                <FontAwesomeIcon
+                  className="rotate-180"
+                  icon={faRightFromBracket}
+                />
+                Logout
+              </li>
+            </div>
+          ) : (
+            <></>
+          )}
         </ul>
       </div>
     </div>
