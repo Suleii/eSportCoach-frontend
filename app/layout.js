@@ -17,13 +17,13 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${inter.className} min-h-screen`}>
+      <body className='flex flex-col min-h-screen'>
         <StoreProvider>
-          <div>
+          
             <Header/>
-          <main className="">{children}</main>
+          <main className="flex-auto">{children}</main>
           <Footer/>
-          </div>
+        
         </StoreProvider>
       </body>
     </html>
