@@ -4,16 +4,12 @@
     font-weight: bold;
 }
 
-/* .selected {
-    background-color: #599c5f;
-} */
-
 .button_reset:focus-visible{
     background-color: #fc8366;
 }
 
 .rdp {
-    --rdp-cell-size: 45px;  
+    --rdp-cell-size: 40px;  
 }
 
 .nav {

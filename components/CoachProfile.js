@@ -112,12 +112,24 @@ function CoachProfile(props) {
           <div>
             <div>
               <span className="text-white mb-1">@{props.username}</span>
-              <span className="ml-5">
-                <FontAwesomeIcon
-                  icon={faEllipsisVertical}
-                  style={{ color: "#ffffff" }}
-                />
-              </span>
+              <div className="dropdown dropdown-top dropdown-end ">
+                <div tabIndex={0}>
+                  <span className="ml-5  ">
+                    <FontAwesomeIcon
+                      icon={faEllipsisVertical}
+                      style={{ color: "#ffffff" }}
+                    />
+                  </span>
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content z-[1] menu  bg-base-100 rounded-box w-36 h-7 justify-center align-center"
+                >
+                  <li className="text-accent text-xs">
+                    <a href="/contact">Report this user</a>
+                  </li>
+                </ul>
+              </div>
             </div>
             <div className="text-xs mb-6">
               <span>{stars}</span>
@@ -126,33 +138,25 @@ function CoachProfile(props) {
             {user.token === coachToken ? (
               <Link
                 href={`/coaches/${props.username}/settings`}
+                type="button"
                 className="btn btn-success text-white"
               >
-                Edit Profile
+                Edit Profile{" "}
                 <span className="text-white">
                   <FontAwesomeIcon icon={faPencil} />
-                </span>
-              </Link>
-            ) : user.token !== null ? (
-              <Link
-                href={`/coaches/${props.username}/booking`}
-                className="btn btn-success text-white"
-              >
-                Book Me
-                <span className="text-white">
-                  <FontAwesomeIcon icon={faArrowRightLong} />
-                </span>
+                </span>{" "}
               </Link>
             ) : (
-              <button
-                onClick={() => router.push("/signin")}
+              <Link
+                href={`/coaches/${props.username}/booking`}
+                type="button"
                 className="btn btn-success text-white"
               >
-                Book Me
+                Book Me{" "}
                 <span className="text-white">
                   <FontAwesomeIcon icon={faArrowRightLong} />
-                </span>
-              </button>
+                </span>{" "}
+              </Link>
             )}
           </div>
         </div>
@@ -247,7 +251,7 @@ function CoachProfile(props) {
             </ul>
           </div>
           <h3 className="text-lg mb-1">Price</h3>
-          <div className="">1 session : €{price}</div>
+          <div className="">1 session (2hrs): €{price}</div>
 
           <h3 className="text-lg mt-6 mb-6">Reviews</h3>
           {reviews.length > 0 ? (
