@@ -99,7 +99,12 @@ console.log("profile", profile)
                 <div>
                     <div>
                         <span className="text-white mb-1">@{props.username}</span>
-                        <span className="ml-5"><FontAwesomeIcon icon={faEllipsisVertical} style={{'color':"#ffffff"}} /></span>
+                        <div className="dropdown dropdown-top dropdown-end ">
+                        <div tabIndex={0} ><span className='ml-5  '><FontAwesomeIcon icon={faEllipsisVertical} style={{'color':"#ffffff"}} /></span></div>
+                          <ul tabIndex={0} className="dropdown-content z-[1] menu  bg-base-100 rounded-box w-36 h-7 justify-center align-center">
+                              <li className='text-accent text-xs'><a href='/contact'>Report this user</a></li>
+                          </ul> 
+                        </div>
                     </div>
                     <div className="text-xs mb-6"><span>{stars}</span><span className="text-white"> ({reviewCount})</span></div>
                     { user.token === coachToken
@@ -202,7 +207,7 @@ console.log("profile", profile)
                 </div>
                 <h3 className="text-lg mb-1">Price</h3>
                 <div className="">
-                    1 session : €{price}
+                    1 session (2hrs): €{price}
                 </div>
                 
                 

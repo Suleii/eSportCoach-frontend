@@ -117,7 +117,7 @@ return (
           <ul className="py-4">
               {bookingsSelected.length > 0 
                 ? (bookingsSelected.map((booking, i) => {
-                  return <Event key={i} game={booking.game} gamer={booking.username.user.username} date={booking.date} coach={booking.coachUsername} id={booking._id}/>}))
+                  return <Event key={i} game={booking.game} partner={booking.username.user.username} date={booking.date} coach={booking.coachUsername} id={booking._id}/>}))
                 : <div className="form-control bg-base-100 rounded-md flex ">
                     <div className="flex">
                         <input

@@ -43,7 +43,7 @@ return (
         :
     <div>
     <div className='flex justify-between align-center mb-1'>
-        <div className="text-base ">Session with {props.gamer}</div>
+        <div className="text-base ">Session with {props.partner}</div>
         <div className="text-base">{time}</div>
     </div>
     <div className='flex justify-between items-center'>

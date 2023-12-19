@@ -9,11 +9,8 @@ import { config } from '@fortawesome/fontawesome-svg-core';
 config.autoAddCss = false;
 
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import Link from 'next/link';
 import Review from './Reviews';
 import GamerSchedule from './GamerSchedule';
-
 
 
 function UserProfile (props) {
@@ -21,11 +18,6 @@ function UserProfile (props) {
 const [profile, setProfile] = useState([]);
 const [reviewsdata, setReviewsData] = useState([]);
 const [bookings, setBookings] = useState([]);
-
-
-
-const user = useSelector((state) => state.user.value); 
-
 
 
 useEffect(() => {
@@ -57,17 +49,7 @@ useEffect(() => {
   
   console.log("reviewsdata", reviewsdata)
 
-  // const reviews = 
-  //   if(reviewsdata.length===0){
-  //     bookings.map((booking, j)=> {
-  //     return <Review key={j} rating={0} username={booking.coachUsername.user.username} photo={data.username.photo} game={booking.game} content="No reviews for this coach yet"/>;
-  //     })
-  //   }else{
-  //     reviewsdata.map((data) => {})
-  //   }
-  // });
-
- 
+// Check if there is a coach who was booked but does not have a review
   const haveSameCoach = (bookings, reviewsdata) => {
     for (let i = 0; i < bookings.length; i++) {
       for (let j = 0; j < reviewsdata.length; j++) {
@@ -81,32 +63,28 @@ useEffect(() => {
     return false; // No common element found
   }
 
-
-// const gamesTags = games.map((item, i)=>
-// <div className="badge badge-accent text-xs mr-2" key={i}>{item}</div>
-// ); 
-
-// console.log("reviews data", reviewsdata)
+ 
 
     return(
         <div className="flex flex-col items-center min-h-screen">
           <div className='w-5/6 flex-1'>
-            <div className="flex flex-row justify-between">
-                <div className="avatar">
-                    <div className="w-24 h-24 rounded-full">
-                        <img src={profile.photo} alt="Profile pic" />
-                    </div>
+          
+            <div className="flex flex-row justify-between mb-6 items-center">
+                <div className="flex items-center ">
+                  <div className="avatar">
+                      <div className="w-16 h-16 rounded-full">
+                          <img src={profile.photo} alt="Profile pic" />
+                      </div>
+                  </div>
+                  <span className="text-white ml-2">@{props.username}</span>
                 </div>
                 <div>
-                    <div>
-                    <span className="text-white mb-1">@{props.username}</span>
-                    <span className="ml-5"><FontAwesomeIcon icon={faEllipsisVertical} style={{'color':"#ffffff"}} /></span></div>
-                    {/* <div className="text-xs mb-6"><span>{stars}</span><span className="text-white"> ({reviewCount})</span></div>
-                    { user.isCoach 
-                        ? <Link href="/" type="button" className="btn btn-success text-white">Edit Profile <span className="text-white"><FontAwesomeIcon icon={faPencil} /></span> </Link>
-                        : <Link href="/" type="button" className="btn btn-success text-white"></Link>
-                    } */}
-                    
+                      <div className="dropdown dropdown-end ">
+                        <div tabIndex={0} ><span className='ml-5  '><FontAwesomeIcon icon={faEllipsisVertical} style={{'color':"#ffffff"}} /></span></div>
+                          <ul tabIndex={0} className="dropdown-content z-[1] menu  bg-base-100 rounded-box w-36 h-7 justify-center align-center">
+                              <li className='text-accent text-xs'><a href='/contact'>Report this user</a></li>
+                          </ul> 
+                        </div>
                 </div>
                 
                 
@@ -114,19 +92,37 @@ useEffect(() => {
               <GamerSchedule username={props.username} profile={profile} bookings={bookings}/>
                 
 
-               <h3 className="text-lg mt-6 mb-6">My reviews</h3>
+               <h3 className="text-lg mt-10 mb-6">My reviews</h3>
                {bookings.map((booking, i) => {
                 const hasMatchingCoach = haveSameCoach([booking], reviewsdata);
                 
-                return hasMatchingCoach ? (
-                  reviewsdata.map((data, j) => (
-                    <Review key={j} rating={data.rating} username={data.coach.user.username} photo={data.coach.photo} game={data.game} content={data.content} />
-                  ))
-                ) : (
-                  <Review key={i} rating={0} username={booking.coachUsername.user.username} photo={booking.coachUsername.photo} game={booking.game} content="No reviews for this coach yet. Do it now!" />
+                return(
+                  <div key={i}>
+                    {hasMatchingCoach ? (
+                      reviewsdata
+                        .filter((data) => booking.coachUsername.user.username === data.coach.user.username)
+                        .map((filteredData, j) => (
+                          <Review
+                            key={j}
+                            rating={filteredData.rating}
+                            coach={filteredData.coach.user.username}
+                            photo={filteredData.coach.photo}
+                            game={filteredData.game}
+                            content={filteredData.content}
+                          />
+                        ))
+                    ) : (
+                      <Review
+                        key={i}
+                        rating={0}
+                        coach={booking.coachUsername.user.username}
+                        photo={booking.coachUsername.photo}
+                        game={booking.game}
+                      />
+                    )}
+                  </div>
                 );
               })}
-                
             
             </div>
         </div>
