@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation'
 
@@ -20,6 +20,8 @@ function CoachSettings(props) {
     
     const router = useRouter()
     const user = useSelector((state) => state.user.value);
+    const fileInputRef = useRef();
+
   
    
     
@@ -159,11 +161,49 @@ function CoachSettings(props) {
             });
         };
   
+        const handleFileInputChange = (e) => {
+          const file = e.target.files[0];
+          setProfilePictureFile(file);
+      };
+  
+      const handleUploadPictureClick = () => {
+        fileInputRef.current.click(); // Trigger file input click when the picture is clicked
+    };
   
     return (
     <div className="flex flex-col items-center min-h-screen mx-auto text-white w-5/6 flex-1 ">
         <form onSubmit={handleSubmit} className="w-full max-w-md">
           <div className='flex flex col justify-between'>
+            {/* Profile picture circle with the ability to upload */}
+            <div className="relative">
+                        <div
+                            className="w-20 h-20 bg-base-200 rounded-full overflow-hidden cursor-pointer"
+                            onClick={handleUploadPictureClick}
+                        >
+                            {/* Display the current profile picture */}
+                            {photo ? (
+            <img
+                src={photo}
+                alt="Profile"
+                className="w-full h-full object-cover"
+            />
+        ) : (
+            <img
+                src="./avatar.png"
+                alt="Default Avatar"
+                className="w-full h-full object-cover"
+            />
+        )}
+                        </div>
+                        {/* File input for uploading a new profile picture */}
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleFileInputChange}
+                            style={{ display: 'none' }}
+                            ref={fileInputRef}
+                        />
+                    </div>
         <h2 className=''>Basic informations</h2>
         {!isEditing && (
             <button className='bg-accent w-20 h-8 rounded-xl' type="button" onClick={handleEditClick}>
@@ -203,15 +243,6 @@ function CoachSettings(props) {
             />
           </label>
   
-          <label>
-            <input className="bg-base-100 w-80 h-10 rounded-xl p-2 mb-5"
-              type="text"
-              placeholder="Photo"
-              value={photo}
-              onChange={handleInputChange}
-              disabled={!isEditing}
-            />
-          </label>
 
           <h2 className='flex flex col mt-3 mb-8 '>Gaming informations</h2>
   

@@ -10,7 +10,7 @@ import Modal from './Modal'
 import Event from './Event'
 
 
-function CoachSchedule(props) {
+function GamerSchedule(props) {
 const user = useSelector((state) => state.user.value);
 const [profile, setProfile]=useState([])
 const [selectedDate, setSelectedDate] = useState("");
@@ -22,7 +22,7 @@ const [disabledDays, setDisabledDays] = useState([])
 
 //Get the coach profile
 useEffect(()=> {
-  fetch(`http://localhost:3000/coaches/profile/${props.username}`)
+  fetch(`http://localhost:3000/gamers/profile/${props.username}`)
     .then(response => response.json())
     .then(data => {
     setProfile(data.profile);
@@ -32,7 +32,7 @@ useEffect(()=> {
 
 //Get all bookings for this coach
 useEffect(() => {
-    fetch(`http://localhost:3000/bookings/${props.username}`) // search sessions according to the user's token
+    fetch(`http://localhost:3000/bookings/${user.token}`) // search sessions according to the user's token
     .then(response=> response.json())
     .then(data => {
       setBookings(data.bookings)
@@ -176,4 +176,4 @@ return (
 
 )
 }
-export default CoachSchedule;
+export default GamerSchedule;
