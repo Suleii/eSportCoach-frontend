@@ -12,40 +12,40 @@ import Event from './Event'
 
 function GamerSchedule(props) {
 const user = useSelector((state) => state.user.value);
-const [profile, setProfile]=useState([])
+const profile = props.profile;
 const [selectedDate, setSelectedDate] = useState("");
 const [open, setOpen] = useState(false);
-const [bookings, setBookings] = useState([]);
+const bookings = props.bookings
 const [bookingsSelected, setBookingsSelected] = useState([]);
 const [checkbox, setCheckbox] = useState(false)
 const [disabledDays, setDisabledDays] = useState([])
 
 //Get the coach profile
-useEffect(()=> {
-  fetch(`http://localhost:3000/gamers/profile/${props.username}`)
-    .then(response => response.json())
-    .then(data => {
-    setProfile(data.profile);
-    })
-},[])
+// useEffect(()=> {
+//   fetch(`http://localhost:3000/gamers/profile/${props.username}`)
+//     .then(response => response.json())
+//     .then(data => {
+//     setProfile(data.profile);
+//     })
+// },[])
 
 
 //Get all bookings for this coach
-useEffect(() => {
-    fetch(`http://localhost:3000/bookings/${user.token}`) // search sessions according to the user's token
-    .then(response=> response.json())
-    .then(data => {
-      setBookings(data.bookings)
-      })
+// useEffect(() => {
+//     fetch(`http://localhost:3000/bookings/gamer/${props.username}`) // search sessions according to the user's token
+//     .then(response=> response.json())
+//     .then(data => {
+//       setBookings(data.bookings)
+//       })
 
      //Get all unavailabilities 
-    fetch(`http://localhost:3000/unavailabilities/${props.username}`)
-      .then(response => response.json())
-      .then(data => {
-        setDisabledDays(data.unavailabilities)
-      })
+  //   fetch(`http://localhost:3000/unavailabilities/${props.username}`)
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       setDisabledDays(data.unavailabilities)
+  //     })
 
-  },[selectedDate])
+  // },[selectedDate])
 
 
   
@@ -109,8 +109,8 @@ console.log(bookingsDates)
 const bookingsStyles = {color : "#599c5f"}
 
 return (
-<div className="flex flex-col items-center min-h-screen">
-  <div className='w-5/6 flex-1'>
+<div className="flex flex-col items-center">
+  <div className='w-5/6'>
       <div className="container">
         {/* opens the modal */}
         <Modal open={open}>

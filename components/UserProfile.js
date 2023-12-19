@@ -12,6 +12,7 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import Link from 'next/link';
 import Review from './Reviews';
+import GamerSchedule from './GamerSchedule';
 
 
 
@@ -110,7 +111,7 @@ useEffect(() => {
                 
                 
             </div>
-          
+              <GamerSchedule username={props.username} profile={profile} bookings={bookings}/>
                 
 
                <h3 className="text-lg mt-6 mb-6">My reviews</h3>
