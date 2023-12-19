@@ -22,7 +22,7 @@ function CoachSettings(props) {
     const user = useSelector((state) => state.user.value);
     const fileInputRef = useRef();
 
-  
+   
    
     
 // Fetch coach information when the component mounts
@@ -45,23 +45,25 @@ function CoachSettings(props) {
               setExperience(experience);
               const games = data.profile.games;
               setGames(games);
-              const twitch = data.profile.social.twitch;
+              const twitch = data.profile.socials.twitch;
               setTwitch(twitch);
-              const instagram = data.profile.social.instagram;
+              const instagram = data.profile.socials.instagram;
               setInstagram(instagram);
-              const youtube = data.profile.social.youtube;
+              const youtube = data.profile.socials.youtube;
               setYoutube(youtube);
-              const discord = data.profile.social.discord;
+              const discord = data.profile.socials.discord;
               setDiscord(discord);
               const price = data.profile.price;
               setPrice(price);
                 });
+              
             } else {
                 // Redirect to login page if not logged in
                 //router.push('/login');
               }
             }, [user.token, user.username]);
  
+            
  // Handle input changes and update the corresponding state variable
     const handleInputChange = (e) => {
          const { name, value } = e.target;
@@ -99,7 +101,7 @@ function CoachSettings(props) {
             about,
             experience,
             games,
-            social: {
+            socials: {
                 twitch,
                 instagram,
                 youtube,
@@ -108,7 +110,7 @@ function CoachSettings(props) {
             price,
         };
           
-            fetch(`http://192.168.1.65:3000/coaches/profile/${props.username}`, {
+            fetch(`http://localhost:3000/coaches/profile/${props.username}`, {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',
@@ -161,49 +163,13 @@ function CoachSettings(props) {
             });
         };
   
-        const handleFileInputChange = (e) => {
-          const file = e.target.files[0];
-          setProfilePictureFile(file);
-      };
-  
-      const handleUploadPictureClick = () => {
-        fileInputRef.current.click(); // Trigger file input click when the picture is clicked
-    };
+
   
     return (
     <div className="flex flex-col items-center min-h-screen mx-auto text-white w-5/6 flex-1 ">
         <form onSubmit={handleSubmit} className="w-full max-w-md">
           <div className='flex flex col justify-between'>
-            {/* Profile picture circle with the ability to upload */}
-            <div className="relative">
-                        <div
-                            className="w-20 h-20 bg-base-200 rounded-full overflow-hidden cursor-pointer"
-                            onClick={handleUploadPictureClick}
-                        >
-                            {/* Display the current profile picture */}
-                            {photo ? (
-            <img
-                src={photo}
-                alt="Profile"
-                className="w-full h-full object-cover"
-            />
-        ) : (
-            <img
-                src="./avatar.png"
-                alt="Default Avatar"
-                className="w-full h-full object-cover"
-            />
-        )}
-                        </div>
-                        {/* File input for uploading a new profile picture */}
-                        <input
-                            type="file"
-                            accept="image/*"
-                            onChange={handleFileInputChange}
-                            style={{ display: 'none' }}
-                            ref={fileInputRef}
-                        />
-                    </div>
+           
         <h2 className=''>Basic informations</h2>
         {!isEditing && (
             <button className='bg-accent w-20 h-8 rounded-xl' type="button" onClick={handleEditClick}>
@@ -239,7 +205,7 @@ function CoachSettings(props) {
               placeholder="Email"
               value={email}
               onChange={handleInputChange}
-              disabled={true}
+              disabled={!isEditing}
             />
           </label>
   
