@@ -27,11 +27,11 @@ function SearchPage({ searchQuery }) {
   useEffect(() => {
     // Collect quiz answers with local Storage
     const storedAnswers = localStorage.getItem("quizAnswers");
-    let budgetFilter, languageFilterFromQuiz;
+    let budgetFilterFromQuiz, languageFilterFromQuiz;
 
     if (storedAnswers) {
       const quizAnswers = JSON.parse(storedAnswers);
-      budgetFilter = quizAnswers.maxBudget;
+      budgetFilterFromQuiz = quizAnswers.maxBudget;
       languageFilterFromQuiz = quizAnswers.language;
 
       // Delete local Storage answers to avoid bug
@@ -57,7 +57,7 @@ function SearchPage({ searchQuery }) {
                 (maxPrice === null || item.price <= maxPrice) &&
                 (languageFilter === null ||
                   item.language.includes(languageFilter)) &&
-                (!budgetFilter || item.price <= budgetFilter) &&
+                (!budgetFilterFromQuiz || item.price <= budgetFilterFromQuiz) &&
                 (!languageFilterFromQuiz ||
                   item.language.includes(languageFilterFromQuiz))
               );
@@ -113,7 +113,7 @@ function SearchPage({ searchQuery }) {
       <div className="modal-box">
         <h3 className="font-bold text-lg">Select Language</h3>
         <div className="py-4 space-y-2">
-          {["English", "French", "Spanish"].map((language) => (
+          {["English", "French", "Spanish", "Italian"].map((language) => (
             <div
               key={language}
               onClick={() => handleLanguageSelection(language)}
