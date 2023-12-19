@@ -5,25 +5,23 @@ import { useRouter } from 'next/navigation'
 
 function CoachSettings(props) {
     const [isEditing, setIsEditing] = useState(false);
-    const [lastname, setLastname] = useState();
-    const [firstname, setFirstname] = useState();
-    const [email, setEmail] = useState();
-    const [photo, setPhoto] = useState();
-    const [about, setAbout] = useState();
+    const [lastname, setLastname] = useState('');
+    const [firstname, setFirstname] = useState('');
+    const [email, setEmail] = useState('');
+    const [photo, setPhoto] = useState('');
+    const [about, setAbout] = useState('');
     const [experience, setExperience] = useState([])
     const [games, setGames] = useState([])
-    const [twitch, setTwitch] = useState();
-    const [instagram, setInstagram] = useState()
-    const [youtube, setYoutube] = useState()
-    const [discord, setDiscord] = useState()
-    const [price, setPrice] = useState()
+    const [twitch, setTwitch] = useState('');
+    const [instagram, setInstagram] = useState('')
+    const [youtube, setYoutube] = useState('')
+    const [discord, setDiscord] = useState('')
+    const [price, setPrice] = useState(0)
     
     const router = useRouter()
     const user = useSelector((state) => state.user.value);
     const fileInputRef = useRef();
 
-   
-   
     
 // Fetch coach information when the component mounts
     useEffect(() => {
@@ -155,10 +153,10 @@ function CoachSettings(props) {
                 setAbout(data.profile.about);
                 setExperience(data.profile.experience);
                 setGames(data.profile.games);
-                setTwitch(data.profile.social.twitch);
-                setInstagram(data.profile.social.instagram);
-                setYoutube(data.profile.social.youtube);
-                setDiscord(data.profile.social.discord);
+                setTwitch(data.profile.socials.twitch);
+                setInstagram(data.profile.socials.instagram);
+                setYoutube(data.profile.socialsyoutube);
+                setDiscord(data.profile.socials.discord);
                 setPrice(data.profile.price);
             });
         };
