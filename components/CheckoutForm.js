@@ -70,55 +70,61 @@ const Return = () => {
 
   // Create a booking reservation in database
   const createBooking = () => {
-    // First fetch to collect coach datas
+    let savedCoachData; // Variable to stock coach Data
+
+    // First fetch to collect coach data
     fetch(`http://localhost:3000/coaches/profile/${coachName}`)
       .then((res) => res.json())
       .then((coachData) => {
         if (!coachData.result) {
-          console.error("Coach data not found");
+          throw new Error("Coach data not found"); // "throw new Error" allow to stop the execution of createBooking
+        }
+        savedCoachData = coachData;
+
+        // Second fetch to collect user connected data
+        return fetch(`http://localhost:3000/gamers/profile/${user.username}`);
+      })
+      .then((res) => res.json())
+      .then((userData) => {
+        if (!userData.result) {
+          throw new Error("User data not found");
         }
 
-        // Second fetch to collect user connected datas
-        return fetch(`http://localhost:3000/gamers/profile/${user.username}`)
-          .then((res) => res.json())
-          .then((userData) => {
-            if (!userData.result) {
-              console.error("User data not found");
-            }
+        // Booking data management
+        const bookingData = {
+          date: booking.date,
+          coachUsername: savedCoachData.profile._id,
+          game: booking.game,
+          username: user.username,
+        };
+        // Third fetch to create booking in database
+        return fetch("http://localhost:3000/bookings", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(bookingData),
+        });
+      })
+      .then((response) => response.json())
+      .then((bookingData) => {
+        console.log("Booking Created:", bookingData);
 
-            // Booking datas management
-            const bookingData = {
-              date: booking.date,
-              coachUsername: coachData.profile._id,
-              game: booking.game,
-              username: user.username,
-            };
-
-            // Third fetch to create booking in database
-            return fetch("http://localhost:3000/bookings", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(bookingData),
-            });
-          })
-          .then((response) => response.json())
-          .then((bookingData) => {
-            console.log("Booking Created:", bookingData);
-
-            // Fourth fetch to create unavailability in database
-            return fetch("http://localhost:3000/unavailabilities", {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(bookingData),
-            });
-          })
-          .then((response) => response.json())
-          .then((unavailabilityData) =>
-            console.log("Unavailability Created:", unavailabilityData)
-          )
-          .catch((error) =>
-            console.error("Error in creating booking or unavailability:", error)
-          );
+        // Fourth fetch to send confirmation email
+        return fetch("http://localhost:3000/emails/bookingConfirmation", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            coachName: booking.coach,
+            date: booking.date,
+            email: customerEmail,
+          }),
+        });
+      })
+      .then((response) => response.json())
+      .then((emailConfirmation) => {
+        console.log("Email confirmation sent:", emailConfirmation);
+      })
+      .catch((error) => {
+        console.error("An error occurred:", error.message);
       });
   };
 
@@ -133,13 +139,16 @@ const Return = () => {
       <div className="flex items-center justify-center min-h-screen">
         <section className="shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col items-center justify-center">
           <h1 className="text-lg font-bold mb-2">Confirmation de Paiement</h1>
-          <p>
+          <p className="text-center">
             Merci pour votre confiance ! Un email de confirmation a été envoyé à{" "}
             <strong>{customerEmail}</strong>.
           </p>
-          <p className="mt-5">
+          <p className="mt-5 text-center">
             Si vous avez des questions, n'hésitez pas à envoyer un email à{" "}
-            <a href="mailto:contact@exp.com">contact@exp.com</a>.
+            <a href="mailto:experience.lacapsule@gmail.com">
+              experience.lacapsule@gmail.com
+            </a>
+            .
           </p>
           <button
             onClick={handleReturnHome}

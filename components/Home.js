@@ -1,14 +1,17 @@
 "use client";
 import SearchBar from "./Searchbar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Prevent fontawesome icons from flashing large icons when reloading :
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false;
 
 function Home() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [bestCoaches, setBestCoaches] = useState([]);
 
   // Update searchQuery with query value on SearchBar
   const handleSearch = (query) => {
@@ -43,6 +46,42 @@ function Home() {
     { name: "Pokemon", image: "pokemon.jpg", searchTerm: "pokemon" },
   ];
 
+  useEffect(() => {
+    fetch("http://localhost:3000/coaches/bestCoaches")
+      .then((response) => response.json())
+      .then(async (data) => {
+        if (data.result) {
+          const coachesWithReviews = await Promise.all(
+            // Use Promise.all to treat simultaneously all Promises return by map
+            data.coaches.map(async (coach) => {
+              // Run through all coach data collected
+              const reviewResponse = await fetch(
+                `http://localhost:3000/reviews/${coach.user.username}`
+              );
+              const reviewData = await reviewResponse.json(); // For each code, send a request to collect his reviews
+              return { ...coach, reviewCount: reviewData.reviews.length }; // Return a new object with all coaches data AND reviews length
+            })
+          );
+          setBestCoaches(coachesWithReviews);
+        }
+      });
+  }, []);
+
+  // Fonction pour générer des étoiles
+  const generateStars = (rating) => {
+    let stars = [];
+    for (let i = 0; i < 5; i++) {
+      stars.push(
+        <FontAwesomeIcon
+          key={i}
+          icon={faStar}
+          style={{ color: i < rating ? "#599c5f" : undefined }}
+        />
+      );
+    }
+    return stars;
+  };
+
   return (
     <div className="flex flex-col items-center min-h-screen">
       <div className="w-5/6 flex-1">
@@ -62,164 +101,24 @@ function Home() {
           ))}
         </div>
 
-        <h1 className="mt-10 ml-8">Best Coaches</h1>
-        <div className="mt-6 flex flex-row space-x-8 pb-24 ">
-          <div className="h-36 w-28 flex flex-col items-center ">
-            <img src="gotaga.jpg" className="rounded-full" />
-            <p>Gotaga</p>
-            <div className="flex flex-row">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="16"
-                width="18"
-                viewBox="0 0 576 512"
-                className="fill-success"
-              >
-                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-              </svg>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="16"
-                width="18"
-                viewBox="0 0 576 512"
-                className="fill-success"
-              >
-                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-              </svg>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="16"
-                width="18"
-                viewBox="0 0 576 512"
-                className="fill-success"
-              >
-                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-              </svg>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="16"
-                width="18"
-                viewBox="0 0 576 512"
-                className="fill-success"
-              >
-                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-              </svg>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="16"
-                width="18"
-                viewBox="0 0 576 512"
-                className="fill-success"
-              >
-                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-              </svg>
+        <h1 className="mt-10 mb-5 ml-8">Best Coaches</h1>
+        <div className="flex flex-row items-center">
+          {bestCoaches.map((coach, index) => (
+            <div
+              key={index}
+              className="h-36 w-28 flex flex-col items-center p-3"
+            >
+              <img
+                src={coach.photo}
+                alt={coach.user.username}
+                className="rounded-full"
+              />
+              <p className="m-2">{coach.user.username}</p>
+              <div className="flex flex-row">{generateStars(coach.rating)}</div>
+              <p className="m-2">({coach.reviewCount})</p>{" "}
+              {/* Exemple de données */}
             </div>
-            <p>(500)</p>
-          </div>
-          <div className="h-36 w-28 flex flex-col items-center ">
-            <img src="riskin.png" className="rounded-full" />
-            <p>Riskin</p>
-            <div className="flex flex-row">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="16"
-                width="18"
-                viewBox="0 0 576 512"
-                className="fill-success"
-              >
-                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-              </svg>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="16"
-                width="18"
-                viewBox="0 0 576 512"
-                className="fill-success"
-              >
-                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-              </svg>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="16"
-                width="18"
-                viewBox="0 0 576 512"
-                className="fill-success"
-              >
-                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-              </svg>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="16"
-                width="18"
-                viewBox="0 0 576 512"
-                className="fill-success"
-              >
-                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-              </svg>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="16"
-                width="18"
-                viewBox="0 0 576 512"
-                className="fill-success"
-              >
-                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-              </svg>
-            </div>
-            <p>(200)</p>
-          </div>
-          <div className="h-36 w-28 flex flex-col items-center ">
-            <img src="azox.jpg" className="rounded-full" />
-            <p>Azox</p>
-            <div className="flex flex-row">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="16"
-                width="18"
-                viewBox="0 0 576 512"
-                className="fill-success"
-              >
-                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-              </svg>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="16"
-                width="18"
-                viewBox="0 0 576 512"
-                className="fill-success"
-              >
-                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-              </svg>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="16"
-                width="18"
-                viewBox="0 0 576 512"
-                className="fill-success"
-              >
-                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-              </svg>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="16"
-                width="18"
-                viewBox="0 0 576 512"
-                className="fill-success"
-              >
-                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-              </svg>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                height="16"
-                width="18"
-                viewBox="0 0 576 512"
-                className="fill-success"
-              >
-                <path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-              </svg>
-            </div>
-            <p>(300)</p>
-          </div>
+          ))}
         </div>
       </div>
     </div>

@@ -1,30 +1,31 @@
 "use client";
 import { useRouter } from "next/navigation";
-import {useState,  useEffect} from 'react'
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Menu from "../components/Menu";
 
 function Header() {
   const user = useSelector((state) => state.user.value);
-  const [profile, setProfile] = useState("")
+  const [profile, setProfile] = useState("");
 
   useEffect(() => {
-    if(user.username !== null){
-      if(user.isCoach){
+    if (user.username !== null) {
+      if (user.isCoach) {
         fetch(`http://localhost:3000/coaches/profile/${user.username}`)
-        .then((response) => response.json())
-        .then((data) => {
-        setProfile(data.profile)});
-      }else{
+          .then((response) => response.json())
+          .then((data) => {
+            setProfile(data.profile);
+          });
+      } else {
         fetch(`http://localhost:3000/gamers/profile/${user.username}`)
-        .then(response => response.json())
-        .then(data => {
-        setProfile(data.profile); // to get the profile pic
-        });
-      };
-      }      
+          .then((response) => response.json())
+          .then((data) => {
+            setProfile(data.profile); // to get the profile pic
+          });
+      }
+    }
   }, []);
-console.log(profile)
+  console.log(profile);
   return (
     <div className="navbar pt-10 mb-10">
       <div className="container mx-auto flex justify-between items-center">
@@ -52,7 +53,7 @@ console.log(profile)
                   </a>
                 ) : (
                   <a href="/signin">
-                    <img alt="Profile icon" src="/profilepic.png" />
+                    <img alt="Profile icon" src="/profilepicLogin.png" />
                   </a>
                 )}
               </div>

@@ -138,7 +138,6 @@ function CoachProfile(props) {
             {user.token === coachToken ? (
               <Link
                 href={`/coaches/${props.username}/settings`}
-                type="button"
                 className="btn btn-success text-white"
               >
                 Edit Profile{" "}
@@ -146,10 +145,9 @@ function CoachProfile(props) {
                   <FontAwesomeIcon icon={faPencil} />
                 </span>{" "}
               </Link>
-            ) : (
+            ) : user.token !== null ? (
               <Link
                 href={`/coaches/${props.username}/booking`}
-                type="button"
                 className="btn btn-success text-white"
               >
                 Book Me{" "}
@@ -157,6 +155,16 @@ function CoachProfile(props) {
                   <FontAwesomeIcon icon={faArrowRightLong} />
                 </span>{" "}
               </Link>
+            ) : (
+              <button
+                onClick={() => router.push("/signin")}
+                className="btn btn-success text-white"
+              >
+                Book Me{" "}
+                <span className="text-white">
+                  <FontAwesomeIcon icon={faArrowRightLong} />
+                </span>{" "}
+              </button>
             )}
           </div>
         </div>
