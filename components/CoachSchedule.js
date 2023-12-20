@@ -32,7 +32,7 @@ useEffect(()=> {
 
 //Get all bookings for this coach
 useEffect(() => {
-    fetch(`http://localhost:3000/bookings/${props.username}`) // search sessions according to the user's token
+    fetch(`http://localhost:3000/bookings/${props.username}`) 
     .then(response=> response.json())
     .then(data => {
       setBookings(data.bookings)
