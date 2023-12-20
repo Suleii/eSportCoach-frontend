@@ -1,12 +1,6 @@
 "use client";
-import styles from "../styles/CoachProfile.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faStar,
-  faEllipsisVertical,
-  faPencil,
-  faArrowRightLong,
-} from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisVertical} from "@fortawesome/free-solid-svg-icons";
 
 // Prevent fontawesome icons from flashing large icons when reloading :
 import "@fortawesome/fontawesome-svg-core/styles.css";
