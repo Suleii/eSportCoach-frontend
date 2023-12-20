@@ -41,7 +41,7 @@ console.log(profile)
               role="button"
               className="btn btn-ghost btn-circle avatar"
             >
-              <div className="w-10 rounded-full">
+              <div className="w-10 rounded-full bg-base-200">
                 {user.username && user.isCoach === true ? (
                   <a href={`/coaches/${user.username}`}>
                     <img alt="Profile pic" src={profile.photo} />
