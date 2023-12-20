@@ -19,8 +19,8 @@ function CoachResult(props) {
   }
 
   return (
-    <div className="border-b-2 border-white border-opacity-10 mb-2 p-5">
-      <div className="flex items-center space-x-4 ">
+    <div className="border-b-2 border-white border-opacity-10 mb-2">
+      <div className="flex items-center space-x-4 mb-2">
         <div className="avatar">
           <div className="w-14 h-14 rounded-full">
             <img src={props.photo} alt="profile picture" />
