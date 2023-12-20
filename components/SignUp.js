@@ -49,6 +49,16 @@ function SignUp() {
               isCoach: false,
             })
           );
+          fetch("http://localhost:3000/emails/signup",{
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                name: signUpFirstname,  
+                email: signUpMail,
+              }),
+            })
+          .then(response => response.json())
+          .then(data => console.log(data))  
 
           setSignUpLastname("");
           setSignUpFirstname("");
@@ -74,7 +84,7 @@ function SignUp() {
         firstname: signUpFirstname,
         username: signUpUsername,
         email: signUpMail,
-        photo: "",
+        photo: "/profilepic.png",
         games: [],
         price: 0,
         socials: {
@@ -103,6 +113,16 @@ function SignUp() {
               isCoach: true,
             })
           );
+          fetch("http://localhost:3000/emails/signup",{
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: signUpFirstname,  
+              email: signUpMail,
+            }),
+          })
+          .then(response => response.json())
+          .then(data => console.log(data))
 
           setSignUpLastname("");
           setSignUpFirstname("");
