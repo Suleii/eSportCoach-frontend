@@ -69,7 +69,7 @@ function CoachSettings(props) {
                   router.push('/');
               }
     })
-  }, [photo]);
+  }, [user.token, props.username]);
  
             
  // Handle input changes and update the corresponding state variable
@@ -374,6 +374,7 @@ setExperience(updatedExperience);
               name='about'
               onChange={handleInputChange}
               disabled={!isEditing}
+              
             />
           </label>
 
@@ -464,6 +465,7 @@ setExperience(updatedExperience);
               value={twitch}
               onChange={(e) => setGameInput(e.target.value)}
               disabled={!isEditing}
+              
             />
           </label>
   
@@ -475,6 +477,7 @@ setExperience(updatedExperience);
               name='instagram'
               onChange={handleInputChange}
               disabled={!isEditing}
+              
             />
           </label>
   
@@ -486,6 +489,7 @@ setExperience(updatedExperience);
               name='youtube'
               onChange={handleInputChange}
               disabled={!isEditing}
+             
             />
           </label>
   
@@ -497,6 +501,7 @@ setExperience(updatedExperience);
               name='discord'
               onChange={handleInputChange}
               disabled={!isEditing}
+              
             />
           </label>
   
@@ -507,6 +512,7 @@ setExperience(updatedExperience);
               name='price'
               onChange={handleInputChange}
               disabled={!isEditing}
+              
             />
           </label>
         </div>

@@ -8,10 +8,13 @@ import 'react-day-picker/dist/style.css';
 import styles from '../styles/CoachSchedule.module.css';
 import Modal from './Modal'
 import Event from './Event'
+import {useRouter} from 'next/navigation';
 
 
 function CoachSchedule(props) {
 const user = useSelector((state) => state.user.value);
+const router = useRouter();
+
 const [profile, setProfile]=useState([])
 const [selectedDate, setSelectedDate] = useState("");
 const [open, setOpen] = useState(false);
@@ -20,19 +23,28 @@ const [bookingsSelected, setBookingsSelected] = useState([]);
 const [checkbox, setCheckbox] = useState(false)
 const [disabledDays, setDisabledDays] = useState([])
 
-//Get the coach profile
+//Get the coach credentials and if user token is valid then get profile
 useEffect(()=> {
-  fetch(`http://localhost:3000/coaches/profile/${props.username}`)
-    .then(response => response.json())
-    .then(data => {
-    setProfile(data.profile);
+  fetch(`http://localhost:3000/users/credentials/${props.username}`)
+  .then(response => response.json())
+  .then(data => {
+    if(user.token === data.credentials.token){
+      fetch(`http://localhost:3000/coaches/profile/${props.username}`)
+      .then(response => response.json())
+      .then(data => {
+      setProfile(data.profile);
     })
+    }else{
+      router.push('/')
+    }
+  })
+  
 },[])
 
 
 //Get all bookings for this coach
 useEffect(() => {
-    fetch(`http://localhost:3000/bookings/${props.username}`) // search sessions according to the user's token
+    fetch(`http://localhost:3000/bookings/${props.username}`) 
     .then(response=> response.json())
     .then(data => {
       setBookings(data.bookings)

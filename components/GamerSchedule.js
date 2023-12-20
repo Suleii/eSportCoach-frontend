@@ -11,26 +11,42 @@ import Event from './Event'
 
 
 function GamerSchedule(props) {
-const [selectedDate, setSelectedDate] = useState("");
-const [open, setOpen] = useState(false);
-const bookings = props.bookings
-const [bookingsSelected, setBookingsSelected] = useState([]);
+  const user = useSelector((state) => state.user.value);
 
+  const [token, setToken] = useState("");
+  const [selectedDate, setSelectedDate] = useState("");
+  const [open, setOpen] = useState(false);
+  const bookings = props.bookings
+  const [bookingsSelected, setBookingsSelected] = useState([]);
+
+
+useEffect(() => {
+  fetch(`http://localhost:3000/users/credentials/${props.username}`)
+  .then(response => response.json())
+  .then(data => {
+    setToken(data.credentials.token)
+})
+}, []);
 
 //click on a date to display the sessions for the day
 const handleDayClick = (date) => {
-  setOpen((prev) => !prev);
-  setSelectedDate(date); // updates selected date
+  if(user.token === token){
+    setOpen((prev) => !prev);
+    // update selected date
+    setSelectedDate(date);
+    // Filter bookings by selected day
+    let bookingsoftheday = bookings.filter((booking) =>
+    isWithinInterval(new Date(booking.date), {
+    start: startOfDay(date),
+    end: endOfDay(date)
+    })
+    );
+    setBookingsSelected(bookingsoftheday);
+    };
+  }
+   
   
-  // Filter bookings by selected day
-  let bookingsoftheday = bookings.filter((booking) =>
-  isWithinInterval(new Date(booking.date), {
-  start: startOfDay(date),
-  end: endOfDay(date)
-  })
-  );
-  setBookingsSelected(bookingsoftheday);
-  };
+ 
   
 const handleClose = () => {
   setOpen(false)
