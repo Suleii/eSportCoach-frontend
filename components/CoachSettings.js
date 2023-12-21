@@ -71,21 +71,13 @@ function CoachSettings(props) {
                   router.push('/');
               }
     })
-  }, [user.token, user.username, user.avatar]);
+  }, [user.token, user.username, user.photo]);
  
             
  // Handle input changes and update the corresponding state variable
  const handleInputChange = (e) => {
   const { name, value } = e.target;
-
-    // Update the state directly for language, games, and experience
-    if (name === 'languageInput') {
-      setLanguageInput(value);
-    } else if (name === 'gameInput') {
-      setGameInput(value);
-    } else if (name === 'experienceInput') {
-      setExperienceInput(value);
-    } else {
+   
       // For other fields, update the state based on the input name
       const fieldToStateMap = {
         lastname: setLastname,
@@ -98,6 +90,9 @@ function CoachSettings(props) {
         youtube: setYoutube,
         discord: setDiscord,
         price: setPrice,
+        language: setLanguageInput,
+        games: setGameInput,
+        experience: setExperienceInput,
       };
 
       const setStateFunction = fieldToStateMap[name];
@@ -105,7 +100,7 @@ function CoachSettings(props) {
         setStateFunction(value);
       }
     }
-  };
+  //};
 
 // Add and remove games
 const addGame = () => {
@@ -169,7 +164,7 @@ setExperience(updatedExperience);
             games,
             language,
         };
-        
+        console.log("update",updatedCoachInfo);
           
         fetch(`http://localhost:3000/coaches/profile/${props.username}`, {
             method: 'PUT',
@@ -243,6 +238,7 @@ setExperience(updatedExperience);
         })
         .then((response) => response.json())
         .then((data)=> {
+          console.log('Uploaded picture data:', data);
           if (!data) {
               console.error('Failed to update coach photo');
           } else {
@@ -252,7 +248,7 @@ setExperience(updatedExperience);
   };
 
 
-
+console.log('user.photo:', user.photo);
   
     return (
     <div className="flex flex-col items-center text-white">
@@ -337,7 +333,7 @@ setExperience(updatedExperience);
                     placeholder="Languages"
                     value={languageInput}
                     name='language'
-                    onChange={(e) => setLanguageInput(e.target.value)}
+                    onChange={handleInputChange}
                     disabled={!isEditing}
                 />
                 <button
@@ -391,7 +387,7 @@ setExperience(updatedExperience);
                     placeholder="Experiences"
                     value={experienceInput}
                     name='experience'
-                    onChange={(e) => setExperienceInput(e.target.value)}
+                    onChange={handleInputChange}
                     disabled={!isEditing}
                 />
                 <button
@@ -431,7 +427,7 @@ setExperience(updatedExperience);
                     placeholder="Games"
                     value={gameInput}
                     name='games'
-                    onChange={(e) => setGameInput(e.target.value)}
+                    onChange={handleInputChange}
                     disabled={!isEditing}
                 />
                 <button
