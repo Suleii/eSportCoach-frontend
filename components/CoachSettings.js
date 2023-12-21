@@ -69,45 +69,50 @@ function CoachSettings(props) {
                   router.push('/');
               }
     })
-  }, [user.token, props.username]);
+  }, [photo]);
  
             
  // Handle input changes and update the corresponding state variable
  const handleInputChange = (e) => {
   const { name, value } = e.target;
 
-              
-        // Define a mapping of input names to state update functions
-        const fieldToStateMap = {
-            lastname: setLastname,
-            firstname: setFirstname,
-            email: setEmail,
-            photo: setPhoto,
-            about: setAbout,
-            twitch: setTwitch,
-            instagram: setInstagram,
-            youtube: setYoutube,
-            discord: setDiscord,
-            price: setPrice,
-        };
-              
-        // Use the mapping to update the state based on the input name
-            const setStateFunction = fieldToStateMap[name];
-            if (setStateFunction) {
-                setStateFunction(value);
-            }
-        }   
+    // Update the state directly for language, games, and experience
+    if (name === 'languageInput') {
+      setLanguageInput(value);
+    } else if (name === 'gameInput') {
+      setGameInput(value);
+    } else if (name === 'experienceInput') {
+      setExperienceInput(value);
+    } else {
+      // For other fields, update the state based on the input name
+      const fieldToStateMap = {
+        lastname: setLastname,
+        firstname: setFirstname,
+        email: setEmail,
+        photo: setPhoto,
+        about: setAbout,
+        twitch: setTwitch,
+        instagram: setInstagram,
+        youtube: setYoutube,
+        discord: setDiscord,
+        price: setPrice,
+      };
+
+      const setStateFunction = fieldToStateMap[name];
+      if (setStateFunction) {
+        setStateFunction(value);
+      }
+    }
+  };
 
 // Add and remove games
-    const addGame = () => {
-        if (gameInput.trim() !== "" && !games.includes(gameInput)) {
-          // Add a new game only if it's not empty and not already in the array
-          let newGamesArray = [...games, gameInput];
-          setGames(newGamesArray);
-          // Clear the input field
-          setGameInput(""); 
-        }
-      };
+const addGame = () => {
+  if (gameInput.trim() !== "" && !games.includes(gameInput)) {
+    let newGamesArray = [...games, gameInput];
+    setGames(newGamesArray);
+    setGameInput(""); 
+  }
+};
 
     const removeGame = (index) => {
     const updatedGames = [...games];
@@ -116,13 +121,13 @@ function CoachSettings(props) {
     };
 
 // Add and remove languages
-    const addLanguage = () => {
-      if (languageInput.trim() !== "" && !language.includes(languageInput)) {
-        let newLanguageArray = [...language, languageInput];
-        setLanguage(newLanguageArray);
-        setLanguageInput(""); 
-      }
-    };
+const addLanguage = () => {
+  if (languageInput.trim() !== "" && !language.includes(languageInput)) {
+    let newLanguageArray = [...language, languageInput];
+    setLanguage(newLanguageArray);
+    setLanguageInput(""); 
+  }
+};
 
   const removeLanguage = (index) => {
   const updatedLanguage = [...language];
@@ -131,13 +136,13 @@ function CoachSettings(props) {
   };
 
 // Add and remove experiences
-  const addExperience = () => {
-    if (experienceInput.trim() !== "" && !experience.includes(experienceInput)) {
-      let newExperienceArray = [...experience, experienceInput];
-      setExperience(newExperienceArray);
-      setExperienceInput(""); 
-    }
-  };
+const addExperience = () => {
+  if (experienceInput.trim() !== "" && !experience.includes(experienceInput)) {
+    let newExperienceArray = [...experience, experienceInput];
+    setExperience(newExperienceArray);
+    setExperienceInput(""); 
+  }
+};
 
 const removeExperience = (index) => {
 const updatedExperience = [...experience];
@@ -255,17 +260,13 @@ setExperience(updatedExperience);
                    // Trigger file input  when the picture is clicked
                   onClick={() => fileInputRef.current.click()}>
                             {/*Display the current profile picture */}
-                            {photo 
-                            ? ( <img
+                            
+                              <img
                                   src={photo}
                                   alt="Profile"
-                                  className="w-full h-full object-cover"/>
-                                  ) 
-                            : ( <img
-                                  src="/profilepic.png"
-                                  alt="Default Avatar"
-                                  className="w-full h-full object-cover"/>
-                                  )}
+                                  className="rounded-full w-28 h-28"/>
+                                  
+                        
               
                   {/* File input for uploading a new profile picture */}
 
@@ -292,7 +293,7 @@ setExperience(updatedExperience);
           {/* Input fields for coach information */}
         <div className='mt-6 '>
           <label >
-            <input className="bg-base-100 w-80  rounded-xl p-2 mb-5 "
+            <input className="bg-base-100 w-full  rounded-xl p-2 mb-5 "
               type="text" 
               placeholder="Last Name"
               value={lastname}
@@ -303,7 +304,7 @@ setExperience(updatedExperience);
           </label>
   
           <label>
-            <input className="bg-base-100 w-80  rounded-xl p-2 mb-5"
+            <input className="bg-base-100 w-full  rounded-xl p-2 mb-5"
               type="text"
               placeholder="First Name"
               value={firstname}
@@ -314,13 +315,13 @@ setExperience(updatedExperience);
           </label>
   
           <label>
-            <input className="bg-base-100 w-80  rounded-xl p-2 mb-5"
+            <input className="bg-base-100 w-full  rounded-xl p-2 mb-5"
               type="email"
               placeholder="Email"
               value={email}
               name="email"
               onChange={handleInputChange}
-              disabled={!isEditing}
+              disabled={isEditing}
             />
           </label>
 
@@ -367,7 +368,7 @@ setExperience(updatedExperience);
           <h2 className='flex flex col mt-3 mb-6 '>Gaming information</h2>
   
           <label>
-            <input className="bg-base-100 w-80 rounded-xl p-2 mb-5"
+            <input className="bg-base-100 w-full rounded-xl p-2 mb-5"
               type="text"
               placeholder="About"
               value={about}
@@ -386,7 +387,7 @@ setExperience(updatedExperience);
                     placeholder="Experiences"
                     value={experienceInput}
                     name='experience'
-                    onChange={handleInputChange}
+                    onChange={(e) => setExperienceInput(e.target.value)}
                     disabled={!isEditing}
                 />
                 <button
@@ -426,7 +427,7 @@ setExperience(updatedExperience);
                     placeholder="Games"
                     value={gameInput}
                     name='games'
-                    onChange={(e) => setExperienceInput(e.target.value)}
+                    onChange={(e) => setGameInput(e.target.value)}
                     disabled={!isEditing}
                 />
                 <button
@@ -458,7 +459,7 @@ setExperience(updatedExperience);
           </label>
   
           <label>
-            <input className="bg-base-100 w-80  rounded-xl p-2 mb-5"
+            <input className="bg-base-100 w-full  rounded-xl p-2 mb-5"
               type="text"
               placeholder="Twitch"
               name="twitch"
@@ -470,7 +471,7 @@ setExperience(updatedExperience);
           </label>
   
           <label>
-            <input className="bg-base-100 w-80 rounded-xl p-2 mb-5"
+            <input className="bg-base-100 w-full rounded-xl p-2 mb-5"
               type="text"
               placeholder="Instagram"
               value={instagram}
@@ -482,7 +483,7 @@ setExperience(updatedExperience);
           </label>
   
           <label>
-            <input className="bg-base-100 w-80 rounded-xl p-2 mb-5"
+            <input className="bg-base-100 w-full rounded-xl p-2 mb-5"
               type="text"
               placeholder="Youtube"
               value={youtube}
@@ -494,7 +495,7 @@ setExperience(updatedExperience);
           </label>
   
           <label>
-            <input className="bg-base-100 w-80 rounded-xl p-2 mb-5"
+            <input className="bg-base-100 w-full rounded-xl p-2 mb-5"
               type="text"
               placeholder="Discord"
               value={discord}
@@ -506,7 +507,7 @@ setExperience(updatedExperience);
           </label>
   
           <label>
-            <input className="bg-base-100 w-80 rounded-xl p-2 mb-5"
+            <input className="bg-base-100 w-full rounded-xl p-2 mb-5"
               placeholder="Price"
               value={price}
               name='price'
