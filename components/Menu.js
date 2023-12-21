@@ -20,6 +20,7 @@ function Menu() {
 
   function handleLogout() {
     dispatch(logout());
+    router.push("/");
   }
 
   const navigate = (path) => {
@@ -90,7 +91,7 @@ function Menu() {
                 <FontAwesomeIcon
                   className="rotate-180"
                   icon={faRightFromBracket}
-                />{" "}
+                />
                 Logout
               </li>
             </div>

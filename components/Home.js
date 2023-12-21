@@ -53,7 +53,7 @@ function Home() {
         if (data.result) {
           console.log("data coaches", data.coaches)
           const coachesWithReviews = await Promise.all(
-            // Use Promise.all to treat simultaneously all Promises return by map
+            // Use Promise.all to treat simultaneously all Promises return by maps
             data.coaches.map(async (coach) => {
               // Run through all coach data collected
               const reviewResponse = await fetch(
