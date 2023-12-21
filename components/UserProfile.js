@@ -63,7 +63,7 @@ function UserProfile(props) {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen">
+    <div className="flex flex-col items-center">
       <div className="w-5/6 flex-1">
         <div className="flex flex-row justify-between mb-6 items-center">
           <div className="flex items-center ">

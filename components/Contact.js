@@ -67,7 +67,7 @@ const handleMessageChange = (e) => {
 } 
 
 return (
-    <div className="flex flex-col items-center min-h-screen">
+    <div className="flex flex-col items-center">
     <div className='w-5/6 flex-1'>
         <h1 className="text-xl mb-4">Contact us</h1>
         <p className="text-base mb-4">Please fill out this form and we will reply to you shortly.</p>

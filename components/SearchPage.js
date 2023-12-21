@@ -275,7 +275,7 @@ function SearchPage({ searchQuery }) {
   // FRONTEND USER INTERFACE
 
   return (
-    <div className="flex flex-col items-center min-h-screen">
+    <div className="flex flex-col items-center">
       <div className="w-5/6 flex-1 text-white ">
         <div className="text-lg mb-10">Find the best coach for you...</div>
         <SearchBar />

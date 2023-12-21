@@ -75,8 +75,8 @@ function Menu() {
               onClick={() =>
                 navigate(
                   user.isCoach === false
-                    ? `/gamer/${user.username}`
-                    : `/coach/${user.username}`
+                    ? `/gamer/${user.username}/settings`
+                    : `/coaches/${user.username}`
                 )
               }
             >
