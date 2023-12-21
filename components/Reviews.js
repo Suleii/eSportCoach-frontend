@@ -13,59 +13,20 @@ function Review(props) {
   const [myreview, setMyReview] = useState("");
   const user = useSelector((state) => state.user.value);
 
-  //COACH PROFILE STARS
-  const stars = [];
-  for (let i = 0; i < 5; i++) {
-    let style = {};
-    if (i < props.rating) {
-      style = { color: "#599c5f" };
-    }
-    stars.push(<FontAwesomeIcon key={i} icon={faStar} style={style} />);
-  }
-
-  //MODAL FOR GAMER PROFILE
-  const handleClose = () => {
-    setOpen((prev) => !prev);
-  };
-
-  const openModal = () => {
-    setOpen(true);
-    setSelectedCoach(props.coach);
-    console.log("selectedcoach", selectedCoach);
-  };
-
-  const personalStars = [];
-  for (let i = 0; i < 5; i++) {
-    let style = { cursor: "pointer" };
-    if (i < note) {
-      style = { color: "#599c5f", cursor: "pointer" };
-    }
-    personalStars.push(
-      <FontAwesomeIcon
-        key={i}
-        icon={faStar}
-        onClick={() => setNote(i + 1)}
-        style={style}
-        className="note"
-      />
-    );
-  }
-
-  //SEND REVIEW TO DB
-  const handleSubmit = () => {
-    setOpen(false);
-    setOpen(false);
-
-    fetch("http://localhost:3000/reviews", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        game: props.game,
-        username: user.username,
-        coachUsername: props.coach,
-        content: myreview,
-        rating: note,
-      }),
+//SEND REVIEW TO DB
+const handleSubmit= () => {
+    window.location.reload() // reload page
+     
+     fetch('http://localhost:3000/reviews', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            game : props.game,
+            username : user.username,
+            coachUsername: props.coach,
+            content: myreview,
+            rating: note,
+        }),
     })
       .then((response) => response.json())
       .then((data) => {
