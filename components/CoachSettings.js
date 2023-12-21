@@ -1,7 +1,8 @@
 "use client";
 import { useEffect, useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation'
+import {avatar} from '../reducers/user'
 
 function CoachSettings(props) {
     const [isEditing, setIsEditing] = useState(false);
@@ -22,6 +23,7 @@ function CoachSettings(props) {
     const [language, setLanguage] = useState([])
     const [languageInput, setLanguageInput] = useState("");
     
+    const dispatch = useDispatch()
     const router = useRouter()
     const user = useSelector((state) => state.user.value);
     const fileInputRef = useRef();
@@ -69,7 +71,7 @@ function CoachSettings(props) {
                   router.push('/');
               }
     })
-  }, [photo]);
+  }, [user.token, user.username, user.avatar]);
  
             
  // Handle input changes and update the corresponding state variable
@@ -243,7 +245,9 @@ setExperience(updatedExperience);
         .then((data)=> {
           if (!data) {
               console.error('Failed to update coach photo');
-          }
+          } else {
+            dispatch(avatar(data.profile));
+         }
       });
   };
 
@@ -262,7 +266,7 @@ setExperience(updatedExperience);
                             {/*Display the current profile picture */}
                             
                               <img
-                                  src={photo}
+                                  src={user.photo}
                                   alt="Profile"
                                   className="rounded-full w-28 h-28"/>
                                   
@@ -464,7 +468,7 @@ setExperience(updatedExperience);
               placeholder="Twitch"
               name="twitch"
               value={twitch}
-              onChange={(e) => setGameInput(e.target.value)}
+              onChange={handleInputChange}
               disabled={!isEditing}
               
             />

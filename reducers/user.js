@@ -19,9 +19,10 @@ state.value.token = null;
 state.value.username = null;
 state.value.firstname = null;
 state.value.isCoach = false;
+state.value.photo = null;
 },
 avatar: (state, action) => {
-    state.value.photo = action.payload.photo;
+    state.value.photo = action.payload;
   },
 },
 });

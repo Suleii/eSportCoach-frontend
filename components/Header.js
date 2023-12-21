@@ -6,26 +6,8 @@ import Menu from "../components/Menu";
 
 function Header() {
   const user = useSelector((state) => state.user.value);
-  const [profile, setProfile] = useState("");
 
-  useEffect(() => {
-    if (user.username !== null) {
-      if (user.isCoach) {
-        fetch(`http://localhost:3000/coaches/profile/${user.username}`)
-          .then((response) => response.json())
-          .then((data) => {
-            setProfile(data.profile);
-          });
-      } else {
-        fetch(`http://localhost:3000/gamers/profile/${user.username}`)
-          .then((response) => response.json())
-          .then((data) => {
-            setProfile(data.profile); // to get the profile pic
-          });
-      }
-    }
-  }, []);
-  console.log(profile);
+  
   return (
     <div className="navbar pt-10 mb-10">
       <div className="container mx-auto flex justify-between items-center">
@@ -45,11 +27,11 @@ function Header() {
               <div className="w-10 rounded-full bg-base-200">
                 {user.username && user.isCoach === true ? (
                   <a href={`/coaches/${user.username}`}>
-                    <img alt="Profile pic" src={profile.photo} />
+                    <img alt="Profile pic" src={user.photo} />
                   </a>
                 ) : user.username && user.isCoach === false ? (
                   <a href={`/gamer/${user.username}`}>
-                    <img alt="Profile pic" src={profile.photo} />
+                    <img alt="Profile pic" src={user.photo} />
                   </a>
                 ) : (
                   <a href="/signin">
