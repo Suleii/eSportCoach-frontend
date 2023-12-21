@@ -20,6 +20,7 @@ function Menu() {
 
   function handleLogout() {
     router.push("/");
+    router.push("/");
     dispatch(logout());
   }
 
