@@ -5,6 +5,7 @@ import { login, logout } from "../reducers/user";
 import styles from "../styles/Login.module.css";
 import { useRouter } from "next/navigation";
 import Modal from "./Modal";
+import { avatar } from "../reducers/user";
 
 function SignIn() {
   const router = useRouter();
@@ -36,6 +37,21 @@ function SignIn() {
           );
           return;
         } else {
+          if (data.isCoach) {
+            fetch(`http://localhost:3000/coaches/profile/${data.username}`)
+              .then((response) => response.json())
+              .then((data) => {
+                dispatch(avatar(data.profile.photo));
+              });
+          } else {
+            fetch(`http://localhost:3000/gamers/profile/${data.username}`)
+              .then((response) => response.json())
+              .then((data) => {
+                console.log("data", data);
+                console.log("photo", data.profile.photo)
+                dispatch(avatar(data.profile.photo)); 
+              });
+          }
           dispatch(
             login({
               username: data.username,
