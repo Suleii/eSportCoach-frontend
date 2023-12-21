@@ -60,7 +60,7 @@ const Quiz = () => {
   console.log({ games, maxBudget, selectedLanguage });
 
   return (
-    <div className="flex flex-col items-center min-h-screen">
+    <div className="flex flex-col items-center">
       <div className="w-5/6 flex-1">
         <p className="mb-10 text-lg">
           Let us help find the best coach for you!
