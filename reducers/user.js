@@ -21,7 +21,7 @@ state.value.firstname = null;
 state.value.isCoach = false;
 },
 avatar: (state, action) => {
-    state.value.photo = action.payload.photo;
+    state.value.photo = action.payload;
   },
 },
 });

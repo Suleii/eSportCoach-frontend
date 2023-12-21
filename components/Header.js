@@ -45,11 +45,11 @@ function Header() {
               <div className="w-10 rounded-full bg-base-200">
                 {user.username && user.isCoach === true ? (
                   <a href={`/coaches/${user.username}`}>
-                    <img alt="Profile pic" src={profile.photo} />
+                    <img alt="Profile pic" src={user.photo} />
                   </a>
                 ) : user.username && user.isCoach === false ? (
                   <a href={`/gamer/${user.username}`}>
-                    <img alt="Profile pic" src={profile.photo} />
+                    <img alt="Profile pic" src={user.photo} />
                   </a>
                 ) : (
                   <a href="/signin">

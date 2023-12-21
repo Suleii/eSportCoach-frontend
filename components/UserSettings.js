@@ -41,7 +41,7 @@ function UserSettings(props) {
                   router.push('/');
               }
     })
-  }, [photo]);
+  }, [user.token, user.username, user.avatar]);
  
             
  // Handle input changes and update the corresponding state variable
@@ -126,26 +126,23 @@ function UserSettings(props) {
     handleUploadPicture(file);
       };
 
-    const handleUploadPicture = async (file) => {
-
-    const formData = new FormData();
-    formData.append('photoFromFront', file )
-    
-      
+      const handleUploadPicture = async (file) => {
+        const formData = new FormData();
+        formData.append('photoFromFront', file );
+     
         fetch(`http://localhost:3000/gamers/profile/${props.username}/photo`, {
-          method: 'PUT',
-          body: formData,
+           method: 'PUT',
+           body: formData,
         })
         .then((response) => response.json())
-        .then((data)=> {
-          if (!data) {
+        .then((data) => {
+           if (!data) {
               console.error('Failed to update gamer photo');
-          } else {
-            dispatch(avatar(data.profile))
-            
-          }
-      });
-  };
+           } else {
+              dispatch(avatar(data.profile));
+           }
+        });
+     };
 
 
 

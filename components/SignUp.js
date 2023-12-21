@@ -8,6 +8,7 @@ import styles from "../styles/Login.module.css";
 // import SignIn from './SignIn';
 // import Link from 'next/link';
 import { useRouter } from "next/navigation";
+import { avatar } from "../reducers/user";
 
 function SignUp() {
   const router = useRouter();
@@ -49,6 +50,7 @@ function SignUp() {
               isCoach: false,
             })
           );
+          dispatch(avatar("/profilepic.png"));
           fetch("http://localhost:3000/emails/signup",{
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -113,6 +115,7 @@ function SignUp() {
               isCoach: true,
             })
           );
+         dispatch(avatar("/profilepic.png"));
           fetch("http://localhost:3000/emails/signup",{
             method: "POST",
             headers: { "Content-Type": "application/json" },
