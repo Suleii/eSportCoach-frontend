@@ -109,11 +109,13 @@ function Home() {
               key={index}
               className="h-36 w-28 flex flex-col items-center p-3"
             >
+              <div className="w-28 h-28 rounded-full">
               <img
                 src={coach.photo}
                 alt={coach.user.username}
-                className="rounded-full"
+                className=""
               />
+              </div>
               <p className="m-2">{coach.user.username}</p>
               <div className="flex flex-row">{generateStars(coach.rating)}</div>
               <p className="m-2">({coach.reviewCount})</p>{" "}
