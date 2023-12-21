@@ -4,10 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar} from '@fortawesome/free-solid-svg-icons';
 import {useState} from 'react';
 import {useSelector} from 'react-redux'
+import {useRouter} from 'next/navigation'
 import Modal from './Modal'
 
 function Review(props) {
-
+const router = useRouter()
 const [open, setOpen] = useState(false);
 const [selectedCoach, setSelectedCoach] = useState(null);
 const [note, setNote] = useState(0);
@@ -46,8 +47,7 @@ const personalStars = [];
 
 //SEND REVIEW TO DB
 const handleSubmit= () => {
-    setOpen(false)
-     setOpen(false)
+    window.location.reload()
      
      fetch('http://localhost:3000/reviews', {
         method: 'POST',
@@ -65,6 +65,13 @@ const handleSubmit= () => {
         console.log(data.message);
         
         })
+
+    fetch(`http://localhost:3000/reviews/coachRating/${props.coach}`,{
+      method:'PUT',
+      headers: {'Content-Type': 'application/json'}
+    })
+    .then(response => response.json())
+    .then(data => console.log(data.message))
       
     }
 
@@ -74,7 +81,7 @@ const handleSubmit= () => {
     } 
 
 
-    console.log(myreview)
+
 
 	return (
         <>
