@@ -246,7 +246,7 @@ setExperience(updatedExperience);
 
   
     return (
-    <div className="flex flex-col items-center min-h-screen text-white">
+    <div className="flex flex-col items-center text-white">
       <div className='w-5/6 flex-1 '>
         <form onSubmit={handleSubmit}  encType="multipart/form-data" >
           <div className='flex flex col justify-center mb-8 w-full '>

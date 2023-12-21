@@ -121,7 +121,7 @@ console.log(bookingsDates)
 const bookingsStyles = {color : "#599c5f"}
 
 return (
-<div className="flex flex-col items-center min-h-screen">
+<div className="flex flex-col items-center">
   <div className='w-5/6 flex-1'>
       <div className="container">
         {/* opens the modal */}

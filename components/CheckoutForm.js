@@ -136,7 +136,7 @@ const Return = () => {
 
   if (status === "complete") {
     return (
-      <div className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center justify-center">
         <section className="shadow-md rounded px-8 pt-6 pb-8 mb-4 flex flex-col items-center justify-center">
           <h1 className="text-lg font-bold mb-2">Confirmation de Paiement</h1>
           <p className="text-center">

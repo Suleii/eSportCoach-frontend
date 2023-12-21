@@ -113,10 +113,10 @@ function SignIn() {
         value={signInPassword}
       />
       <div className="flex flex-row space-x-10 mb-10">
-        <div>
+        {/* <div>
           <input type="checkbox" id="exampleUniq" className="bg-success" />
           <label htmlFor="exampleUniq">Remember me</label>
-        </div>
+        </div> */}
         <p onClick={handleOpen}>Forgot password?</p>
       </div>
       {errorMessage && <div className="text-red-500 mb-3">{errorMessage}</div>}
@@ -131,7 +131,7 @@ function SignIn() {
         Don't have an account? Please <span className="underline">sign up</span>
         .
       </a>
-      <p className="mb-4">or</p>
+      {/* <p className="mb-4">or</p>
       <div className="flex flex-row ">
         <button className="bg-accent w-80 h-10 rounded-md p-2 mb-6">
           <img
@@ -140,7 +140,7 @@ function SignIn() {
           ></img>
           <p>Log in with Twitch</p>
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }

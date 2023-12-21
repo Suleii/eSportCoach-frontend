@@ -23,7 +23,7 @@ const handleSubmit = () => {
 }
 
 return (
-    <div className="flex flex-col items-center min-h-screen">
+    <div className="flex flex-col items-center ">
     <div className='w-5/6 flex-1'>
     
         <p className="mb-4">Please choose a new password.</p>
