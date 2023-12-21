@@ -142,19 +142,6 @@ function SignIn() {
         Don't have an account? Please <span className="underline">sign up</span>
         .
       </a>
-<<<<<<< HEAD
-      {/* <p className="mb-4">or</p>
-      <div className="flex flex-row ">
-        <button className="bg-accent w-80 h-10 rounded-md p-2 mb-6">
-          <img
-            className="h-6 float-left"
-            src="https://www.vectorlogo.zone/logos/twitch/twitch-icon.svg"
-          ></img>
-          <p>Log in with Twitch</p>
-        </button>
-      </div> */}
-=======
->>>>>>> 33cf46bf17e966a2c5d9e8cd49e522a605d5b72c
     </div>
   );
 }
