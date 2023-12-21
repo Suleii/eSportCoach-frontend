@@ -19,8 +19,8 @@ function Menu() {
   const router = useRouter();
 
   function handleLogout() {
-    dispatch(logout());
     router.push("/");
+    dispatch(logout());
   }
 
   const navigate = (path) => {
