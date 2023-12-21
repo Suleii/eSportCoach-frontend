@@ -43,7 +43,7 @@ function UserProfile(props) {
       });
   }, []);
 
-  console.log("reviewsdata", reviewsdata);
+  
 
   // Check if there is a coach who was booked but does not have a review
   const haveSameCoach = (bookings, reviewsdata) => {
@@ -68,7 +68,7 @@ function UserProfile(props) {
         <div className="flex flex-row justify-between mb-6 items-center">
           <div className="flex items-center ">
             <div className="avatar">
-              <div className="w-16 h-16 rounded-full">
+              <div className="w-16 h-16 bg-base-200 rounded-full">
                 <img src={profile.photo} alt="Profile pic" />
               </div>
             </div>

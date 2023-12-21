@@ -52,31 +52,39 @@ function Review(props) {
   }
 
   //SEND REVIEW TO DB
-  const handleSubmit = () => {
-    setOpen(false);
-    setOpen(false);
-
-    fetch("http://localhost:3000/reviews", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
+const handleSubmit= () => {
+  window.location.reload()
+   
+   fetch('http://localhost:3000/reviews', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        game: props.game,
-        username: user.username,
-        coachUsername: props.coach,
-        content: myreview,
-        rating: note,
+          game : props.game,
+          username : user.username,
+          coachUsername: props.coach,
+          content: myreview,
+          rating: note,
       }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data.message);
-      });
-  };
+  })
+  .then(response => response.json())
+  .then(data => {
+      console.log(data.message);
+      
+      })
 
-  const handleInputChange = (e) => {
-    const msg = e.target.value;
-    setMyReview(msg);
-  };
+  fetch(`http://localhost:3000/reviews/coachRating/${props.coach}`,{
+    method:'PUT',
+    headers: {'Content-Type': 'application/json'}
+  })
+  .then(response => response.json())
+  .then(data => console.log(data.message))
+    
+  }
+
+ const handleInputChange = (e) => {
+      const msg = e.target.value;
+      setMyReview(msg)
+  } 
 
   console.log(myreview);
 
