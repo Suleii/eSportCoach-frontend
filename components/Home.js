@@ -51,6 +51,7 @@ function Home() {
       .then((response) => response.json())
       .then(async (data) => {
         if (data.result) {
+          console.log("data coaches", data.coaches)
           const coachesWithReviews = await Promise.all(
             // Use Promise.all to treat simultaneously all Promises return by map
             data.coaches.map(async (coach) => {

@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-value: { token: null, username: null, firstname: null , isCoach: false},
+value: { token: null, username: null, firstname: null , isCoach: false, photo:null},
 };
 
 export const userSlice = createSlice({
@@ -20,8 +20,11 @@ state.value.username = null;
 state.value.firstname = null;
 state.value.isCoach = false;
 },
+avatar: (state, action) => {
+    state.value.photo = action.payload.photo;
+  },
 },
 });
 
-export const { login, logout } = userSlice.actions;
+export const { login, logout, avatar } = userSlice.actions;
 export default userSlice.reducer;
