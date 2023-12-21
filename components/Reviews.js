@@ -47,7 +47,7 @@ const personalStars = [];
 
 //SEND REVIEW TO DB
 const handleSubmit= () => {
-    window.location.reload()
+    window.location.reload() // reload page
      
      fetch('http://localhost:3000/reviews', {
         method: 'POST',
