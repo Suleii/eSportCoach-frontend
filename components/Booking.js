@@ -2,7 +2,7 @@
 import React from 'react';
 import { useState , useEffect} from 'react';
 import { useDispatch } from 'react-redux';
-import {add, format, subDays} from 'date-fns'
+import {add, format, subDays, isEqual} from 'date-fns'
 import {useRouter} from 'next/navigation'
 import { useSelector } from 'react-redux';
 import {selectDate} from '../reducers/booking'
@@ -19,13 +19,14 @@ const [times, setTimes] = useState([]);
 const [games, setGames]= useState([])
 const [gameSelected, setGameSelected]= useState('')
 const [unavailabilitiesData, setUnavailabilitiesData] = useState([])
+const [bookings, setBookings]= useState([])
 
 const dispatch = useDispatch();
 
 
   
 
-// Fetch the games listed in the coach profile + the coach's unvailabilities
+// Fetch the games listed in the coach profile + the coach's bookings and unvailabilities
 useEffect(() => {
     fetch(`http://localhost:3000/coaches/profile/${props.username}`)
     .then(response => response.json())
@@ -34,13 +35,20 @@ useEffect(() => {
     setGames(gamesData);
     });
 
-    fetch(`http://localhost:3000/unavailabilities/${props.username}`)
-      .then(response => response.json())
-      .then(data => {
-        console.log("data",data)
-        let unvailabilities = data.unavailabilities.map((date) => (date.date))
-        setUnavailabilitiesData(unvailabilities)
-      })
+        fetch(`http://localhost:3000/unavailabilities/${props.username}`)
+        .then(response => response.json())
+        .then(data => {
+            console.log("data",data)
+            let unvailabilities = data.unavailabilities.map((date) => (date.date))
+            setUnavailabilitiesData(unvailabilities)
+        })
+
+            fetch(`http://localhost:3000/bookings/${props.username}`) 
+            .then(response=> response.json())
+            .then(data => {
+                let bookedtimes = data.bookings.map((booking) => booking.date)
+                setBookings(bookedtimes)
+                })  
   }, [])
 
 // disable booking for days before today
@@ -85,7 +93,12 @@ const times = []
         }
     setTimes(times)
     }
-        
+       console.log("bookings", bookings) 
+
+//Search if there are times that are already booked, if yes then don't display them
+const availableTimes = times.filter((time) => !bookings.some((bookingDate) => isEqual(new Date(time), new Date(bookingDate))));
+
+console.log("available times", availableTimes)
 // useEffect will work everytime the date changes 
 useEffect(() => {
     if (date.selectedDate) {
@@ -137,7 +150,7 @@ return (
                     </div>
 
                     <div className='grid grid-cols-3 gap-x-6 gap-y-2 mt-5 mb-10'>
-                        {times.map((time,i) =>{
+                        {availableTimes.map((time,i) =>{
                             return (
                             <div key={`time-${i}`} className='rounded mt-2 h-8 w-20 text-sm border border-accent border-1.25 bg-primary hover:bg-accent text-white flex justify-center '>
                                 <button type='button'  onClick={()=>{setDate((prev) => ({...prev, dateTime: time})) }}>{format(time, "kk:mm")}</button>

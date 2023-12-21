@@ -10,6 +10,8 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useEffect } from "react";
 
 function Menu() {
   const dispatch = useDispatch();
@@ -18,8 +20,11 @@ function Menu() {
 
   function handleLogout() {
     dispatch(logout());
-    router.push("/");
   }
+
+  const navigate = (path) => {
+    router.push(path);
+  };
 
   return (
     <div className="drawer z-10 w-10">
@@ -45,6 +50,7 @@ function Menu() {
           </svg>
         </label>
       </div>
+
       <div className="drawer-side">
         <label
           htmlFor="my-drawer"
@@ -54,39 +60,40 @@ function Menu() {
         <ul className="menu p-4 w-56 min-h-full bg-base-100 text-base-content text-white flex justify-between h-14 opacity-95">
           {/* Sidebar content here */}
           <div className="space-y-6 mt-14">
-            <li className="text-white">
-              <a href="/">
-                {" "}
-                <FontAwesomeIcon icon={faHouse} />
-                Home
+            <li onClick={() => navigate("/")}>
+              <a className="text-white cursor-pointer">
+                <FontAwesomeIcon icon={faHouse} /> Home
               </a>
             </li>
-            <li className="text-white">
-              <a href="/search">
-                <FontAwesomeIcon icon={faMagnifyingGlass} />
-                Search
+            <li onClick={() => navigate("/search")}>
+              <a className="text-white cursor-pointer">
+                <FontAwesomeIcon icon={faMagnifyingGlass} /> Search
               </a>
             </li>
-            {/* <li className='text-white'><a href='/'>My Profile</a></li> */}
-            <li className="text-white">
-              <a href="/settings">
-                <FontAwesomeIcon icon={faGear} />
-                Settings
+            <li
+              onClick={() =>
+                navigate(
+                  user.isCoach === false
+                    ? `/gamer/${user.username}`
+                    : `/coach/${user.username}`
+                )
+              }
+            >
+              <a className="text-white cursor-pointer">
+                <FontAwesomeIcon icon={faGear} /> Settings
               </a>
             </li>
           </div>
-          {user.token ? (
+          {user.token && (
             <div className="flex flex-row" onClick={handleLogout}>
-              <li className="text-white mb-28">
+              <li className="text-white mb-28 cursor-pointer">
                 <FontAwesomeIcon
                   className="rotate-180"
                   icon={faRightFromBracket}
-                />
+                />{" "}
                 Logout
               </li>
             </div>
-          ) : (
-            <></>
           )}
         </ul>
       </div>
