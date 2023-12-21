@@ -76,7 +76,7 @@ function Menu() {
                 navigate(
                   user.isCoach === false
                     ? `/gamer/${user.username}`
-                    : `/coach/${user.username}`
+                    : `/coaches/${user.username}`
                 )
               }
             >
