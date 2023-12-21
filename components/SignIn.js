@@ -125,8 +125,10 @@ function SignIn() {
         onChange={(e) => setSignInPassword(e.target.value)}
         value={signInPassword}
       />
-      <div className="flex flex-row space-x-10 mb-10">
-        <p onClick={handleOpen}>Forgot password?</p>
+      <div className="flex flex-row space-x-10 mb-10 cursor-pointer">
+        <p onClick={handleOpen} className="underline">
+          Forgot password?
+        </p>
       </div>
       {errorMessage && <div className="text-red-500 mb-3">{errorMessage}</div>}
       <button
