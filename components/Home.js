@@ -27,12 +27,20 @@ function Home() {
 
   const games = [
     { name: "League of Legends", image: "lol.jpg", searchTerm: "lol" },
-    { name: "Counter Strike Global Offensive", image: "csgo.jpg", searchTerm: "counter-strike" },
+    {
+      name: "Counter Strike Global Offensive",
+      image: "csgo.jpg",
+      searchTerm: "counter-strike",
+    },
     { name: "World of Warcraft", image: "wow.jpg", searchTerm: "wow" },
     { name: "Fortnite", image: "fortnite.jpg", searchTerm: "fortnite" },
     { name: "Apex Legends", image: "apex.jpg", searchTerm: "apex" },
     { name: "Overwatch", image: "overwatch.jpg", searchTerm: "overwatch" },
-    { name: "Assetto Corsa Competizione", image: "acc.jpg", searchTerm: "assetto corsa"},
+    {
+      name: "Assetto Corsa Competizione",
+      image: "acc.jpg",
+      searchTerm: "assetto corsa",
+    },
     { name: "Call Of Duty", image: "mw3.jpeg", searchTerm: "cod" },
     { name: "PUBG", image: "pubg.jpg", searchTerm: "pubg" },
     { name: "Pokemon", image: "pokemon.jpg", searchTerm: "pokemon" },
@@ -44,7 +52,7 @@ function Home() {
       .then(async (data) => {
         if (data.result) {
           const coachesWithReviews = await Promise.all(
-            // Use Promise.all to treat simultaneously all Promises return by map
+            // Use Promise.all to treat simultaneously all Promises return by maps
             data.coaches.map(async (coach) => {
               // Run through all coach data collected
               const reviewResponse = await fetch(
