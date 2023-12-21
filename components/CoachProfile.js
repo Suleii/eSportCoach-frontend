@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faStar,
   faEllipsisVertical,
-  faPencil,
+  faCalendar,
   faArrowRightLong,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -137,12 +137,12 @@ function CoachProfile(props) {
             </div>
             {user.token === coachToken ? (
               <Link
-                href={`/coaches/${props.username}/settings`}
+                href={`/coaches/${props.username}/schedule`}
                 className="btn btn-success text-white"
               >
-                Edit Profile{" "}
+                My Calendar{" "}
                 <span className="text-white">
-                  <FontAwesomeIcon icon={faPencil} />
+                  <FontAwesomeIcon icon={faCalendar} />
                 </span>{" "}
               </Link>
             ) : user.token !== null ? (

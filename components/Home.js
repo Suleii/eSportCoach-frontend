@@ -25,6 +25,8 @@ function Home() {
     )}`;
   };
 
+  // Make a research by clicking on coach pictures
+
   const games = [
     { name: "League of Legends", image: "lol.jpg", searchTerm: "lol" },
     {
@@ -51,7 +53,7 @@ function Home() {
       .then((response) => response.json())
       .then(async (data) => {
         if (data.result) {
-          console.log("data coaches", data.coaches)
+          console.log("data coaches", data.coaches);
           const coachesWithReviews = await Promise.all(
             // Use Promise.all to treat simultaneously all Promises return by maps
             data.coaches.map(async (coach) => {
@@ -109,11 +111,13 @@ function Home() {
               key={index}
               className="h-36 w-28 flex flex-col items-center p-3"
             >
-              <img
-                src={coach.photo}
-                alt={coach.user.username}
-                className="rounded-full"
-              />
+              <div>
+                <img
+                  src={coach.photo}
+                  alt={coach.user.username}
+                  className="w-24 h-24 rounded-full"
+                />
+              </div>
               <p className="m-2">{coach.user.username}</p>
               <div className="flex flex-row">{generateStars(coach.rating)}</div>
               <p className="m-2">({coach.reviewCount})</p>{" "}

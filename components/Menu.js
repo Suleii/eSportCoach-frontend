@@ -77,7 +77,7 @@ function Menu() {
                 navigate(
                   user.isCoach === false
                     ? `/gamer/${user.username}/settings`
-                    : `/coaches/${user.username}`
+                    : `/coaches/${user.username}/settings`
                 )
               }
             >
@@ -87,8 +87,8 @@ function Menu() {
             </li>
           </div>
           {user.token && (
-            <div className="flex flex-row" onClick={handleLogout}>
-              <li className="text-white mb-28 cursor-pointer">
+            <div onClick={handleLogout}>
+              <li className="text-white mb-28 cursor-pointer flex flex-row float items-center">
                 <FontAwesomeIcon
                   className="rotate-180"
                   icon={faRightFromBracket}
