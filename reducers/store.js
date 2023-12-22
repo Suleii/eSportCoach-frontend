@@ -10,7 +10,7 @@ import storage from "redux-persist/lib/storage";
 import user from "../reducers/user"
 import booking from "../reducers/booking"
 
-const reducers = combineReducers({ user, booking });
+const reducers = combineReducers({ user, booking, });
 
 /* ---------------------------------------------------------------- */
 /*                      Persistor configuration                     */

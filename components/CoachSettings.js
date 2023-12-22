@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouter } from 'next/navigation'
 import {avatar} from '../reducers/user'
 
+
 function CoachSettings(props) {
     const [isEditing, setIsEditing] = useState(false);
     const [lastname, setLastname] = useState("");
@@ -36,63 +37,60 @@ function CoachSettings(props) {
       .then(data => {
         if(user.token === data.credentials.token){
             fetch(`http://localhost:3000/coaches/profile/${props.username}`)
-              .then((response) => response.json())
-              .then((data) => {
-                    const lastname = data.profile.lastname;
-                    setLastname(lastname);
-                    const firstname = data.profile.firstname;
-                    setFirstname(firstname);
-                    const email = data.profile.email;
-                    setEmail(email);
-                    const photo = data.profile.photo;
-                    setPhoto(photo);
-                    const about = data.profile.about;
-                    setAbout(about);
-                    const experience = data.profile.experience;
-                    setExperience(experience);
-                    const games = data.profile.games;
-                    setGames(games);
-                    const twitch = data.profile.socials.twitch;
-                    setTwitch(twitch);
-                    const instagram = data.profile.socials.instagram;
-                    setInstagram(instagram);
-                    const youtube = data.profile.socials.youtube;
-                    setYoutube(youtube);
-                    const discord = data.profile.socials.discord;
-                    setDiscord(discord);
-                    const price = data.profile.price;
-                    setPrice(price);
-                    const language = data.profile.language;
-                    setLanguage(language);
-                      });
-              
+            .then((response) => response.json())
+            .then((data) => {
+              const lastname = data.profile.lastname;
+              setLastname(lastname);
+              const firstname = data.profile.firstname;
+              setFirstname(firstname);
+              const email = data.profile.email;
+              setEmail(email);
+              const photo = data.profile.photo;
+              setPhoto(photo);
+              const about = data.profile.about;
+              setAbout(about);
+              const experience = data.profile.experience;
+              setExperience(experience);
+              const games = data.profile.games;
+              setGames(games);
+              const twitch = data.profile.socials.twitch;
+              setTwitch(twitch);
+              const instagram = data.profile.socials.instagram;
+              setInstagram(instagram);
+              const youtube = data.profile.socials.youtube;
+              setYoutube(youtube);
+              const discord = data.profile.socials.discord;
+              setDiscord(discord);
+              const price = data.profile.price;
+              setPrice(price);
+              const language = data.profile.language;
+              setLanguage(language);
+              });
             } else {
                 // Redirect to home page if not correct user 
                   router.push('/');
               }
-    })
-  }, [user.token, user.username, user.photo]);
+            })}, [user.token, user.username, user.photo]);
  
             
  // Handle input changes and update the corresponding state variable
  const handleInputChange = (e) => {
   const { name, value } = e.target;
-   
-      // For other fields, update the state based on the input name
-      const fieldToStateMap = {
-        lastname: setLastname,
-        firstname: setFirstname,
-        email: setEmail,
-        photo: setPhoto,
-        about: setAbout,
-        twitch: setTwitch,
-        instagram: setInstagram,
-        youtube: setYoutube,
-        discord: setDiscord,
-        price: setPrice,
-        language: setLanguageInput,
-        games: setGameInput,
-        experience: setExperienceInput,
+  // For other fields, update the state based on the input name
+    const fieldToStateMap = {
+      lastname: setLastname,
+      firstname: setFirstname,
+      email: setEmail,
+      photo: setPhoto,
+      about: setAbout,
+      twitch: setTwitch,
+      instagram: setInstagram,        
+      youtube: setYoutube,
+      discord: setDiscord,
+      price: setPrice,
+      language: setLanguageInput,
+      games: setGameInput,
+      experience: setExperienceInput,
       };
 
       const setStateFunction = fieldToStateMap[name];
@@ -100,7 +98,6 @@ function CoachSettings(props) {
         setStateFunction(value);
       }
     }
-  //};
 
 // Add and remove games
 const addGame = () => {
@@ -111,11 +108,11 @@ const addGame = () => {
   }
 };
 
-    const removeGame = (index) => {
-    const updatedGames = [...games];
+const removeGame = (index) => {
+  const updatedGames = [...games];
     updatedGames.splice(index, 1);
     setGames(updatedGames);
-    };
+};
 
 // Add and remove languages
 const addLanguage = () => {
@@ -126,11 +123,11 @@ const addLanguage = () => {
   }
 };
 
-  const removeLanguage = (index) => {
+const removeLanguage = (index) => {
   const updatedLanguage = [...language];
-  updatedLanguage.splice(index, 1);
-  setLanguage(updatedLanguage);
-  };
+    updatedLanguage.splice(index, 1);
+    setLanguage(updatedLanguage);
+};
 
 // Add and remove experiences
 const addExperience = () => {
@@ -147,110 +144,106 @@ updatedExperience.splice(index, 1);
 setExperience(updatedExperience);
 };
 
-  // Function to update coach information on the server
-  const updateCoachInfo = () => {
-        const updatedCoachInfo = {
-            lastname,
-            firstname,
-            email,
-            photo,
-            about,
-            experience,
-            twitch,
-            instagram,
-            youtube,
-            discord,
-            price,
-            games,
-            language,
-        };
-        console.log("update",updatedCoachInfo);
-          
+// Function to update coach information on the server
+const updateCoachInfo = () => {
+  const updatedCoachInfo = {
+    lastname,
+    firstname,
+    email,
+    photo,
+    about,
+    experience,
+    twitch,
+    instagram,
+    youtube,
+    discord,
+    price,
+    games,
+    language,
+  };
+console.log("update",updatedCoachInfo);
+
         fetch(`http://localhost:3000/coaches/profile/${props.username}`, {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-              },
-            body: JSON.stringify(updatedCoachInfo),
-            })
-            .then((response) => {
-              if (!response.ok) {
-                console.error('Failed to update coach information');
-              }
-            });
-          };
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(updatedCoachInfo),
+          })
+          .then((response) => {
+            if (!response.ok) {
+              console.error('Failed to update coach information');
+            }
+          });
+        };
 
-     // Form submission and update coach information
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        updateCoachInfo();
-      };
+// Form submission and update coach information
+const handleSubmit = (e) => {
+   e.preventDefault();
+   updateCoachInfo();
+};
       
-     // Save button, disable editing mode, and update coach information
-    const handleSaveClick = () => {
-        setIsEditing(false);
-        updateCoachInfo();
-      };
+// Save button, disable editing mode, and update coach information
+const handleSaveClick = () => {
+    setIsEditing(false);
+    updateCoachInfo();
+};
 
-    // Enable editing mode when the edit button is clicked
-    const handleEditClick = () => {
-        setIsEditing(true);
-    
-    };
+// Enable editing mode when the edit button is clicked
+  const handleEditClick = () => {
+    setIsEditing(true);
+};
   
-     // Cancel button, disable editing mode, and reset the form to the original state
-    const handleCancelClick = () => {
-      setIsEditing(false);
-      fetch(`http://localhost:3000/coaches/profile/${props.username}`)
-        .then((response) => response.json())
-        .then((data) => {
-            // Set the state variables back to their original values
-                setLastname(data.profile.lastname);
-                setFirstname(data.profile.firstname);
-                setEmail(data.profile.email);
-                setPhoto(data.profile.photo);
-                setAbout(data.profile.about);
-                setExperience(data.profile.experience);
-                setGames(data.profile.games);
-                setTwitch(data.profile.socials.twitch);
-                setInstagram(data.profile.socials.instagram);
-                setYoutube(data.profile.socials.youtube);
-                setDiscord(data.profile.socials.discord);
-                setPrice(data.profile.price);
-                setLanguage(data.profile.language)
-            });
+// Cancel button, disable editing mode, and reset the form to the original state
+  const handleCancelClick = () => {
+    setIsEditing(false);
+    fetch(`http://localhost:3000/coaches/profile/${props.username}`)
+      .then((response) => response.json())
+      .then((data) => {
+          // Set the state variables back to their original values
+              setLastname(data.profile.lastname);
+              setFirstname(data.profile.firstname);
+              setEmail(data.profile.email);
+              setPhoto(data.profile.photo);
+              setAbout(data.profile.about);
+              setExperience(data.profile.experience);
+              setGames(data.profile.games);
+              setTwitch(data.profile.socials.twitch);
+              setInstagram(data.profile.socials.instagram);
+              setYoutube(data.profile.socials.youtube);
+              setDiscord(data.profile.socials.discord);
+              setPrice(data.profile.price);
+              setLanguage(data.profile.language)
+           });
         };
   
-    const handleFileInputChange = (e) => {
-    const file = e.target.files[0];
+const handleFileInputChange = (e) => {
+  const file = e.target.files[0];
     setPhoto(file);
     handleUploadPicture(file);
-      };
+};
 
-    const handleUploadPicture = async (file) => {
-    const formData = new FormData();
+const handleUploadPicture = async (file) => {
+  const formData = new FormData();
     formData.append('photoFromFront', file )
-    
       
-        fetch(`http://localhost:3000/coaches/profile/${props.username}/photo`, {
-          method: 'PUT',
-          body: formData,
-        })
-        .then((response) => response.json())
-        .then((data)=> {
-          console.log('Uploaded picture data:', data);
-          if (!data) {
-              console.error('Failed to update coach photo');
-          } else {
-            dispatch(avatar(data.profile));
-         }
-      });
-  };
+      fetch(`http://localhost:3000/coaches/profile/${props.username}/photo`, {
+        method: 'PUT',
+        body: formData,
+      })
+      .then((response) => response.json())
+      .then((data)=> {
+        console.log('Uploaded picture data:', data);
+        if (!data.result) {
+            console.error('Failed to update coach photo');
+        } else {
+          dispatch(avatar(data.profile));
+      }
+  });
+};
 
-
-console.log('user.photo:', user.photo);
   
-    return (
+return (
     <div className="flex flex-col items-center text-white">
       <div className='w-5/6 flex-1 '>
         <form onSubmit={handleSubmit}  encType="multipart/form-data" >
@@ -266,7 +259,8 @@ console.log('user.photo:', user.photo);
                                   alt="Profile"
                                   className="rounded-full w-28 h-28"/>
                                   
-                        
+                    {/* Edit pencil */}
+                    <img src="/edit.png" alt="edit" className="w-10 h-10 flex ml-16 -mt-8" />     
               
                   {/* File input for uploading a new profile picture */}
 

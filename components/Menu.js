@@ -61,7 +61,7 @@ function Menu() {
         ></label>
         <ul className="menu p-4 w-56 min-h-full bg-base-100 text-base-content text-white flex justify-between h-14 opacity-95">
           {/* Sidebar content here */}
-          <div className="space-y-6 mt-14">
+          <div className="space-y-10 mt-16">
             <li onClick={() => navigate("/")}>
               <a className="text-white cursor-pointer">
                 <FontAwesomeIcon icon={faHouse} /> Home
@@ -88,13 +88,13 @@ function Menu() {
           </div>
           {user.token && (
             <div className="flex flex-row" onClick={handleLogout}>
-              <li className="text-white mb-28 cursor-pointer">
+              <a className="text-white mb-28 cursor-pointer">
                 <FontAwesomeIcon
                   className="rotate-180"
                   icon={faRightFromBracket}
                 />
                 Logout
-              </li>
+              </a>
             </div>
           )}
         </ul>

@@ -179,7 +179,7 @@ const handleSubmit= () => {
 
               <span className="text-xs">{stars}</span>
             </div>
-            <div className="text-xs mb-2">{props.content}</div>
+            <div className="text-sm mb-2">{props.content}</div>
             <div className="badge badge-accent text-xs">{props.game}</div>
             <div className="divider divider-neutral h-0.5 mb-3"></div>
           </div>

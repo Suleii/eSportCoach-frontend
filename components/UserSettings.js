@@ -10,7 +10,6 @@ function UserSettings(props) {
     const [firstname, setFirstname] = useState("");
     const [email, setEmail] = useState("");
     const [photo, setPhoto] = useState("");
-
     const dispatch = useDispatch()
     const router = useRouter()
     const user = useSelector((state) => state.user.value);
@@ -163,7 +162,8 @@ function UserSettings(props) {
                                   alt="Profile"
                                   className="rounded-full w-28 h-28"/>
                                   
-                        
+                  {/* Overlay image */}
+                  <img src="/edit.png" alt="edit" className="w-10 h-10 flex ml-16 -mt-8" />
               
                   {/* File input for uploading a new profile picture */}
 

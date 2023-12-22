@@ -94,7 +94,7 @@ function CoachProfile(props) {
   ));
 
   const gamesTags = games.map((item, i) => (
-    <div className="badge badge-accent text-xs mr-2" key={i}>
+    <div className="badge badge-accent text-sm mr-3" key={i}>
       {item}
     </div>
   ));
@@ -103,35 +103,15 @@ function CoachProfile(props) {
   return (
     <div className="flex flex-col items-center ">
       <div className="w-5/6 flex-1">
-        <div className="flex flex-row justify-between">
+        <div className="flex flex-row justify-between items-center mb-6">
           <div className="avatar">
-            <div className="w-24 h-24 rounded-full">
+            <div className="avatar w-24 h-24 rounded-full">
               <img src={profile.photo} alt="Profile pic" />
             </div>
           </div>
           <div>
-            <div>
               <span className="text-white mb-1">@{props.username}</span>
-              <div className="dropdown dropdown-top dropdown-end ">
-                <div tabIndex={0}>
-                  <span className="ml-5  ">
-                    <FontAwesomeIcon
-                      icon={faEllipsisVertical}
-                      style={{ color: "#ffffff" }}
-                    />
-                  </span>
-                </div>
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content z-[1] menu  bg-base-100 rounded-box w-36 h-7 justify-center align-center"
-                >
-                  <li className="text-accent text-xs">
-                    <a href="/contact">Report this user</a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-            <div className="text-xs mb-6">
+            <div className="text-xs mb-4">
               <span>{stars}</span>
               <span className="text-white"> ({reviewCount})</span>
             </div>
@@ -167,18 +147,35 @@ function CoachProfile(props) {
               </button>
             )}
           </div>
+          <div className="dropdown dropdown-top dropdown-end ">
+                <div className="mb-20" tabIndex={0}>
+                  <span className="ml-5">
+                    <FontAwesomeIcon
+                      icon={faEllipsisVertical}
+                      style={{ color: "#ffffff" }}
+                    />
+                  </span>
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="dropdown-content z-[1] menu  bg-base-100 rounded-box w-36 h-7 justify-center align-center"
+                >
+                  <li className="text-accent text-xs">
+                    <a href="/contact">Report this user</a>
+                  </li>
+                </ul>
+              </div>
         </div>
         <div className="text-white w-full">
-          <h3 className="text-lg mb-1"> About me</h3>
+          <h2 className="text-lg mb-2"> About me</h2>
           <p className="text-sm mb-2">{profile.about}</p>
+          <h3 className="text-lg mt-4 mb-2">Games</h3>
           {gamesTags}
-          <div>
-            <h3 className="text-lg mt-6">Experience/Achievements</h3>
-            <div className="text-base mx-10 mt-4">
+          <div className="space-x-8 mb-6 ">
+            <h3 className="text-lg mt-6 mb-4 ">Experience</h3>
               <ul className="list-image-[url(../public/circle-check-solid.svg)]">
                 {ExperienceList}
               </ul>
-            </div>
           </div>
           <div className="flex flex-row">
             <ul className="menu menu-horizontal bg-base-100 rounded-box mb-6">
@@ -258,10 +255,10 @@ function CoachProfile(props) {
               )}
             </ul>
           </div>
-          <h3 className="text-lg mb-1">Price</h3>
+          <h3 className="text-xl mb-1">Price</h3>
           <div className="">1 session (2hrs): €{price}</div>
 
-          <h3 className="text-lg mt-6 mb-6">Reviews</h3>
+          <h3 className="text-xl mt-6 mb-6">Reviews</h3>
           {reviews.length > 0 ? (
             reviews
           ) : (
