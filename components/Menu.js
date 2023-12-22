@@ -90,10 +90,10 @@ function Menu() {
             <div onClick={handleLogout}>
               <a className="text-white mb-28 cursor-pointer flex flex-row float items-center">
                 <FontAwesomeIcon
-                  className="rotate-180"
+                  className="rotate-180 mr-2"
                   icon={faRightFromBracket}
                 />
-                Logout
+                <span> Logout</span>
               </a>
             </div>
           )}

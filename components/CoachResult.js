@@ -28,9 +28,7 @@ function CoachResult(props) {
         </div>
         <div className="flex-1">
           <div className="font-bold text-xl">@{props.username}</div>
-          <div>
-            {stars} ({props.reviewsNumber})
-          </div>
+          <div>{stars} (2)</div>
 
           <div className="flex mt-2">
             {props.gameTag.map((game, index) => (

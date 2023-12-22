@@ -73,13 +73,12 @@ function SearchPage({ searchQuery }) {
 
   // Iterate on results to return every results  with CoachResult componant
   const resultData = results.map((result, index) => {
-    const reviewsNumber = result.reviews ? result.reviews.length : 0;
+    // const reviewsNumber = result.reviews ? result.reviews.length : 0;
 
     return (
       <CoachResult
         key={index}
         username={result.user.username}
-        reviewsNumber={reviewsNumber}
         gameTag={result.games}
         languagesTag={result.language}
         price={result.price}
@@ -277,7 +276,9 @@ function SearchPage({ searchQuery }) {
   return (
     <div className="flex flex-col items-center">
       <div className="w-5/6 flex-1 text-white ">
-        <div className="text-xl mb-10 ">Find the best coach <br></br>for you...</div>
+        <div className="text-xl mb-10 ">
+          Find the best coach <br></br>for you...
+        </div>
         <SearchBar />
         <>
           <div className="block items-center justify-center text-lg mt-8">
@@ -339,7 +340,9 @@ function SearchPage({ searchQuery }) {
             Sorry, no result matching your criteria
           </div>
         ) : (
-          <div className="flex justify-center mt-36 text-base">Use the search bar to find a coach</div>
+          <div className="flex justify-center mt-36 text-base">
+            Use the search bar to find a coach
+          </div>
         )}
       </div>
     </div>

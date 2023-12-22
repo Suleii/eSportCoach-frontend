@@ -112,7 +112,7 @@ function Home(props) {
               key={index}
               className="h-36 w-28 flex flex-col items-center justify-between"
             >
-              <img 
+              <img
                 src={coach.photo}
                 alt={coach.user.username}
                 className="rounded-full h-20 w-20"
