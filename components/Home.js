@@ -25,6 +25,8 @@ function Home() {
     )}`;
   };
 
+  // Make a research by clicking on coach pictures
+
   const games = [
     { name: "League of Legends", image: "lol.jpg", searchTerm: "lol" },
     {
@@ -51,7 +53,7 @@ function Home() {
       .then((response) => response.json())
       .then(async (data) => {
         if (data.result) {
-          console.log("data coaches", data.coaches)
+          console.log("data coaches", data.coaches);
           const coachesWithReviews = await Promise.all(
             // Use Promise.all to treat simultaneously all Promises return by maps
             data.coaches.map(async (coach) => {
@@ -103,22 +105,23 @@ function Home() {
         </div>
 
         <h1 className="mt-10 mb-5 ml-8">Best Coaches</h1>
-        <div className="flex flex-row items-center">
+        <div className="rounded-box flex space-x-4 h-56 mt-10 overflow-x-auto pb-2 md:overflow-x-scroll w-full scrollbar-thumb-accent scrollbar-track-base-100 scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
+
           {bestCoaches.map((coach, index) => (
             <div
               key={index}
-              className="h-36 w-28 flex flex-col items-center p-3"
+              className="carousel-item h-36 w-28 flex flex-col items-center "
             >
-              <div className="w-28 h-28 rounded-full">
-              <img
-                src={coach.photo}
-                alt={coach.user.username}
-                className=""
-              />
-              </div>
+              
+                <img
+                  src={coach.photo}
+                  alt={coach.user.username}
+                  className=" w-24 h-24 rounded-full"
+                />
+              
               <p className="m-2">{coach.user.username}</p>
               <div className="flex flex-row">{generateStars(coach.rating)}</div>
-              <p className="m-2">({coach.reviewCount})</p>{" "}
+              <p className="mt-2">({coach.reviewCount})</p>{" "}
               {/* Exemple de données */}
             </div>
           ))}

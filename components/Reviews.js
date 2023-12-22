@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useSelector } from "react-redux";
+import Link from "next/link";
 import Modal from "./Modal";
 
 function Review(props) {
@@ -52,12 +53,12 @@ function Review(props) {
   }
 
   //SEND REVIEW TO DB
-const handleSubmit= () => {
-  window.location.reload()
-   
-   fetch('http://localhost:3000/reviews', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+  const handleSubmit = () => {
+    window.location.reload();
+
+    fetch("http://localhost:3000/reviews", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
           game : props.game,
           username : user.username,
@@ -65,19 +66,20 @@ const handleSubmit= () => {
           content: myreview,
           rating: note,
       }),
-  })
-  .then(response => response.json())
-  .then(data => {
-      console.log(data.message);
-      
-      })
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data.message);
+        fetch(`http://localhost:3000/reviews/coachRating/${props.coach}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data.message));
+  ;
+      });
 
-  fetch(`http://localhost:3000/reviews/coachRating/${props.coach}`,{
-    method:'PUT',
-    headers: {'Content-Type': 'application/json'}
-  })
-  .then(response => response.json())
-  .then(data => console.log(data.message))
+    
     
   }
 
@@ -174,7 +176,9 @@ const handleSubmit= () => {
                 <div className="w-10 h-10 rounded-full mr-4">
                   <img src={props.photo} alt="Profile pic" />
                 </div>
-                <span className="text-sm">@{props.username}</span>
+                <Link href={"http://localhost:3001/gamer/" + props.username}>
+                  <span className="text-sm">@{props.username}</span>
+                </Link>
               </div>
 
               <span className="text-xs">{stars}</span>
