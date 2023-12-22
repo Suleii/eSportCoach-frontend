@@ -70,7 +70,8 @@ const Return = () => {
 
   // Create a booking reservation in database
   const createBooking = () => {
-    let savedCoachData; // Variable to stock coach Data
+    let savedCoachData;
+    let savedUserData; // Variable to stock coach and User Data
 
     // First fetch to collect coach data
     fetch(`http://localhost:3000/coaches/profile/${coachName}`)
@@ -89,6 +90,7 @@ const Return = () => {
         if (!userData.result) {
           throw new Error("User data not found");
         }
+        savedUserData = userData;
 
         // Booking data management
         const bookingData = {
@@ -115,13 +117,14 @@ const Return = () => {
           body: JSON.stringify({
             coachName: booking.coach,
             date: booking.date,
-            email: customerEmail,
+            email: savedUserData.profile.email,
           }),
         });
       })
       .then((response) => response.json())
       .then((emailConfirmation) => {
         console.log("Email confirmation sent:", emailConfirmation);
+        console.log(savedUserData);
       })
       .catch((error) => {
         console.error("An error occurred:", error.message);
