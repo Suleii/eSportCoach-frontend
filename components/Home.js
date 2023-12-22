@@ -9,7 +9,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 config.autoAddCss = false;
 
-function Home() {
+function Home(props) {
   const [searchQuery, setSearchQuery] = useState("");
   const [bestCoaches, setBestCoaches] = useState([]);
 
@@ -86,11 +86,12 @@ function Home() {
   };
 
   return (
-    <div className="flex flex-col items-center min-h-screen">
+    <div className="flex flex-col items-center ">
       <div className="w-5/6 flex-1">
+        <h1 className="text-xl font-medium mb-6">Welcome!</h1>
         <SearchBar onSearch={handleSearch} />
 
-        <h1 className="mt-10 ml-8">Top games</h1>
+        <h1 className="mt-10 ml-8 text-lg">Top games</h1>
         <div className="rounded-box flex space-x-4 h-64 mt-10 overflow-x-auto pb-2 md:overflow-x-scroll w-full scrollbar-thumb-accent scrollbar-track-base-100 scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
           {games.map((game, index) => (
             <div key={index} className="carousel-item">
@@ -104,24 +105,21 @@ function Home() {
           ))}
         </div>
 
-        <h1 className="mt-10 mb-5 ml-8">Best Coaches</h1>
-        <div className="rounded-box flex space-x-4 h-56 mt-10 overflow-x-auto pb-2 md:overflow-x-scroll w-full scrollbar-thumb-accent scrollbar-track-base-100 scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full">
-
+        <h1 className="mt-10 mb-8 ml-8 text-lg">Best Coaches</h1>
+        <div className="flex flex-row h-44 items-stretch overflow-x-scroll justify-between space-x-7">
           {bestCoaches.map((coach, index) => (
             <div
               key={index}
-              className="carousel-item h-36 w-28 flex flex-col items-center "
+              className="h-36 w-28 flex flex-col items-center justify-between"
             >
-              
-                <img
-                  src={coach.photo}
-                  alt={coach.user.username}
-                  className=" w-24 h-24 rounded-full"
-                />
-              
+              <img 
+                src={coach.photo}
+                alt={coach.user.username}
+                className="rounded-full h-20 w-20"
+              />
               <p className="m-2">{coach.user.username}</p>
               <div className="flex flex-row">{generateStars(coach.rating)}</div>
-              <p className="mt-2">({coach.reviewCount})</p>{" "}
+              <p className="m-2 text-sm">({coach.reviewCount})</p>{" "}
               {/* Exemple de données */}
             </div>
           ))}

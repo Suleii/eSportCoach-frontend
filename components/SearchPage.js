@@ -175,7 +175,7 @@ function SearchPage({ searchQuery }) {
                     icon={faStar}
                     className={`${
                       i < rating ? "text-green-700" : "text-gray-200"
-                    } text-xl`}
+                    } text-base`}
                   />
                 ))}
               </div>
@@ -277,10 +277,10 @@ function SearchPage({ searchQuery }) {
   return (
     <div className="flex flex-col items-center">
       <div className="w-5/6 flex-1 text-white ">
-        <div className="text-lg mb-10">Find the best coach for you...</div>
+        <div className="text-xl mb-10 ">Find the best coach <br></br>for you...</div>
         <SearchBar />
         <>
-          <div className="flex flex-col items-center justify-center text-lg mt-5">
+          <div className="block items-center justify-center text-lg mt-8">
             Filters
           </div>
           <div className="flex flex-row items-center w-full justify-center mt-5 justify-between">
@@ -289,8 +289,8 @@ function SearchPage({ searchQuery }) {
                 onClick={showReviewsModal}
                 className={`rounded-2xl w-12 h-12 flex justify-center items-center  ${
                   minRating !== 0
-                    ? "bg-orange-500 hover:bg-orange-400"
-                    : "bg-zinc-400 hover:bg-zinc-300"
+                    ? "bg-accent hover:bg-accent"
+                    : "bg-neutral hover:bg-neutral"
                 } cursor-pointer`}
               >
                 <FontAwesomeIcon icon={faStar} className="text-white" />
@@ -303,8 +303,8 @@ function SearchPage({ searchQuery }) {
                 onClick={showPriceModal}
                 className={`rounded-2xl w-12 h-12 flex justify-center items-center p-3 ${
                   minPrice !== null || maxPrice !== null
-                    ? "bg-orange-500 hover:bg-orange-400"
-                    : "bg-zinc-400 hover:bg-zinc-300"
+                    ? "bg-accent hover:bg-accent"
+                    : "bg-neutral hover:bg-neutral"
                 } cursor-pointer `}
               >
                 <FontAwesomeIcon
@@ -312,7 +312,7 @@ function SearchPage({ searchQuery }) {
                   className="text-white"
                 />
               </div>
-              <div className="text-base">Price</div>
+              <div className="text-sm">Price</div>
               {isPriceModalVisible && <PriceModal />}
             </div>
 
@@ -321,8 +321,8 @@ function SearchPage({ searchQuery }) {
                 onClick={showLanguageModal}
                 className={`rounded-2xl w-12 h-12 flex justify-center items-center ${
                   languageFilter
-                    ? "bg-orange-500 hover:bg-orange-400"
-                    : "bg-zinc-400 hover:bg-zinc-300"
+                    ? "bg-accent hover:bg-accent"
+                    : "bg-neutral hover:bg-neutral"
                 } cursor-pointer`}
               >
                 <FontAwesomeIcon icon={faLanguage} className="text-white" />
@@ -335,11 +335,11 @@ function SearchPage({ searchQuery }) {
         {resultData.length > 0 ? (
           resultData
         ) : searchQuery ? (
-          <div className="mt-5 text-xl">
+          <div className="flex justify-center mt-36 text-base">
             Sorry, no result matching your criteria
           </div>
         ) : (
-          <div className="mt-5 text-xl">Use the search bar to find a coach</div>
+          <div className="flex justify-center mt-36 text-base">Use the search bar to find a coach</div>
         )}
       </div>
     </div>

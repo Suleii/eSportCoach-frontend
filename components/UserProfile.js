@@ -66,11 +66,11 @@ function UserProfile(props) {
         <div className="flex flex-row justify-between mb-6 items-center">
           <div className="flex items-center ">
             <div className="avatar">
-              <div className="w-16 h-16 bg-base-200 rounded-full">
+              <div className=" w-20 h-20 rounded-full bg-base-200">
                 <img src={profile.photo} alt="Profile pic" />
               </div>
             </div>
-            <span className="text-white ml-2">@{props.username}</span>
+            <span className="text-white text-lg ml-4">@{props.username}</span>
           </div>
           <div>
             <div className="dropdown dropdown-end cursor-pointer">
@@ -98,8 +98,8 @@ function UserProfile(props) {
           profile={profile}
           bookings={bookings}
         />
-
-        <h3 className="text-lg mt-10 mb-6">My reviews</h3>
+        <h3 className="text-lg mt-10 mb-6 ml-6">My reviews</h3>
+        
         {bookings.map((booking, i) => {
           const hasMatchingCoach = haveSameCoach([booking], reviewsdata);
 
