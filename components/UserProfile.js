@@ -1,6 +1,6 @@
 "use client";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEllipsisVertical} from "@fortawesome/free-solid-svg-icons";
+import { faEllipsisVertical } from "@fortawesome/free-solid-svg-icons";
 
 // Prevent fontawesome icons from flashing large icons when reloading :
 import "@fortawesome/fontawesome-svg-core/styles.css";
@@ -43,8 +43,6 @@ function UserProfile(props) {
       });
   }, []);
 
-  
-
   // Check if there is a coach who was booked but does not have a review
   const haveSameCoach = (bookings, reviewsdata) => {
     for (let i = 0; i < bookings.length; i++) {
@@ -75,7 +73,7 @@ function UserProfile(props) {
             <span className="text-white text-lg ml-4">@{props.username}</span>
           </div>
           <div>
-            <div className="dropdown dropdown-end ">
+            <div className="dropdown dropdown-end cursor-pointer">
               <div tabIndex={0}>
                 <span className="ml-5  ">
                   <FontAwesomeIcon

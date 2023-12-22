@@ -25,6 +25,8 @@ function Home(props) {
     )}`;
   };
 
+  // Make a research by clicking on coach pictures
+
   const games = [
     { name: "League of Legends", image: "lol.jpg", searchTerm: "lol" },
     {
@@ -51,7 +53,7 @@ function Home(props) {
       .then((response) => response.json())
       .then(async (data) => {
         if (data.result) {
-          console.log("data coaches", data.coaches)
+          console.log("data coaches", data.coaches);
           const coachesWithReviews = await Promise.all(
             // Use Promise.all to treat simultaneously all Promises return by maps
             data.coaches.map(async (coach) => {
