@@ -42,27 +42,35 @@ function SignIn() {
               `https://experience-backend.vercel.app/coaches/profile/${data.username}`
             )
               .then((response) => response.json())
-              .then((data) => {
-                dispatch(avatar(data.profile.photo));
+              .then((dataprofile) => {
+                dispatch(avatar(dataprofile.profile.photo));
+                dispatch(
+                  login({
+                    username: data.username,
+                    token: data.token,
+                    isCoach: data.isCoach,
+                  })
+                );
               });
           } else {
             fetch(
               `https://experience-backend.vercel.app/gamers/profile/${data.username}`
             )
               .then((response) => response.json())
-              .then((data) => {
-                console.log("data", data);
-                console.log("photo", data.profile.photo);
-                dispatch(avatar(data.profile.photo));
+              .then((dataprofile) => {
+                console.log("data", dataprofile);
+                console.log("photo", dataprofile.profile.photo);
+                dispatch(avatar(dataprofile.profile.photo));
+                dispatch(
+                  login({
+                    username: data.username,
+                    token: data.token,
+                    isCoach: data.isCoach,
+                  })
+                );
               });
           }
-          dispatch(
-            login({
-              username: data.username,
-              token: data.token,
-              isCoach: data.isCoach,
-            })
-          );
+          
           setSignInUsername("");
           setSignInPassword("");
           router.back();
