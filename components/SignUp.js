@@ -3,10 +3,6 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { login, logout } from "../reducers/user";
 import styles from "../styles/Login.module.css";
-//import { Modal } from 'antd';
-// import SignUp from './SignUp';
-// import SignIn from './SignIn';
-// import Link from 'next/link';
 import { useRouter } from "next/navigation";
 import { avatar } from "../reducers/user";
 
