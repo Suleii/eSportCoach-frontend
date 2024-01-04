@@ -20,7 +20,7 @@ function Home(props) {
 
   // Make a research by clicking on game images
   const navigateToSearch = (searchTerm) => {
-    window.location.href = `http://localhost:3001/search?search=${encodeURIComponent(
+    window.location.href = `https://experience-frontend.vercel.app/search?search=${encodeURIComponent(
       searchTerm
     )}`;
   };

@@ -175,7 +175,12 @@ function Review(props) {
                 <div className="w-10 h-10 rounded-full mr-4">
                   <img src={props.photo} alt="Profile pic" />
                 </div>
-                <Link href={"http://localhost:3001/gamer/" + props.username}>
+                <Link
+                  href={
+                    "https://experience-frontend.vercel.app/gamer/" +
+                    props.username
+                  }
+                >
                   <span className="text-sm">@{props.username}</span>
                 </Link>
               </div>
