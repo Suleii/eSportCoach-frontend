@@ -24,16 +24,18 @@ function Booking(props) {
 
   // Fetch the games listed in the coach profile + the coach's bookings and unvailabilities
   useEffect(() => {
-    fetch(`https://experience-backend.vercel.app
-/coaches/profile/${props.username}`)
+    fetch(
+      `https://experience-backend.vercel.app/coaches/profile/${props.username}`
+    )
       .then((response) => response.json())
       .then((data) => {
         let gamesData = data.profile.games;
         setGames(gamesData);
       });
 
-    fetch(`https://experience-backend.vercel.app
-/unavailabilities/${props.username}`)
+    fetch(
+      `https://experience-backend.vercel.app/unavailabilities/${props.username}`
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log("data", data);
@@ -41,8 +43,7 @@ function Booking(props) {
         setUnavailabilitiesData(unvailabilities);
       });
 
-    fetch(`https://experience-backend.vercel.app
-/bookings/${props.username}`)
+    fetch(`https://experience-backend.vercel.app/bookings/${props.username}`)
       .then((response) => response.json())
       .then((data) => {
         let bookedtimes = data.bookings.map((booking) => booking.date);

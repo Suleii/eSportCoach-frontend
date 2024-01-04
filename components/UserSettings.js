@@ -17,13 +17,15 @@ function UserSettings(props) {
 
   // Fetch coach information when the component mounts
   useEffect(() => {
-    fetch(`https://experience-backend.vercel.app
-/users/credentials/${props.username}`)
+    fetch(
+      `https://experience-backend.vercel.app/users/credentials/${props.username}`
+    )
       .then((response) => response.json())
       .then((data) => {
         if (user.token === data.credentials.token) {
-          fetch(`https://experience-backend.vercel.app
-/gamers/profile/${props.username}`)
+          fetch(
+            `https://experience-backend.vercel.app/gamers/profile/${props.username}`
+          )
             .then((response) => response.json())
             .then((data) => {
               const lastname = data.profile.lastname;
@@ -70,8 +72,7 @@ function UserSettings(props) {
     };
 
     fetch(
-      `https://experience-backend.vercel.app
-/gamers/profile/${props.username}`,
+      `https://experience-backend.vercel.app/gamers/profile/${props.username}`,
       {
         method: "PUT",
         headers: {
@@ -106,8 +107,9 @@ function UserSettings(props) {
   // Cancel button, disable editing mode, and reset the form to the original state
   const handleCancelClick = () => {
     setIsEditing(false);
-    fetch(`https://experience-backend.vercel.app
-/gamers/profile/${props.username}`)
+    fetch(
+      `https://experience-backend.vercel.app/gamers/profile/${props.username}`
+    )
       .then((response) => response.json())
       .then((data) => {
         // Set the state variables back to their original values
@@ -129,8 +131,7 @@ function UserSettings(props) {
     formData.append("photoFromFront", file);
 
     fetch(
-      `https://experience-backend.vercel.app
-/gamers/profile/${props.username}/photo`,
+      `https://experience-backend.vercel.app/gamers/profile/${props.username}/photo`,
       {
         method: "PUT",
         body: formData,

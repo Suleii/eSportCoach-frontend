@@ -56,39 +56,36 @@ function Review(props) {
   const handleSubmit = () => {
     window.location.reload();
 
-    fetch("https://experience-backend.vercel.app
-/reviews", {
+    fetch("https://experience-backend.vercel.app/reviews", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-          game : props.game,
-          username : user.username,
-          coachUsername: props.coach,
-          content: myreview,
-          rating: note,
+        game: props.game,
+        username: user.username,
+        coachUsername: props.coach,
+        content: myreview,
+        rating: note,
       }),
     })
       .then((response) => response.json())
       .then((data) => {
         console.log(data.message);
-        fetch(`https://experience-backend.vercel.app
-/reviews/coachRating/${props.coach}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data.message));
-  ;
+        fetch(
+          `https://experience-backend.vercel.app/reviews/coachRating/${props.coach}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+          }
+        )
+          .then((response) => response.json())
+          .then((data) => console.log(data.message));
       });
+  };
 
-    
-    
-  }
-
- const handleInputChange = (e) => {
-      const msg = e.target.value;
-      setMyReview(msg)
-  } 
+  const handleInputChange = (e) => {
+    const msg = e.target.value;
+    setMyReview(msg);
+  };
 
   console.log(myreview);
 

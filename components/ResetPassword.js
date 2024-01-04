@@ -1,49 +1,50 @@
-"use client"
-import { useRouter } from 'next/navigation'
+"use client";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
+function ResetPassword(props) {
+  const router = useRouter();
 
-function ResetPassword (props) {
-const router = useRouter();
+  const [password, setPassword] = useState("");
 
-const [password, setPassword] = useState("");
+  const handleSubmit = () => {
+    fetch("https://experience-backend.vercel.app/users/updatepassword", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username: props.username,
+        token: props.token,
+        newpassword: password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => console.log(data));
 
-const handleSubmit = () => {
-    fetch("https://experience-backend.vercel.app
-/users/updatepassword", {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({username: props.username , token: props.token, newpassword: password}),
-      })
-    .then(response => response.json())
-    .then(data => console.log(data))
+    router.push("/signin");
+  };
 
-    router.push('/signin')
-}
-
-return (
+  return (
     <div className="flex flex-col items-center ">
-    <div className='w-5/6 flex-1'>
-    
+      <div className="w-5/6 flex-1">
         <p className="mb-4">Please choose a new password.</p>
-              <input
-            className="bg-base-200 w-full h-10 rounded-md p-2 mb-6"
-            type="password"
-            placeholder="New password"
-            id="password"
-            onChange={(e) => setPassword(e.target.value)}
-            value={password}
-          />
-        <div className='flex justify-end'>
+        <input
+          className="bg-base-200 w-full h-10 rounded-md p-2 mb-6"
+          type="password"
+          placeholder="New password"
+          id="password"
+          onChange={(e) => setPassword(e.target.value)}
+          value={password}
+        />
+        <div className="flex justify-end">
           <button className="btn btn-success" onClick={handleSubmit}>
-                Submit
+            Submit
           </button>
         </div>
+      </div>
     </div>
-    </div>
-)
+  );
 }
 
 export default ResetPassword;

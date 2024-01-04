@@ -19,8 +19,9 @@ function GamerSchedule(props) {
   const [bookingsSelected, setBookingsSelected] = useState([]);
 
   useEffect(() => {
-    fetch(`https://experience-backend.vercel.app
-/users/credentials/${props.username}`)
+    fetch(
+      `https://experience-backend.vercel.app/users/credentials/${props.username}`
+    )
       .then((response) => response.json())
       .then((data) => {
         setToken(data.credentials.token);

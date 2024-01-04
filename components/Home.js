@@ -49,8 +49,7 @@ function Home(props) {
   ];
 
   useEffect(() => {
-    fetch("https://experience-backend.vercel.app
-/coaches/bestCoaches")
+    fetch("https://experience-backend.vercel.app/coaches/bestCoaches")
       .then((response) => response.json())
       .then(async (data) => {
         if (data.result) {
@@ -60,8 +59,7 @@ function Home(props) {
             data.coaches.map(async (coach) => {
               // Run through all coach data collected
               const reviewResponse = await fetch(
-                `https://experience-backend.vercel.app
-/reviews/${coach.user.username}`
+                `https://experience-backend.vercel.app/reviews/${coach.user.username}`
               );
               const reviewData = await reviewResponse.json(); // For each code, send a request to collect his reviews
               return { ...coach, reviewCount: reviewData.reviews.length }; // Return a new object with all coaches data AND reviews length

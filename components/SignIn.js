@@ -21,8 +21,7 @@ function SignIn() {
   const user = useSelector((state) => state.user.value);
 
   const handleSignIn = () => {
-    fetch("https://experience-backend.vercel.app
-/users/signin", {
+    fetch("https://experience-backend.vercel.app/users/signin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -39,20 +38,22 @@ function SignIn() {
           return;
         } else {
           if (data.isCoach) {
-            fetch(`https://experience-backend.vercel.app
-/coaches/profile/${data.username}`)
+            fetch(
+              `https://experience-backend.vercel.app/coaches/profile/${data.username}`
+            )
               .then((response) => response.json())
               .then((data) => {
                 dispatch(avatar(data.profile.photo));
               });
           } else {
-            fetch(`https://experience-backend.vercel.app
-/gamers/profile/${data.username}`)
+            fetch(
+              `https://experience-backend.vercel.app/gamers/profile/${data.username}`
+            )
               .then((response) => response.json())
               .then((data) => {
                 console.log("data", data);
-                console.log("photo", data.profile.photo)
-                dispatch(avatar(data.profile.photo)); 
+                console.log("photo", data.profile.photo);
+                dispatch(avatar(data.profile.photo));
               });
           }
           dispatch(
@@ -74,8 +75,7 @@ function SignIn() {
   };
   const handleClose = () => {
     setOpen(false);
-    fetch("https://experience-backend.vercel.app
-/emails/forgottenpassword", {
+    fetch("https://experience-backend.vercel.app/emails/forgottenpassword", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email: email }),

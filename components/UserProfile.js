@@ -18,15 +18,17 @@ function UserProfile(props) {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    fetch(`https://experience-backend.vercel.app
-/gamers/profile/${props.username}`)
+    fetch(
+      `https://experience-backend.vercel.app/gamers/profile/${props.username}`
+    )
       .then((response) => response.json())
       .then((data) => {
         setProfile(data.profile); // to get the profile pic
       });
 
-    fetch(`https://experience-backend.vercel.app
-/bookings/gamer/${props.username}`)
+    fetch(
+      `https://experience-backend.vercel.app/bookings/gamer/${props.username}`
+    )
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -37,8 +39,9 @@ function UserProfile(props) {
         }
       });
 
-    fetch(`https://experience-backend.vercel.app
-/reviews/gamer/${props.username}`)
+    fetch(
+      `https://experience-backend.vercel.app/reviews/gamer/${props.username}`
+    )
       .then((response) => response.json())
       .then((data) => {
         let reviewsdb = data.reviews;

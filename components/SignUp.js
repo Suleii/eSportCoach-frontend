@@ -25,8 +25,7 @@ function SignUp() {
   const user = useSelector((state) => state.user.value);
 
   const handleSignUpGamer = () => {
-    fetch("https://experience-backend.vercel.app
-/users/signup/gamer", {
+    fetch("https://experience-backend.vercel.app/users/signup/gamer", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -52,17 +51,16 @@ function SignUp() {
             })
           );
           dispatch(avatar("/profilepic.png"));
-          fetch("https://experience-backend.vercel.app
-/emails/signup",{
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({
-                name: signUpFirstname,  
-                email: signUpMail,
-              }),
-            })
-          .then(response => response.json())
-          .then(data => console.log(data))  
+          fetch("https://experience-backend.vercel.app/emails/signup", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              name: signUpFirstname,
+              email: signUpMail,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => console.log(data));
 
           setSignUpLastname("");
           setSignUpFirstname("");
@@ -80,8 +78,7 @@ function SignUp() {
   };
 
   const handleSignUpCoach = () => {
-    fetch("https://experience-backend.vercel.app
-/users/signup/coach", {
+    fetch("https://experience-backend.vercel.app/users/signup/coach", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -118,18 +115,17 @@ function SignUp() {
               isCoach: true,
             })
           );
-         dispatch(avatar("/profilepic.png"));
-          fetch("https://experience-backend.vercel.app
-/emails/signup",{
+          dispatch(avatar("/profilepic.png"));
+          fetch("https://experience-backend.vercel.app/emails/signup", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              name: signUpFirstname,  
+              name: signUpFirstname,
               email: signUpMail,
             }),
           })
-          .then(response => response.json())
-          .then(data => console.log(data))
+            .then((response) => response.json())
+            .then((data) => console.log(data));
 
           setSignUpLastname("");
           setSignUpFirstname("");
