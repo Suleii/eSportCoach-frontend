@@ -33,7 +33,8 @@ function CoachProfile(props) {
   const router = useRouter();
 
   useEffect(() => {
-    fetch(`http://localhost:3000/coaches/profile/${props.username}`)
+    fetch(`https://experience-backend.vercel.app
+/coaches/profile/${props.username}`)
       .then((response) => response.json())
       .then((data) => {
         setProfile(data.profile);
@@ -56,7 +57,8 @@ function CoachProfile(props) {
   }, []);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/reviews/${props.username}`)
+    fetch(`https://experience-backend.vercel.app
+/reviews/${props.username}`)
       .then((response) => response.json())
       .then((data) => {
         let reviewsdata = data.reviews;
@@ -110,7 +112,7 @@ function CoachProfile(props) {
             </div>
           </div>
           <div>
-              <span className="text-white mb-1">@{props.username}</span>
+            <span className="text-white mb-1">@{props.username}</span>
             <div className="text-xs mb-4">
               <span>{stars}</span>
               <span className="text-white"> ({reviewCount})</span>
@@ -148,23 +150,23 @@ function CoachProfile(props) {
             )}
           </div>
           <div className="dropdown dropdown-top dropdown-end ">
-                <div className="mb-20" tabIndex={0}>
-                  <span className="ml-5">
-                    <FontAwesomeIcon
-                      icon={faEllipsisVertical}
-                      style={{ color: "#ffffff" }}
-                    />
-                  </span>
-                </div>
-                <ul
-                  tabIndex={0}
-                  className="dropdown-content z-[1] menu  bg-base-100 rounded-box w-36 h-7 justify-center align-center"
-                >
-                  <li className="text-accent text-xs">
-                    <a href="/contact">Report this user</a>
-                  </li>
-                </ul>
-              </div>
+            <div className="mb-20" tabIndex={0}>
+              <span className="ml-5">
+                <FontAwesomeIcon
+                  icon={faEllipsisVertical}
+                  style={{ color: "#ffffff" }}
+                />
+              </span>
+            </div>
+            <ul
+              tabIndex={0}
+              className="dropdown-content z-[1] menu  bg-base-100 rounded-box w-36 h-7 justify-center align-center"
+            >
+              <li className="text-accent text-xs">
+                <a href="/contact">Report this user</a>
+              </li>
+            </ul>
+          </div>
         </div>
         <div className="text-white w-full">
           <h2 className="text-lg mb-2"> About me</h2>
@@ -173,9 +175,9 @@ function CoachProfile(props) {
           {gamesTags}
           <div className="space-x-8 mb-6 ">
             <h3 className="text-lg mt-6 mb-4 ">Experience</h3>
-              <ul className="list-image-[url(../public/circle-check-solid.svg)]">
-                {ExperienceList}
-              </ul>
+            <ul className="list-image-[url(../public/circle-check-solid.svg)]">
+              {ExperienceList}
+            </ul>
           </div>
           <div className="flex flex-row">
             <ul className="menu menu-horizontal bg-base-100 rounded-box mb-6">

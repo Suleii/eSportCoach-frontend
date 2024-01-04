@@ -18,13 +18,15 @@ function UserProfile(props) {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    fetch(`http://localhost:3000/gamers/profile/${props.username}`)
+    fetch(`https://experience-backend.vercel.app
+/gamers/profile/${props.username}`)
       .then((response) => response.json())
       .then((data) => {
         setProfile(data.profile); // to get the profile pic
       });
 
-    fetch(`http://localhost:3000/bookings/gamer/${props.username}`)
+    fetch(`https://experience-backend.vercel.app
+/bookings/gamer/${props.username}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);
@@ -35,7 +37,8 @@ function UserProfile(props) {
         }
       });
 
-    fetch(`http://localhost:3000/reviews/gamer/${props.username}`)
+    fetch(`https://experience-backend.vercel.app
+/reviews/gamer/${props.username}`)
       .then((response) => response.json())
       .then((data) => {
         let reviewsdb = data.reviews;
@@ -99,7 +102,7 @@ function UserProfile(props) {
           bookings={bookings}
         />
         <h3 className="text-lg mt-10 mb-6 ml-6">My reviews</h3>
-        
+
         {bookings.map((booking, i) => {
           const hasMatchingCoach = haveSameCoach([booking], reviewsdata);
 

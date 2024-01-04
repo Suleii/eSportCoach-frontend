@@ -40,7 +40,8 @@ function SearchPage({ searchQuery }) {
 
     // GET API to collect search data
     if (searchQuery) {
-      fetch(`http://localhost:3000/search/globalSearch?search=${searchQuery}`)
+      fetch(`https://experience-backend.vercel.app
+/search/globalSearch?search=${searchQuery}`)
         .then((response) => response.json())
         .then((data) => {
           if (data.result) {

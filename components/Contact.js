@@ -15,7 +15,8 @@ const handleSubmit = () => {
     if(!userName || !userEmail || !subject || !msg){
         setError("Missing field(s)")
     }else{
-        fetch("http://localhost:3000/emails/contact",{
+        fetch("https://experience-backend.vercel.app
+/emails/contact",{
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -25,7 +25,8 @@ function SignUp() {
   const user = useSelector((state) => state.user.value);
 
   const handleSignUpGamer = () => {
-    fetch("http://localhost:3000/users/signup/gamer", {
+    fetch("https://experience-backend.vercel.app
+/users/signup/gamer", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -51,7 +52,8 @@ function SignUp() {
             })
           );
           dispatch(avatar("/profilepic.png"));
-          fetch("http://localhost:3000/emails/signup",{
+          fetch("https://experience-backend.vercel.app
+/emails/signup",{
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({
@@ -78,7 +80,8 @@ function SignUp() {
   };
 
   const handleSignUpCoach = () => {
-    fetch("http://localhost:3000/users/signup/coach", {
+    fetch("https://experience-backend.vercel.app
+/users/signup/coach", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -116,7 +119,8 @@ function SignUp() {
             })
           );
          dispatch(avatar("/profilepic.png"));
-          fetch("http://localhost:3000/emails/signup",{
+          fetch("https://experience-backend.vercel.app
+/emails/signup",{
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({

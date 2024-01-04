@@ -56,7 +56,8 @@ function Review(props) {
   const handleSubmit = () => {
     window.location.reload();
 
-    fetch("http://localhost:3000/reviews", {
+    fetch("https://experience-backend.vercel.app
+/reviews", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -70,7 +71,8 @@ function Review(props) {
       .then((response) => response.json())
       .then((data) => {
         console.log(data.message);
-        fetch(`http://localhost:3000/reviews/coachRating/${props.coach}`, {
+        fetch(`https://experience-backend.vercel.app
+/reviews/coachRating/${props.coach}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
     })

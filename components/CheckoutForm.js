@@ -19,7 +19,8 @@ const CheckoutForm = () => {
 
   useEffect(() => {
     // Create a Checkout Session as soon as we get coachName
-    fetch(`http://localhost:3000/checkout_session/create-checkout-session`, {
+    fetch(`https://experience-backend.vercel.app
+/checkout_session/create-checkout-session`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ coachName }),
@@ -56,7 +57,8 @@ const Return = () => {
     const sessionId = urlParams.get("session_id");
 
     fetch(
-      `http://localhost:3000/checkout_session/session-status?session_id=${sessionId}`
+      `https://experience-backend.vercel.app
+/checkout_session/session-status?session_id=${sessionId}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -74,7 +76,8 @@ const Return = () => {
     let savedUserData; // Variable to stock coach and User Data
 
     // First fetch to collect coach data
-    fetch(`http://localhost:3000/coaches/profile/${coachName}`)
+    fetch(`https://experience-backend.vercel.app
+/coaches/profile/${coachName}`)
       .then((res) => res.json())
       .then((coachData) => {
         if (!coachData.result) {
@@ -83,7 +86,8 @@ const Return = () => {
         savedCoachData = coachData;
 
         // Second fetch to collect user connected data
-        return fetch(`http://localhost:3000/gamers/profile/${user.username}`);
+        return fetch(`https://experience-backend.vercel.app
+/gamers/profile/${user.username}`);
       })
       .then((res) => res.json())
       .then((userData) => {
@@ -100,7 +104,8 @@ const Return = () => {
           username: user.username,
         };
         // Third fetch to create booking in database
-        return fetch("http://localhost:3000/bookings", {
+        return fetch("https://experience-backend.vercel.app
+/bookings", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(bookingData),
@@ -111,7 +116,8 @@ const Return = () => {
         console.log("Booking Created:", bookingData);
 
         // Fourth fetch to send confirmation email
-        return fetch("http://localhost:3000/emails/bookingConfirmation", {
+        return fetch("https://experience-backend.vercel.app
+/emails/bookingConfirmation", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({

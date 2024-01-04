@@ -25,11 +25,13 @@ const [disabledDays, setDisabledDays] = useState([])
 
 //Get the coach credentials and if user token is valid then get profile
 useEffect(()=> {
-  fetch(`http://localhost:3000/users/credentials/${props.username}`)
+  fetch(`https://experience-backend.vercel.app
+/users/credentials/${props.username}`)
   .then(response => response.json())
   .then(data => {
     if(user.token === data.credentials.token){
-      fetch(`http://localhost:3000/coaches/profile/${props.username}`)
+      fetch(`https://experience-backend.vercel.app
+/coaches/profile/${props.username}`)
       .then(response => response.json())
       .then(data => {
       setProfile(data.profile);
@@ -44,14 +46,16 @@ useEffect(()=> {
 
 //Get all bookings for this coach
 useEffect(() => {
-    fetch(`http://localhost:3000/bookings/${props.username}`) 
+    fetch(`https://experience-backend.vercel.app
+/bookings/${props.username}`) 
     .then(response=> response.json())
     .then(data => {
       setBookings(data.bookings)
       })
 
      //Get all unavailabilities 
-    fetch(`http://localhost:3000/unavailabilities/${props.username}`)
+    fetch(`https://experience-backend.vercel.app
+/unavailabilities/${props.username}`)
       .then(response => response.json())
       .then(data => {
         setDisabledDays(data.unavailabilities)
@@ -89,7 +93,8 @@ setCheckbox(datesdisabled);
 const handleClose = () => {
   console.log(selectedDate, profile._id)
   if(checkbox){
-    fetch("http://localhost:3000/unavailabilities", {
+    fetch("https://experience-backend.vercel.app
+/unavailabilities", {
       method: 'POST',
 			headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ date: selectedDate , coachUsername: profile._id}),
@@ -100,7 +105,8 @@ const handleClose = () => {
   }else{
     
     
-      fetch("http://localhost:3000/unavailabilities", {
+      fetch("https://experience-backend.vercel.app
+/unavailabilities", {
       method: 'DELETE',
 			headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ date: selectedDate , coachUsername: profile._id}),

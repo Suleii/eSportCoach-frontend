@@ -12,7 +12,8 @@ const Quiz = () => {
 
   // Fetch available games
   useEffect(() => {
-    fetch(`http://localhost:3000/coaches/games`)
+    fetch(`https://experience-backend.vercel.app
+/coaches/games`)
       .then((response) => response.json())
       .then((data) => {
         setGames(data.availableGames);
@@ -21,7 +22,8 @@ const Quiz = () => {
 
   // Fetch available languages
   useEffect(() => {
-    fetch(`http://localhost:3000/coaches/languages`)
+    fetch(`https://experience-backend.vercel.app
+/coaches/languages`)
       .then((response) => response.json())
       .then((data) => {
         setLanguages(data.availableLanguages);

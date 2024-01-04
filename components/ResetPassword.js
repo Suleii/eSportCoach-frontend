@@ -9,7 +9,8 @@ const router = useRouter();
 const [password, setPassword] = useState("");
 
 const handleSubmit = () => {
-    fetch("http://localhost:3000/users/updatepassword", {
+    fetch("https://experience-backend.vercel.app
+/users/updatepassword", {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
