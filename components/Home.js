@@ -34,7 +34,7 @@ function Home(props) {
       image: "csgo.jpg",
       searchTerm: "counter-strike",
     },
-    { name: "World of Warcraft", image: "wow.jpg", searchTerm: "wow" },
+    { name: "World of Warcraft", image: "wow.png", searchTerm: "wow" },
     { name: "Fortnite", image: "fortnite.jpg", searchTerm: "fortnite" },
     { name: "Apex Legends", image: "apex.jpg", searchTerm: "apex" },
     { name: "Overwatch", image: "overwatch.jpg", searchTerm: "overwatch" },
